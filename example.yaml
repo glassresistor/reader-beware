@@ -1,0 +1,32 @@
+---
+entrypoint:
+  body: |
+    this is a story all about how
+
+    my life got twist turned upside down
+
+    [now take a minute]({{ 'take-a-minute'|explore }})
+
+take-a-minute:
+  body: |
+    just sit right there
+
+    and let me tell you a story [about how i became the prince of belair]({{ 'prince-of-belair'|explore }})
+
+    or a story about [staying home]({{ 'stay-home'|explore  }})
+
+    or a story about [staying home but learning karate!]({{ 'stay-home'|choice(karate=True) }})
+
+prince-of-belair:
+  body: |
+    i forgot what happens at this point
+
+stay-home:
+  body: |
+    its another morning and your playing basketball
+
+    {% if karate %}
+      you fight a guy and get shot
+    {% else %}
+      you get your butt kicked
+    {% endif %}
