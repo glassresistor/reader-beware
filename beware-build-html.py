@@ -8,7 +8,7 @@ from jinja2 import Environment, contextfilter
 
 class NarativeWorldBuilder(object):
 
-    def __init__(self, yaml_path):
+    def __init__(self, yaml_path, output_path):
         with open(yaml_path, 'r') as f:
             self.naratives = yaml.load(f)
         self.env = Environment()
@@ -16,8 +16,6 @@ class NarativeWorldBuilder(object):
         self.env.filters['choice'] = self.choice
         markdowner = Markdown()
         self.markdown_to_html = markdowner.convert
-
-    def build_html(self):
         self.render_body('entrypoint', {})
 
     def body(self, narative_name):
@@ -47,5 +45,21 @@ class NarativeWorldBuilder(object):
         return self.narative_path(next_narative, world)
 
 
-example = NarativeWorldBuilder('example.yaml')
-example.build_html()
+import click
+
+
+@click.command()
+@click.option(
+    '--narative-path',
+    default='narative.yaml',
+    help='Path to natarive yaml file')
+@click.option(
+    '--output',
+    default='output',
+    help='Path to natarive yaml file')
+def build_html(narative_path, output):
+    example = NarativeWorldBuilder(narative_path, output)
+
+
+if __name__ == '__main__':
+    build_html()
