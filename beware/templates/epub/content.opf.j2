@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="bookid" version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata>
+    <dc:identifier id="bookid">book id</dc:identifier>
+    <dc:title>Title goes here</dc:title>
+    <dc:creator xmlns:opf="http://www.idpf.org/2007/opf" opf:role="aut">Margaret Killjoy</dc:creator>
+    <dc:language>en-US</dc:language>
+    <dc:subject>CYOA</dc:subject>
+    <dc:description>Dek goes here</dc:description>
+    <dc:publisher>Got a publisher</dc:publisher>
+    <dc:date xmlns:opf="http://www.idpf.org/2007/opf" opf:event="">2011-05-17</dc:date>
+    <dc:rights>This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 171 Second Street, Suite 300, San Francisco, California, 94105, USA.</dc:rights>
+    <dc:language>en-US</dc:language>
+    <dc:identifier xmlns:opf="http://www.idpf.org/2007/opf" opf:scheme="">idk what this is</dc:identifier>
+    <meta content="Reader Beware" name="generator" />
+    <meta name="cover" content="ebook-cover_fmt.jpeg" />
+    <meta content="0.8.7" name="Sigil version" />
+    <dc:date xmlns:opf="http://www.idpf.org/2007/opf" opf:event="modification">2018-08-03</dc:date>
+  </metadata>
+  <manifest>
+    <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml" />
+    <item href="Styles/template.css" id="css" media-type="text/css" />
+    {% for section_name in section_names %}
+    <item href="{{ section_name }}" id="{{ section_name }}" media-type="application/xhtml+xml" />
+    {% endfor %}
+    <item href="Images/ebook-cover_fmt.jpeg" id="ebook-cover_fmt.jpeg" media-type="image/jpeg" />
+    <item href="Fonts/AGaramondPro-Bold.otf" id="AGaramondPro-Bold.otf" media-type="application/vnd.ms-opentype" />
+  </manifest>
+  <spine toc="ncx">
+    {% for section_name in section_names %}
+    <itemref idref="{{ section_name  }}" />
+    {% endfor %}
+  </spine>
+</package>
