@@ -1,7 +1,7 @@
 import click
 
-from build_html import NarativeWorldBuilder
-from build_epub import EPubWorldBuilder
+from beware.build_html import NarativeWorldBuilder
+from beware.build_epub import EPubWorldBuilder
 
 
 @click.group()
