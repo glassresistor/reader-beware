@@ -5,7 +5,8 @@ import json
 import base64
 
 from markdown2 import Markdown
-from jinja2 import Environment, contextfilter, FileSystemLoader, select_autoescape
+from jinja2 import Environment, contextfilter
+from jinja2 import FileSystemLoader
 
 
 class NarativeWorldBuilder(object):
