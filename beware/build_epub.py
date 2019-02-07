@@ -15,7 +15,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         with open(os.path.join(self.output_path, 'content.opf'), 'w') as f:
             f.write(content_opf)
         shutil.copyfile(
-            'beware/files/template.css',
+            os.path.join(self.base_dir, 'files', 'template.css'),
             os.path.join(
                 self.output_path,
                 'template.css'))

@@ -13,9 +13,9 @@ class NarativeWorldBuilder(object):
     def __init__(self, yaml_path, output_path):
         with open(yaml_path, 'r') as f:
             self.naratives = yaml.load(f)
-        self.env = Environment(
-            loader=FileSystemLoader('beware/templates'),
-        )
+        self.base_dir = os.path.dirname(os.path.realpath(__file__))
+        template_dir = os.path.join(self.base_dir, 'templates')
+        self.env = Environment(loader=FileSystemLoader(template_dir))
         self.env.filters['explore'] = self.explore
         self.env.filters['choice'] = self.choice
         markdowner = Markdown()
