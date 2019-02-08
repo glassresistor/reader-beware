@@ -3,6 +3,7 @@ import base64
 import yaml
 import json
 import base64
+import shutil
 
 from markdown2 import Markdown
 from jinja2 import Environment, contextfilter
@@ -22,10 +23,16 @@ class NarativeWorldBuilder(object):
         self.markdown_to_html = markdowner.convert
         self.output_path = output_path
         self.section_names = []
+        self.render_next = []
 
-    def build():
-        os.makedir(self.output_path)
+    def build(self):
+        shutil.rmtree(self.output_path)
+        os.mkdir(self.output_path)
         self.render_body('entrypoint', {})
+        while 0 < len(self.render_next):
+            print(self.render_next)
+            narative = self.render_next.pop(0)
+            self.render_body(*narative)
 
     def body(self, narative_name):
         return self.naratives[narative_name]['body']
@@ -57,5 +64,6 @@ class NarativeWorldBuilder(object):
     def choice(self, context, next_narative, **update_vars):
         world = context.vars
         world.update(update_vars)
-        self.render_body(next_narative, world)
+        self.render_next.append((next_narative, world))
+        print(self.render_next)
         return self.narative_path(next_narative, world)
