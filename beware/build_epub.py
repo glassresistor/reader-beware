@@ -1,4 +1,6 @@
 import os
+import json
+import base64
 import shutil
 from beware.build_html import NarativeWorldBuilder
 
@@ -25,3 +27,8 @@ class EPubWorldBuilder(NarativeWorldBuilder):
             self.output_path,
             '%s.epub' %
             self.output_path)
+
+    def narative_path(self, narative, world):
+        world_params = narative + '-' + json.dumps(world, sort_keys=True)
+        return '%s.html' % base64.b64encode(
+            world_params.encode('ascii')).decode()

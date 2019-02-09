@@ -4,6 +4,7 @@ import yaml
 import json
 import base64
 import shutil
+import copy
 
 from markdown2 import Markdown
 from jinja2 import Environment, contextfilter
@@ -26,20 +27,23 @@ class NarativeWorldBuilder(object):
         self.render_next = []
 
     def build(self):
-        shutil.rmtree(self.output_path)
+        try:
+            shutil.rmtree(self.output_path)
+        except FileNotFoundError:
+            pass
         os.mkdir(self.output_path)
         self.render_body('entrypoint', {})
-        while 0 < len(self.render_next):
-            print(self.render_next)
-            narative = self.render_next.pop(0)
+        while self.render_next:
+            narative = self.render_next.pop()
             self.render_body(*narative)
+        print('%s sections written' % len(self.section_names))
 
     def body(self, narative_name):
         return self.naratives[narative_name]['body']
 
     def narative_path(self, narative, world):
         world_params = narative + '-' + json.dumps(world, sort_keys=True)
-        return str(base64.b64encode(world_params.encode('ascii'))) + '.html'
+        return world_params + '.html'
 
     def render_body(self, narative_name, world):
         path = self.narative_path(narative_name, world)
@@ -62,8 +66,7 @@ class NarativeWorldBuilder(object):
 
     @contextfilter
     def choice(self, context, next_narative, **update_vars):
-        world = context.vars
+        world = copy.copy(context.vars)
         world.update(update_vars)
-        self.render_next.append((next_narative, world))
-        print(self.render_next)
+        self.render_next.append([next_narative, world])
         return self.narative_path(next_narative, world)
