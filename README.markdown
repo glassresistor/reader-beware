@@ -79,7 +79,9 @@ In the go outside section you can see an example of of a if and else statement. 
 
 ## Install instructions
 
-In a Python 3.5+ environment(untested in python less than that).  Currently its not on pypi so install from github
+In a Python 3.5+ environment(untested in python less than that).  Currently its not on pypi so install from github.
+
+This has been tested in linux and works fine.  Maybe it works in Windows but if you use it and it fails just make an issue and I'll try and get fix any bugs.
 
 ```bash
 pip install -e git+https://github.com/glassresistor/reader-beware.git
