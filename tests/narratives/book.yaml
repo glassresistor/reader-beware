@@ -1,0 +1,11 @@
+title: The Adventures of Sam
+author: Margaret Killjoy
+language: en-US
+subject: CYOA
+description: |
+  A test story about sam.
+publisher: Test Publisher
+date: 2018-08-03
+rights: Some rights reserved.
+identifier: urn:test:sam-1
+cover: Images/cover.png
