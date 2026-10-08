@@ -1,0 +1,7 @@
+---
+entrypoint:
+  body: |
+    [back]({{ 'loop'|explore }})
+loop:
+  body: |
+    [back]({{ 'loop'|explore }})

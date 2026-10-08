@@ -1,0 +1,4 @@
+---
+entrypoint:
+  body: |
+    [nowhere]({{ 'nowhere'|explore }})

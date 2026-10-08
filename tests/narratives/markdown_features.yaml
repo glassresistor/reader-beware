@@ -1,0 +1,10 @@
+---
+entrypoint:
+  body: |
+    # Heading one
+
+    Some **bold** and *italics*.
+
+    ```python
+    x = 1
+    ```

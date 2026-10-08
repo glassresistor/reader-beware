@@ -1,0 +1,18 @@
+---
+entrypoint:
+  body: |
+    This is your opening page.
+
+    [put on red shirt]({{ 'put-on-shirt'|choice(shirt_color='red') }})
+
+    [put on green shirt]({{ 'put-on-shirt'|choice(shirt_color='green') }})
+
+put-on-shirt:
+  body: |
+    You put on the {{ shirt_color }} shirt.
+
+    [And go outside]({{ 'go-outside'|explore }})
+
+go-outside:
+  body: |
+    Outside you see Jane and she says "{% if shirt_color == 'green' %}I like your green shirt very much.{% else %}I dislike that color on you.{% endif %}"

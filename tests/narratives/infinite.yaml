@@ -1,0 +1,7 @@
+---
+entrypoint:
+  body: |
+    [start]({{ 'loop'|choice(value=0) }})
+loop:
+  body: |
+    [next]({{ 'loop'|choice(value=value+1) }})

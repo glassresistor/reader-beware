@@ -1,0 +1,13 @@
+---
+entrypoint:
+  body: |
+    [start counting]({{ 'loop'|choice(value=0) }})
+loop:
+  body: |
+    You have counted {{ value }}.
+
+    {% if value < 10 %}
+    [next number]({{ 'loop'|choice(value=value+1) }})
+    {% else %}
+    Done counting!
+    {% endif %}
