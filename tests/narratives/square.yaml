@@ -1,0 +1,37 @@
+---
+entrypoint:
+  body: |
+    Your dropped off on the roof of a huge square maze.
+
+    Your scared and hungry and the only way down is through a hole in the roof.
+
+    [go down]({{ 'go'|choice(x=0, y=0) }})
+go:
+  body: |
+    You enter a room with four doors with the numbers {{ x }},{{ y }} on the floor.
+    {% if x+y in [2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97] %}
+    Monsters and horrible machines eat you!
+
+    Then End
+    {% else %}
+    {% if x == 42 and y == 69 %}
+    [Exit]({{ 'exit'|explore }}) the room through a hole in the floor.
+    {% endif %}
+    {% if x > -100 %}
+    [left]({{ 'go'|choice(x=x-1, y=y) }})
+    {% endif %}
+    {% if x < 100 %}
+    [right]({{ 'go'|choice(x=x+1, y=y) }})
+    {% endif %}
+    {% if y < 100 %}
+    [up]({{ 'go'|choice(x=x, y=y+1) }})
+    {% endif %}
+    {% if y > -100 %}
+    [down]({{ 'go'|choice(x=x, y=y-1) }})
+    {% endif %}
+    {% endif %}
+exit:
+  body: |
+    You survive!
+
+    The end!

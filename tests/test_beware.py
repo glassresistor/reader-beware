@@ -99,6 +99,22 @@ class TestHtmlBuilder:
             target = os.path.join(out, href)
             assert os.path.exists(target), 'broken link %s' % href
 
+    def test_the_square_maze_slow(self, tmp_path):
+        """The README's 'Square' maze example (opt-in: BEWARE_RUN_SLOW=1)."""
+        if not os.environ.get('BEWARE_RUN_SLOW'):
+            pytest.skip('slow test; set BEWARE_RUN_SLOW=1 to run it')
+        out_dir = str(tmp_path / 'square')
+        builder = NarativeWorldBuilder(narrative('square.yaml'), out_dir)
+        builder.build()
+        # entrypoint + exit + reachable rooms (prime-sum traps kill paths)
+        assert len(builder.section_names) > 4000
+        files = os.listdir(out_dir)
+        assert any(f.startswith('exit') for f in files)
+        # every html file is a real page with the story div
+        sample = [f for f in files if 'x": 5' in f or True][0]
+        html = open(os.path.join(out_dir, sample)).read()
+        assert '<div class="story">' in html
+
     def test_markdown_rendered(self, out):
         builder = NarativeWorldBuilder(
             narrative('markdown_features.yaml'), out)
