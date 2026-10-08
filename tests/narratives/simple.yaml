@@ -1,0 +1,16 @@
+---
+entrypoint:
+  body: |
+    This is your opening page.
+
+    [go left]({{ 'left'|explore }})
+
+    [go right]({{ 'right'|explore }})
+
+left:
+  body: |
+    This is going left
+
+right:
+  body: |
+    This is going right
