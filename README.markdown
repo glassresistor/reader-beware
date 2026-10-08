@@ -79,9 +79,9 @@ In the go outside section you can see an example of of a if and else statement. 
 
 ## Install instructions
 
-In a Python 3.5+ environment(untested in python less than that).  Currently its not on pypi so install from github.
+In a Python 3.8+ environment (untested on python less than that). Currently its not on pypi so install from github.
 
-This has been tested in linux and works fine.  Maybe it works in Windows but if you use it and it fails just make an issue and I'll try and get fix any bugs.
+This has been tested in linux and works fine. Maybe it works in Windows but if you use it and it fails just make an issue and I'll try and get fix any bugs.
 
 ```bash
 pip install -e git+https://github.com/glassresistor/reader-beware.git
@@ -104,11 +104,14 @@ beware build-html --narative-path narative.yaml --output output_folder
 Once it runs you can open your browser to file://path_to_folder/entrypoint-{}.html and it will be the first page.
 
 
-To build epub files run the below command.  This will create both an epub file and a folder with the epub files unzipped with the same name.
+To build epub files run the below command.  This will create both an epub file (`output_file.epub`) and a folder (`output_file/`) containing the unzipped pages for debugging.
 
 ```bash
 beware build-epub --narative-path narative.yaml --output output_file
 ````
+
+Add `--book-config book.yaml` to set the ebook title, description, publisher,
+rights notice and cover image (see Book Config below).
 
 Acfter this I typically use Calibre to view the epub file and use it to create a mobi file and transfer it to my Kindle but it should work for any ebook reader that Calibre works with or accepts epub/mobi files.
 
@@ -202,16 +205,95 @@ loop:
     {% endif %}
 ```
 
+## Book Config (metadata, description, cover)
+
+To give your ebook a title, description, publisher, rights notice or a cover
+image pass `--book-config` pointing at a YAML or JSON file.  The fields are:
+
+```yaml
+title: The Adventures of Sam
+author: Margaret Killjoy
+language: en-US
+subject: CYOA
+description: |
+  A long description shown in readers.
+publisher: Free Editions
+date: 2018-08-03
+rights: Some rights reserved.
+identifier: urn:uuid:...   # used as the epub identifier
+cover: Images/cover.png    # optional; relative to the narrative file
+```
+
+Unknown keys are kept in `meta.extras` so tools can find them later.  The
+cover image is added into the package (as an images/<name>.<ext> item) when
+the build runs.
+
+```bash
+beware build-epub --narative-path narative.yaml --output book \
+    --book-config book.yaml
+```
+
+This writes both `book/` (the unzipped pages for debugging) and the real
+`book.epub` file.  The epub is a proper EPUB 3 package: mimetype stored first
+and uncompressed, xhtml chapters under `EPUB/xhtml`, css under
+`EPUB/style/default.css`, cover image when configured.
+
+## Pluggable filters and markdown behaviour
+
+The jinja2 filters used by narrative bodies (`explore`/`choice`) are
+registered through `register_filter(name, function)`; any code can register,
+replace or remove filters before calling `build()`:
+
+```python
+from beware.build_html import NarativeWorldBuilder
+
+def shout(value):
+    return value.upper() + '!!!'
+
+builder = NarativeWorldBuilder('narative.yaml', 'output')
+builder.register_filter('shout', shout)
+builder.build()
+```
+
+Then in the narrative: `{{ 'world'|shout }}`.
+
+markdown2's behaviour is pluggable too: set `builder.markdown_extras = ('fenced-code-blocks',)` (or any other markdown2 extension names) before building to enable extensions, e.g. fenced code blocks::
+
+```python
+builder.markdown_extras = ('fenced-code-blocks',)
+```
+
+## Safety limits
+
+A story that never terminates (see Infinite Loop above) is a build bug; the
+builders now support `max_sections` to fail fast instead of filling your hard
+drive:
+
+```python
+builder.max_sections = 5000
+```
+
+## Running tests
+
+The test suite uses pytest and lives in `tests/`.  Run it from the repo root:
+
+```bash
+pip install -e .[test]
+pytest
+```
+
+It covers: building html pages, every README example (simple links, world
+state via choice, loops with and without breaks), missing entrypoint or
+section errors, metadata config parsing (yaml/json), epub packaging
+(mimetype placement, href rewriting inside the book, well-formed xhtml,
+cover image inclusion) and the cli commands.
+
 ## TODO
 - Generate mobi files directly
 - Remove underline from link formatting on Kindle
-- Add config file for ebook title, description, etc.
-- Add cover options
 - Add html templates for copyright/etc. pages
 - Add dead pages between sections
 - Add css to html for dev and production purposes which make it look better than default html
-- Add tests
-- Make jinja2 filters and markdown2's behaviour plugable
 - Work on compressing large ass files.
 - Make tiny webapp that dyanamically makes sections on load and reloads yaml files on save.
 - Move to folder of yaml files?  How to merge? Namespacing?
