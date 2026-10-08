@@ -99,6 +99,20 @@ class TestHtmlBuilder:
             target = os.path.join(out, href)
             assert os.path.exists(target), 'broken link %s' % href
 
+    def test_the_square_bounded(self, out):
+        """A bounded run of the Square maze: generation and page contents."""
+        builder = NarativeWorldBuilder(narrative('square.yaml'), out)
+        builder.max_sections = 200
+        with pytest.raises(RuntimeError):
+            builder.build()
+        files = os.listdir(out)
+        assert len(files) == 200   # stopped exactly at the limit
+        sample = [f for f in files if 'go-' in f][0]
+        html = open(os.path.join(out, sample)).read()
+        assert '<div class="story">' in html
+        assert 'doors with the numbers' in html or \
+               'Monsters and horrible machines eat you!' in html
+
     def test_the_square_maze_slow(self, tmp_path):
         """The README's 'Square' maze example (opt-in: BEWARE_RUN_SLOW=1)."""
         if not os.environ.get('BEWARE_RUN_SLOW'):
