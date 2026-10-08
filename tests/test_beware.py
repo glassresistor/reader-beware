@@ -296,11 +296,13 @@ class TestEpubBuilder:
             assert 'version="3.0"' in opf or '4.0' in opf
 
     def test_links_work_inside_epub(self, out):
+        import posixpath
         builder = EPubWorldBuilder(narrative('shirts.yaml'), out)
         builder.build()
         epub_file = builder.build_epub()
         with zipfile.ZipFile(epub_file) as z:
             names = set(z.namelist())
+            total_links = 0
             for name in sorted(names):
                 if not name.endswith('.xhtml'):
                     continue
@@ -308,6 +310,14 @@ class TestEpubBuilder:
                 hrefs = re.findall(r'<a[^>]*href="([^"]+)"', content)
                 assert all(h.startswith('../xhtml/') for h in hrefs), (
                     'bad links %s in %s' % (hrefs, name))
+                base = posixpath.dirname(name)   # e.g. EPUB/xhtml
+                for href in hrefs:
+                    target = posixpath.normpath(posixpath.join(base, href))
+                    assert target in names, 'broken epub link %s -> %s' % (
+                        name, href)
+                    total_links += 1
+            # entrypoint links to two shirts; each shirt page links outside
+            assert total_links == 4
 
     def test_metadata_is_written(self, out):
         meta = BookMetadata(title='The Adventures of Sam',
