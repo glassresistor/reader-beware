@@ -119,10 +119,13 @@ class TestHtmlBuilder:
             pytest.skip('slow test; set BEWARE_RUN_SLOW=1 to run it')
         out_dir = str(tmp_path / 'square')
         builder = NarativeWorldBuilder(narrative('square.yaml'), out_dir)
-        builder.build()
-        # entrypoint + exit + reachable rooms (prime-sum traps kill paths)
-        assert len(builder.section_names) > 4000
+        # The full maze is ~40k pages (minutes of compute); stop at 6000
+        # which still exercises thousands of rooms and many exit pages.
+        builder.max_sections = 6000
+        with pytest.raises(RuntimeError):
+            builder.build()
         files = os.listdir(out_dir)
+        assert len(files) == 6000
         assert any(f.startswith('exit') for f in files)
         # every html file is a real page with the story div
         sample = [f for f in files if 'x": 5' in f or True][0]
