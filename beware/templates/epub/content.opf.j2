@@ -18,17 +18,21 @@
     <dc:date xmlns:opf="http://www.idpf.org/2007/opf" opf:event="modification">2018-08-03</dc:date>
   </metadata>
   <manifest>
+    {% if ncx %}
     <item href="toc.ncx" id="ncx" media-type="application/x-dtbncx+xml" />
+    {% endif %}
     <item href="template.css" id="css" media-type="text/css" />
     {% for section_name in section_names %}
-    <item href="{{ section_name }}" id="{{ section_name }}" media-type="application/xhtml+xml" />
+    <item href="{{ section_name }}" id="{{ section_name | xml_id }}" media-type="application/xhtml+xml" />
     {% endfor %}
-    <item href="Images/ebook-cover_fmt.jpeg" id="ebook-cover_fmt.jpeg" media-type="image/jpeg" />
-    <item href="Fonts/AGaramondPro-Bold.otf" id="AGaramondPro-Bold.otf" media-type="application/vnd.ms-opentype" />
+    {# The cover is optional; only listed when a cover image was supplied. #}
+    {% if cover_image %}
+    <item href="Images/{{ cover_image }}" id="cover-image" media-type="{{ cover_mime }}" properties="cover" />
+    {% endif %}
   </manifest>
-  <spine toc="ncx">
-    {% for section_name in section_names %}
-    <itemref idref="{{ section_name  }}" />
+  <spine {% if ncx %}toc="ncx"{% endif %}>
+    {% for idref in spine_ids %}
+    <itemref idref="{{ idref }}" />
     {% endfor %}
   </spine>
 </package>
