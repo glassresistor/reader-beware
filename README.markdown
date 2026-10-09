@@ -263,6 +263,34 @@ markdown2's behaviour is pluggable too: set `builder.markdown_extras = ('fenced-
 builder.markdown_extras = ('fenced-code-blocks',)
 ```
 
+## MOBI / Kindle formats
+
+`beware build-mobi` builds the story and converts it to a real `.mobi` file
+using Calibre's `ebook-convert` (the same engine behind the "create a mobi
+file" step in the README workflow).  If Calibre is not installed on your
+machine, the command falls back gracefully: it writes a Kindle-ready
+`.epub` (`--output.epub`) and prints instructions for finishing with
+ebook-convert or the Send-to-Kindle email.
+
+```bash
+beware build-mobi --narative-path narative.yaml --output book \
+    --book-config book.yaml
+```
+
+## Web editor
+
+`beware serve` runs a tiny flask webapp for editing story files:
+
+```bash
+beware serve --root stories_folder --port 8181
+```
+
+It lists all `*.yaml`/`*.yml` stories under the root folder, lets you create,
+edit (raw yaml textarea), save and delete them, validates on every keystroke
+(yaml syntax, jinja syntax, missing entrypoint or undefined linked sections)
+and reloads files from disk on save so external edits are picked up.  Story
+text is escaped in the editor pages (bodies contain raw markup safely).
+
 ## Safety limits
 
 A story that never terminates (see Infinite Loop above) is a build bug; the
@@ -289,12 +317,11 @@ section errors, metadata config parsing (yaml/json), epub packaging
 cover image inclusion) and the cli commands.
 
 ## TODO
-- Generate mobi files directly
+
 - Remove underline from link formatting on Kindle
 - Add html templates for copyright/etc. pages
 - Add dead pages between sections
 - Add css to html for dev and production purposes which make it look better than default html
 - Work on compressing large ass files.
-- Make tiny webapp that dyanamically makes sections on load and reloads yaml files on save.
 - Move to folder of yaml files?  How to merge? Namespacing?
 - Codify book folder structure?
