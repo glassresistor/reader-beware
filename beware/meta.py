@@ -50,6 +50,7 @@ class BookMetadata:
     rights: str = DEFAULT_RIGHTS
     identifier: str = 'reader-beware-book-id'
     cover: Optional[str] = None
+    kindle_notification_address: str = ''
     generator: str = 'Reader Beware'
     css_files: tuple = ('template.css',)
     extras: Dict[str, Any] = field(default_factory=dict)

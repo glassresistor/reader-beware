@@ -2,6 +2,7 @@ import click
 
 from beware.build_html import NarativeWorldBuilder
 from beware.build_epub import EPubWorldBuilder
+from beware.mobi import MobiWorldBuilder, calibre_available
 from beware.meta import BookMetadata
 
 
@@ -43,6 +44,36 @@ def build_epub(narative_path, output, book_config):
     builder.build()
     epub_file = builder.build_epub(meta)
     print('epub written to %s' % epub_file)
+
+
+@cli.command()
+@click.option(
+    '--narative-path',
+    default='narative.yaml',
+    help='Path to natarive yaml file')
+@click.option(
+    '--output',
+    default='output',
+    help='Output base name (mobi written as <output>.mobi)')
+@click.option(
+    '--book-config',
+    default=None,
+    help='Path to a yaml/json file with ebook metadata '
+         '(title, description, cover, ...)')
+def build_mobi(narative_path, output, book_config):
+    meta = BookMetadata.from_config(book_config)
+    epub_builder = EPubWorldBuilder(narative_path, '%s_epub' % output,
+                                    meta=meta)
+    epub_builder.build()
+    epub_builder.build_epub(meta)
+    mobi_builder = MobiWorldBuilder(
+        narative_path, output, meta=meta,
+        epub_builder=epub_builder)
+    artifact, note = mobi_builder.build()
+    if artifact:
+        print('mobi written to %s' % artifact)
+    else:
+        print(note)
 
 
 if __name__ == '__main__':
