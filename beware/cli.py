@@ -1,3 +1,5 @@
+import os
+
 import click
 
 from beware.build_html import NarativeWorldBuilder
@@ -74,6 +76,18 @@ def build_mobi(narative_path, output, book_config):
         print('mobi written to %s' % artifact)
     else:
         print(note)
+
+
+@cli.command()
+@click.option('--root', default='.', help='Folder containing story yaml files')
+@click.option('--port', default=8181, help='Port for the webapp to listen on')
+def serve(root, port):
+    """Run a tiny flask editor for narratives under --root."""
+    from beware.web import create_app
+    app = create_app(root)
+    click.echo('serving story editor at http://127.0.0.1:%s (root=%s)' % (
+        port, os.path.realpath(root)))
+    app.run(port=port)
 
 
 if __name__ == '__main__':

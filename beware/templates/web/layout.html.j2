@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{% block title %}Reader Beware Editor{% endblock %}</title>
+<style>
+  body { font-family: Georgia, serif; margin: 0; background:#faf7f2; color:#3b2f2a; }
+  header { background:#452f1e; color:#f8efe6; padding:.7rem 1.2rem; display:flex; align-items:center; gap:1rem;}
+  header a { color:#f8efe6; text-decoration:none; font-weight:bold; }
+  main { max-width: 900px; margin: 1.5rem auto; padding:0 1rem; }
+  h1 { font-size:1.3rem; }
+  .stories { list-style:none; padding:0; }
+  .stories li { border-bottom:1px solid #ddd; padding:.4rem .2rem; display:flex; justify-content:space-between;}
+  .stories a { color:#7a4f2e; text-decoration:none;}
+  textarea.code { width:100%; height:60vh; font-family:"DejaVu Sans Mono", monospace; font-size:.85rem; background:#fffdf7; border:1px solid #b9a37e; padding:.5rem; }
+  .errors { color:#a11; background:#ffecec; border:1px solid #c55;padding:.6rem; margin-bottom:1rem;}
+  button, input[type=submit] { background:#452f1e;color:#fff;border:none;padding:.4rem .8rem;cursor:pointer;margin-right:.3rem;}
+  .flash-ok { color:green; }
+</style>
+{% block head %}{% endblock %}
+</head>
+<body>
+<header>
+  <a href="{{ url_for('index') }}">Reader Beware &mdash; story editor</a>
+  {% if root is defined and root %}<span style="opacity:.7;font-size:.85em">{{ root }}</span>{% endif %}
+</header>
+<main>
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>
