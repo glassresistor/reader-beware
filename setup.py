@@ -19,6 +19,7 @@ setup(
         'markdown2',
         'lxml',
         'ebooklib',
+        'flask',
     ],
     extras_require={
         'test': ['pytest'],
