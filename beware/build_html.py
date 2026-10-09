@@ -138,6 +138,7 @@ class NarativeWorldBuilder(object):
 
     # -- rendering -----------------------------------------------------
     def render_body(self, narative_name, world):
+        """Render one section to its final html file in the output folder."""
         path = self.narative_path(narative_name, world)
         if path in self.section_names:
             return
