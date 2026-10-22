@@ -1,0 +1,725 @@
+{% extends "layout.html.j2" %}
+{% block title %}{% if story %}{{ story }}{% else %}New story{% endif %} &middot; studio{% endblock %}
+{% block head %}
+<style>
+  .bar {
+    display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .7rem .9rem; margin-bottom: 1rem;
+  }
+  .bar .file { font-size: 1.05rem; color: var(--ink); }
+  .bar .file code { color: var(--pink-soft); }
+  .bar .status { color: var(--ink-faint); font-size: .85rem; min-width: 9em; }
+  .bar .status.ok { color: var(--lilac); }
+  .bar .status.bad { color: var(--danger); }
+  .bar .right { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
+  .stats { color: var(--ink-faint); font-size: .85rem; }
+  .stats b.pink { color: var(--pink); }
+  .outline { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.2rem; }
+  .chip {
+    background: var(--grey-2); border: 1px solid var(--line); color: var(--ink-dim);
+    padding: .2rem .55rem; border-radius: 999px; font-size: .78rem; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--purple); color: var(--ink); }
+  .chip.entrypoint { border-color: var(--pink); color: var(--pink-soft); }
+  .chip.broken { border-color: var(--danger); color: var(--danger); }
+  .card {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 8px; margin-bottom: 1.4rem;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .35);
+  }
+  .card.flagged { border-color: rgba(255, 92, 122, .5); }
+  .card-top {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .6rem .8rem; background: var(--grey-3);
+    border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0;
+  }
+  .card-top .sec-name { min-width: 12em; flex: 0 1 auto; }
+  .card-top .tag {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--pink); border: 1px solid rgba(255, 110, 199, .4);
+    padding: .1rem .4rem; border-radius: 3px;
+  }
+  .card-top .meta { color: var(--ink-faint); font-size: .8rem; }
+  .card-top .spacer { flex: 1; }
+  .toolbar {
+    display: flex; gap: .25rem; flex-wrap: wrap;
+    padding: .45rem .8rem; border-bottom: 1px solid var(--line);
+  }
+  .toolbar button { font-size: .78rem; padding: .2rem .5rem; }
+  .toolbar .accent { background: linear-gradient(180deg, var(--pink) 0%, #c44ea0 100%); color: #20051a; border-color: var(--purple); }
+  .toolbar .accent:hover { background: var(--purple); color: #fff; }
+  textarea.sec-body {
+    display: block; width: calc(100% - 1.6rem); margin: .8rem .8rem 0;
+    min-height: 9em; max-height: 34em; resize: vertical;
+    font-size: .85rem; line-height: 1.45; tab-size: 4;
+    background: #131019; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: .6rem .7rem;
+  }
+  textarea.sec-body:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255, 110, 199, .2); }
+  details.linktool {
+    margin: .8rem; border: 1px solid var(--line); border-radius: 6px;
+    background: #181423;
+  }
+  details.linktool > summary {
+    cursor: pointer; padding: .4rem .7rem; color: var(--lilac);
+    font-size: .85rem; list-style: none;
+  }
+  details.linktool > summary::before { content: "\2724 "; color: var(--pink); }
+  details.linktool[open] > summary { border-bottom: 1px solid var(--line); }
+  .lt-fields { padding: .7rem; display: grid; gap: .55rem; }
+  .lt-row { display: flex; gap: .45rem; align-items: center; flex-wrap: wrap; }
+  .lt-row label { min-width: 6.5em; }
+  .lt-row input.vname { width: 10em; }
+  .lt-row input.vvalue { width: 12em; }
+  .snippet {
+    display: block; width: 100%; background: #0d0b13; color: var(--pink-soft);
+    border: 1px solid var(--purple-deep); border-radius: 4px;
+    padding: .35rem .5rem; font-size: .82rem; overflow-x: auto; white-space: pre;
+  }
+  .inspector { padding: .6rem .8rem .8rem; }
+  .inspector h4 { margin: 0 0 .4rem; color: var(--ink-faint); font-size: .8rem; font-weight: normal; }
+  .inspector ul { list-style: none; margin: 0; padding: 0; }
+  .inspector li {
+    display: flex; gap: .5rem; align-items: baseline;
+    padding: .25rem 0; border-bottom: 1px dashed #2a2436; font-size: .85rem;
+  }
+  .kind { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+  .kind.explore { color: var(--purple); }
+  .kind.choice { color: var(--pink); }
+  .ltarget { color: var(--ink); cursor: pointer; }
+  .ltarget:hover { text-decoration: underline; }
+  .missing .ltarget { color: var(--danger); }
+  .args { color: var(--ink-faint); font-size: .8rem; }
+  .preview {
+    margin: .8rem; border: 1px solid var(--purple-deep); border-radius: 6px;
+    background: #14111c; padding: .9rem 1.1rem;
+    font-size: .95rem; line-height: 1.55;
+  }
+  .preview h2, .preview h3 { color: var(--pink-soft); }
+  .preview a { color: var(--lilac); }
+  .preview pre, .preview code {
+    background: #0d0b13; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .2rem .35rem; font-size: .85rem;
+  }
+  .preview-error { color: var(--danger); }
+  .card-actions { display: flex; gap: .6rem; margin: 1.2rem 0; }
+  .extras-note { color: var(--ink-faint); font-size: .78rem; padding: 0 .8rem .5rem; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="bar">
+  <span class="file">
+    {% if story %}<code>{{ story }}</code>{% else %}New story{% endif %}
+  </span>
+  {% if created %}
+    <label>filename
+      <input type="text" id="rel-new" placeholder="my-story.yaml" required>
+    </label>
+  {% endif %}
+  <button id="save-btn">{% if created %}Create story{% else %}Save{% endif %}</button>
+  <span class="status" id="status"></span>
+  <span class="stats" id="stats"></span>
+  <span class="right">
+    {% if story %}
+      <a href="{{ url_for('edit_raw', rel=story) }}">raw yaml</a>
+    {% else %}
+      <a href="{{ url_for('new_story_raw_form') }}">raw yaml</a>
+    {% endif %}
+    <a href="{{ url_for('index') }}">all stories</a>
+  </span>
+</div>
+
+{% if parse_error %}
+<div class="problems panel">
+  <strong>Cannot edit this story as sections:</strong> {{ parse_error|e }}
+  {% if story %}
+    &mdash; fix it in the <a href="{{ url_for('edit_raw', rel=story) }}">raw yaml editor</a>.
+  {% endif %}
+</div>
+{% endif %}
+
+<div class="problems panel" id="problems"{% if not errors %} hidden{% endif %}>
+  <strong>Problems found:</strong>
+  <ul id="problem-list">
+    {% for error in errors %}<li>{{ error|e }}</li>{% endfor %}
+  </ul>
+</div>
+
+<div class="outline" id="outline"></div>
+
+<div id="cards">
+  {% for section in sections %}
+  <article class="card" data-card>
+    <header class="card-top">
+      <span class="tag" data-tag hidden>entrypoint</span>
+      <input class="sec-name" value="{{ section.name }}" spellcheck="false"
+             autocomplete="off" aria-label="section name">
+      <span class="meta" data-meta></span>
+      <span class="spacer"></span>
+      <button class="ghost" data-action="up" title="move up">&#8679;</button>
+      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="dupe" title="duplicate">copy</button>
+      <button class="danger" data-action="del" title="delete section">delete</button>
+    </header>
+    <div class="toolbar">
+      <button class="ghost" data-md="h2">H2</button>
+      <button class="ghost" data-md="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="code">code</button>
+      <button class="ghost" data-md="quote">quote</button>
+      <button class="ghost" data-md="list">list</button>
+      <button class="ghost" data-md="var" title="insert a jinja expression">{% raw %}{{ var }}{% endraw %}</button>
+      <button class="accent" data-open="link">explore/choice link</button>
+      <button class="ghost" data-open="preview">preview</button>
+    </div>
+    <textarea class="sec-body" spellcheck="false">{{ section.body }}</textarea>
+    <details class="linktool" hidden>
+      <summary>link tool &mdash; build an explore or choice link</summary>
+      <div class="lt-fields">
+        <div class="lt-row">
+          <label>kind</label>
+          <select class="lt-kind">
+            <option value="explore">explore (no state change)</option>
+            <option value="choice">choice (sets variables)</option>
+          </select>
+        </div>
+        <div class="lt-row">
+          <label>text shown</label>
+          <input class="lt-text" placeholder="go left">
+        </div>
+        <div class="lt-row">
+          <label>target</label>
+          <input class="lt-target" list="section-names" placeholder="section name">
+        </div>
+        <div class="lt-vars"></div>
+        <div class="lt-row">
+          <button class="ghost lt-addvar" type="button">+ variable</button>
+          <span class="args">numbers and True/False stay bare, other values are quoted</span>
+        </div>
+        <div class="lt-row">
+          <code class="snippet"></code>
+        </div>
+        <div class="lt-row">
+          <button class="accent lt-insert" type="button">insert at cursor</button>
+          <button class="ghost lt-copy" type="button">copy</button>
+        </div>
+      </div>
+    </details>
+    <div class="inspector">
+      <h4>links in this section</h4>
+      <ul data-inspector>{% for link in section.links %}<li{% if link.target not in names %} class="missing"{% endif %}><span class="kind {{ link.kind }}">{{ link.kind }}</span> <span class="ltarget">{{ link.target }}</span>{% if link.args %} <span class="args">{{ link.args }}</span>{% endif %}</li>{% endfor %}</ul>
+    </div>
+    <div class="preview" hidden>
+      <div class="preview-out"></div>
+    </div>
+    <textarea class="sec-extra" hidden spellcheck="false">{{ section.extra_yaml }}</textarea>
+  </article>
+  {% endfor %}
+</div>
+
+<div class="card-actions">
+  <button id="add-btn">+ add section</button>
+</div>
+<p class="extras-note"{% if not sections %} hidden{% endif %}>
+  Per-section keys other than <code>body</code> are preserved untouched when the
+  studio saves.
+</p>
+
+<datalist id="section-names"></datalist>
+
+{% if not parse_error %}
+<script>
+/* Studio editor behaviour: cards, link tools, preview, autosave. */
+var CREATED = {% if created %}true{% else %}false{% endif %};
+var STORY_REL = {{ (story or '')|tojson }};
+var OPEN2 = '{' + '{';
+var CLOSE2 = '}' + '}';
+var LINK_SOURCE = "'((?:[^'\\\\]|\\\\.)+)'\\s*\\|\\s*(explore|choice)\\b(?:\\s*\\(\\s*([^)]*)\\))?";
+
+function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+function $$(sel, ctx) {
+  return Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+}
+function esc(text) {
+  var holder = document.createElement('div');
+  holder.textContent = String(text == null ? '' : text);
+  return holder.innerHTML;
+}
+var cardsBox = $('#cards');
+var nameList = $('#section-names');
+var statusBox = $('#status');
+var statsBox = $('#stats');
+var problemsBox = $('#problems');
+var problemList = $('#problem-list');
+
+function cardNodes() { return $$('.card', cardsBox); }
+function sectionNames() {
+  return cardNodes().map(function (card) {
+    return $('.sec-name', card).value.trim();
+  }); }
+function bodyOf(card) { return $('.sec-body', card).value; }
+
+function parseLinks(text) {
+  var re = new RegExp(LINK_SOURCE, 'g');
+  var out = [];
+  var m;
+  while ((m = re.exec(String(text || ''))) !== null) {
+    out.push({
+      target: m[1].replace(/\\'/g, "'"),
+      kind: m[2],
+      args: (m[3] || '').trim()
+    });
+  }
+  return out;
+}
+
+function refreshOutline() {
+  var names = sectionNames();
+  var outline = $('#outline');
+  outline.innerHTML = names.map(function (name) {
+    var cls = 'chip' + (name === 'entrypoint' ? ' entrypoint' : '');
+    return '<button class="' + cls + '" data-jump="' + esc(name) + '">'
+      + esc(name || '(unnamed)') + '</button>';
+  }).join('');
+}
+
+function refreshDatalist() {
+  nameList.innerHTML = sectionNames().map(function (name) {
+    return '<option value="' + esc(name) + '">';
+  }).join('');
+}
+
+function allLinks() {
+  var links = [];
+  cardNodes().forEach(function (card) {
+    parseLinks(bodyOf(card)).forEach(function (link) {
+      link.from = $('.sec-name', card).value.trim();
+      links.push(link);
+    });
+  });
+  return links;
+}
+
+function refreshStats() {
+  var names = sectionNames();
+  var links = allLinks();
+  var broken = links.filter(function (l) { return names.indexOf(l.target) === -1; });
+  statsBox.innerHTML = names.length + ' sections, ' + links.length + ' links' +
+    (broken.length
+      ? ', <b class="pink">' + broken.length + ' broken</b>'
+      : '');
+}
+
+function refreshInspector(card) {
+  var names = sectionNames();
+  var links = parseLinks(bodyOf(card));
+  var ul = $('[data-inspector]', card);
+  ul.innerHTML = links.map(function (l) {
+    var missing = names.indexOf(l.target) === -1;
+    return '<li class="' + (missing ? 'missing' : '') + '">'
+      + '<span class="kind ' + l.kind + '">' + l.kind + '</span>'
+      + '<span class="ltarget" data-goto="' + esc(l.target) + '">'
+      + esc(l.target) + '</span>'
+      + '<span class="args">' + esc(l.args) + '</span>'
+      + (missing
+          ? '<button class="danger ghost lt-new" data-new="' + esc(l.target) + '" type="button">create section</button>'
+          : '') + '</li>';
+  }).join('') || '<li><em>none yet</em></li>';
+  var cardMeta = $('[data-meta]', card);
+  var missingCount = links.filter(function (l) {
+    return names.indexOf(l.target) === -1;
+  }).length;
+  cardMeta.innerHTML = links.length + ' link' + (links.length === 1 ? '' : 's') +
+    (missingCount ? ' · <span style="color:var(--danger)">' + missingCount + ' missing</span>' : '');
+  $('[data-tag]', card).hidden = $('.sec-name', card).value.trim() !== 'entrypoint';
+}
+
+function refreshMetaAll() {
+  var cards = cardNodes();
+  cards.forEach(refreshInspector);
+  refreshOutline();
+  refreshDatalist();
+  refreshStats();
+}
+
+/* -- markdown toolbar ------------------------------------------------ */
+function replaceRange(ta, start, end, text) {
+  ta.value = ta.value.slice(0, start) + text + ta.value.slice(end);
+  var pos = start + text.length;
+  ta.selectionStart = ta.selectionEnd = pos;
+  ta.focus();
+}
+function wrapSelection(ta, marker) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  replaceRange(ta, s, e, marker + sel + marker);
+}
+function prefixLines(ta, prefix) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var startLine = ta.value.lastIndexOf('\n', s - 1) + 1;
+  var chunk = ta.value.slice(startLine, e);
+  var updated = chunk.split('\n').map(function (line) {
+    return line ? prefix + line : line;
+  }).join('\n');
+  replaceRange(ta, startLine, e, updated);
+}
+function inlineCodeOrFence(ta) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  if (sel.indexOf('\n') !== -1) {
+    replaceRange(ta, s, e, '```\n' + sel + '\n```');
+  } else {
+    wrapSelection(ta, '`');
+  }
+}
+function applyMarkdown(card, action) {
+  var ta = $('.sec-body', card);
+  if (action === 'bold') { wrapSelection(ta, '**'); }
+  else if (action === 'italic') { wrapSelection(ta, '*'); }
+  else if (action === 'code') { inlineCodeOrFence(ta); }
+  else if (action === 'quote') { prefixLines(ta, '> '); }
+  else if (action === 'list') { prefixLines(ta, '- '); }
+  else if (action === 'h2') { prefixLines(ta, '## '); }
+  else if (action === 'var') {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    var sel = ta.value.slice(s, e);
+    replaceRange(ta, s, e,
+      OPEN2 + ' ' + (sel || 'variable') + ' ' + CLOSE2);
+  }
+  scheduleValidate();
+}
+
+/* -- link tool ------------------------------------------------------- */
+function formatValue(value) {
+  var v = String(value).trim();
+  if (/^-?\d+$/.test(v)) { return v; }
+  if (/^-?\d*\.\d+$/.test(v)) { return v; }
+  if (v === 'true') { return 'True'; }
+  if (v === 'false') { return 'False'; }
+  return "'" + v.replace(/\\/g, '\\\\').replace(/'/g, "\\'") + "'";
+}
+function varRows(card) {
+  return $$('.lt-vars .lt-row', card).map(function (row) {
+    return {
+      name: $('.vname', row).value.trim(),
+      value: $('.vvalue', row).value
+    };
+  }).filter(function (v) { return v.name; });
+}
+function buildSnippet(card) {
+  var kind = $('.lt-kind', card).value;
+  var target = $('.lt-target', card).value.trim();
+  var display = $('.lt-text', card).value.trim();
+  var args = '';
+  if (kind === 'choice') {
+    var parts = varRows(card).map(function (v) {
+      return v.name + '=' + formatValue(v.value);
+    });
+    if (parts.length) { args = '(' + parts.join(', ') + ')'; }
+  }
+  var jinja = OPEN2 + " '" + target + "'|" + kind + args + ' ' + CLOSE2;
+  var label = display || ('[' + target + ']');
+  if (!display) { return '[' + jinja + ']'; }
+  return '[' + display + '](' + jinja + ')';
+}
+function refreshSnippet(card) {
+  $('.snippet', card).textContent = buildSnippet(card);
+}
+function toggleVars(card) {
+  var isChoice = $('.lt-kind', card).value === 'choice';
+  $('.lt-vars', card).style.display = isChoice ? '' : 'none';
+}
+function addVarRow(card) {
+  var row = document.createElement('div');
+  row.className = 'lt-row lt-var';
+  row.innerHTML = '<input class="vname" placeholder="shirt_color">'
+    + '<input class="vvalue" placeholder="red">'
+    + '<button class="danger ghost rm" type="button">&times;</button>';
+  $('.lt-vars', card).appendChild(row);
+}
+function insertLink(card) {
+  var ta = $('.sec-body', card);
+  var snippet = buildSnippet(card);
+  replaceRange(ta, ta.selectionStart || 0, ta.selectionEnd || 0,
+    (needsSpaceBefore(ta) ? ' ' : '') + snippet);
+  scheduleValidate();
+}
+function needsSpaceBefore(ta) {
+  var before = ta.value.slice(0, ta.selectionStart);
+  return before.length > 0 && !/\s$/.test(before);
+}
+
+/* -- preview --------------------------------------------------------- */
+function togglePreview(card) {
+  var box = $('.preview', card);
+  if (!box.hidden) { box.hidden = true; return; }
+  box.hidden = false;
+  var out = $('.preview-out', card);
+  out.textContent = 'rendering…';
+  var fd = new FormData();
+  fd.append('body', bodyOf(card));
+  fetch('/preview/' + encodeURIComponent(STORY_REL || 'new.yaml'),
+        {method: 'POST', body: fd})
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.error) {
+        out.innerHTML = '<p class="preview-error">' + esc(data.error) + '</p>';
+      } else {
+        out.innerHTML = data.html || '<p><em>empty</em></p>';
+      }
+    });
+}
+
+/* -- payload / save / validate -------------------------------------- */
+function buildPayload() {
+  var sections = cardNodes().map(function (card) {
+    return {
+      name: $('.sec-name', card).value.trim(),
+      body: bodyOf(card),
+      extra: $('.sec-extra', card).value
+    };
+  });
+  var fd = new FormData();
+  fd.append('payload', JSON.stringify({sections: sections}));
+  return fd;
+}
+function showErrors(errors) {
+  problemList.innerHTML = errors.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('');
+  problemsBox.hidden = !errors.length;
+  cardNodes().forEach(function (card) {
+    var name = $('.sec-name', card).value.trim();
+    var flagged = name && errors.some(function (e) {
+      return e.indexOf(name + ':') === 0 || e.indexOf(name + ' links') === 0;
+    });
+    card.classList.toggle('flagged', Boolean(flagged));
+  });
+}
+function setStatus(message, cls) {
+  statusBox.textContent = message;
+  statusBox.className = 'status' + (cls ? ' ' + cls : '');
+}
+function saveStory() {
+  if (CREATED) { return createStory(); }
+  setStatus('saving…');
+  fetch('/write/' + encodeURIComponent(STORY_REL),
+        {method: 'POST', body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok && res.d.ok) {
+        setStatus('saved', 'ok');
+        showErrors([]);
+      } else {
+        setStatus('not saved', 'bad');
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function createStory() {
+  var nameField = $('#rel-new');
+  if (!nameField || !nameField.value.trim()) {
+    setStatus('enter a filename first', 'bad');
+    return;
+  }
+  setStatus('creating…');
+  fetch('/create/' + encodeURIComponent(nameField.value.trim()),
+        {method: 'POST', body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok && res.d.ok) {
+        location.href = '/' + encodeURIComponentPath(nameField.value.trim());
+      } else {
+        setStatus('not created', 'bad');
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function encodeURIComponentPath(pathname) {
+  return pathname.split('/').map(encodeURIComponent).join('%2F');
+}
+var validateTimer = null;
+function markDirty() {
+  if (CREATED) { return; }
+  setStatus('unsaved\u2026');
+}
+function scheduleValidate() {
+  markDirty();
+  if (CREATED) { return; }
+  clearTimeout(validateTimer);
+  validateTimer = setTimeout(function () {
+    fetch('/validate/' + encodeURIComponent(STORY_REL),
+          {method: 'POST', body: buildPayload()})
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var errors = data.errors || [];
+        showErrors(errors);
+        if (errors.length) {
+          setStatus(errors.length + ' problem' + (errors.length === 1 ? '' : 's'), 'bad');
+        } else {
+          setStatus('looks good', 'ok');
+        }
+      });
+  }, 900);
+}
+
+/* -- card lifecycle -------------------------------------------------- */
+function blankCard(template) {
+  var card = template.cloneNode(true);
+  $('.sec-name', card).value = '';
+  $('.sec-body', card).value = '';
+  $('.sec-extra', card).value = '';
+  $$('.linktool input, .linktool select', card).forEach(function (input) {
+    if (input.tagName === 'SELECT') { input.value = 'explore'; } else { input.value = ''; }
+  });
+  $('.lt-vars', card).innerHTML = '';
+  $('.preview', card).hidden = true;
+  $('.preview-out', card).innerHTML = '';
+  return card;
+}
+function addCard(name, body) {
+  if (!cardNodes().length) { return null; }
+  var card = blankCard(cardNodes()[0]);
+  $('.sec-name', card).value = name || '';
+  $('.sec-body', card).value = body || '';
+  cardsBox.appendChild(card);
+  wireCard(card);
+  refreshMetaAll();
+  return card;
+}
+function deleteCard(card) {
+  if (!window.confirm('Delete section "' + $('.sec-name', card).value.trim() + '"?')) {
+    return;
+  }
+  card.parentNode.removeChild(card);
+  refreshMetaAll();
+  scheduleValidate();
+}
+function moveCard(card, delta) {
+  var siblings = cardNodes();
+  var index = siblings.indexOf(card);
+  var target = siblings[index + delta];
+  if (!target) { return; }
+  var parent = card.parentNode;
+  if (delta < 0) { parent.insertBefore(card, target); }
+  else { parent.insertBefore(target, card); }
+  refreshMetaAll();
+}
+function duplicateCard(card) {
+  var fresh = blankCard(card);
+  var base = $('.sec-name', card).value.trim();
+  var names = sectionNames();
+  var name = base + '-copy';
+  var n = 2;
+  while (names.indexOf(name) !== -1) { name = base + '-copy-' + (n++); }
+  $('.sec-name', fresh).value = name;
+  $('.sec-body', fresh).value = bodyOf(card);
+  $('.sec-extra', fresh).value = $('.sec-extra', card).value;
+  card.parentNode.insertBefore(fresh, card.nextSibling);
+  wireCard(fresh);
+  refreshMetaAll();
+}
+
+function wireCard(card) {
+  $$('.toolbar button', card).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.dataset.md) { applyMarkdown(card, btn.dataset.md); }
+      else if (btn.dataset.open === 'link') {
+        var tool = $('.linktool', card);
+        tool.hidden = false;
+        tool.open = true;
+        refreshSnippet(card);
+      } else if (btn.dataset.open === 'preview') { togglePreview(card); }
+    });
+  });
+  $$('.card-top button', card).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var action = btn.dataset.action;
+      if (action === 'up') { moveCard(card, -1); scheduleValidate(); }
+      else if (action === 'down') { moveCard(card, 1); scheduleValidate(); }
+      else if (action === 'dupe') { duplicateCard(card); }
+      else if (action === 'del') { deleteCard(card); }
+    });
+  });
+  $('.sec-name', card).addEventListener('input', function () {
+    refreshMetaAll(); markDirty(); scheduleValidate();
+  });
+  $('.sec-body', card).addEventListener('input', function () {
+    refreshInspector(card); refreshStats(); markDirty(); scheduleValidate();
+  });
+  var tool = $('.linktool', card);
+  if (tool) {
+    $$('.lt-kind, .lt-text, .lt-target', card).forEach(function (field) {
+      field.addEventListener('input', function () { refreshSnippet(card); });
+      field.addEventListener('change', function () {
+        toggleVars(card); refreshSnippet(card);
+      });
+    });
+    $('.lt-addvar', card).addEventListener('click', function () {
+      addVarRow(card);
+    });
+    $('.lt-insert', card).addEventListener('click', function () { insertLink(card); });
+    $('.lt-copy', card).addEventListener('click', function () {
+      var code = $('.snippet', card);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code.textContent);
+      } else {
+        code.focus && code.select();
+      }
+    });
+    tool.addEventListener('click', function (event) {
+      var rm = event.target.closest ? event.target.closest('.rm') : null;
+      if (rm) { rm.closest('.lt-var').remove(); refreshSnippet(card); }
+    });
+  }
+}
+
+/* -- global wiring --------------------------------------------------- */
+cardNodes().forEach(wireCard);
+cardNodes().forEach(refreshInspector);
+refreshMetaAll();
+
+var addBtn = $('#add-btn');
+if (addBtn) {
+  addBtn.addEventListener('click', function () {
+    var card = addCard('', '');
+    if (!card) {
+      setStatus('cannot add sections here', 'bad');
+      return;
+    }
+    $('.sec-name', card).focus();
+  });
+}
+var saveBtn = $('#save-btn');
+if (saveBtn) { saveBtn.addEventListener('click', saveStory); }
+
+document.addEventListener('keydown', function (event) {
+  if ((event.metaKey || event.ctrlKey) && String(event.key).toLowerCase() === 's') {
+    event.preventDefault();
+    saveStory();
+  }
+});
+
+cardsBox.addEventListener('click', function (event) {
+  var make = event.target.closest ? event.target.closest('.lt-new') : null;
+  if (make) {
+    var name = make.getAttribute('data-new');
+    var card = addCard(name, '');
+    if (card) { $('.sec-body', card).focus(); }
+    scheduleValidate();
+  }
+});
+$('#outline').addEventListener('click', function (event) {
+  var chip = event.target.closest ? event.target.closest('[data-jump]') : null;
+  if (chip) {
+    var name = chip.getAttribute('data-jump');
+    cardNodes().forEach(function (card) {
+      if ($('.sec-name', card).value.trim() === name) {
+        card.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+    });
+  }
+});
+</script>
+{% endif %}
+{% endblock %}

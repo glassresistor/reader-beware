@@ -2,14 +2,15 @@
 {% block content %}
 <h1>Stories in <code>{{ root }}</code></h1>
 
+<div class="panel">
 {% if stories %}
 <ul class="stories">
   {% for story in stories %}
   <li>
-    <a href="{{ url_for('edit', rel=story) }}">{{ story }}</a>
+    <a href="{{ url_for('edit', rel=story) }}"><strong>{{ story }}</strong></a>
     <form method="post" action="{{ url_for('delete', rel=story) }}"
           onsubmit="return confirm('Delete {{ story }}?');">
-      <button type="submit">delete</button>
+      <button class="danger" type="submit">delete</button>
     </form>
   </li>
   {% endfor %}
@@ -19,4 +20,5 @@
 {% endif %}
 
 <p><a href="{{ url_for('new_story_form') }}"><strong>+ New story&hellip;</strong></a></p>
+</div>
 {% endblock %}

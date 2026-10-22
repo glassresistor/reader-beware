@@ -277,7 +277,7 @@ beware build-mobi --narative-path narative.yaml --output book \
     --book-config book.yaml
 ```
 
-## Web editor
+## Web editors
 
 `beware serve` runs a tiny flask webapp for editing story files:
 
@@ -285,11 +285,61 @@ beware build-mobi --narative-path narative.yaml --output book \
 beware serve --root stories_folder --port 8181
 ```
 
-It lists all `*.yaml`/`*.yml` stories under the root folder, lets you create,
-edit (raw yaml textarea), save and delete them, validates on every keystroke
-(yaml syntax, jinja syntax, missing entrypoint or undefined linked sections)
-and reloads files from disk on save so external edits are picked up.  Story
-text is escaped in the editor pages (bodies contain raw markup safely).
+It lists all `*.yaml`/`*.yml` stories under the root folder and lets you open,
+create and delete them.  There are two editors, both themed in pinks and
+purples over black/grey panels with milky white text:
+
+### The section studio (`/<story>`)
+
+The studio edits a story as a stack of cards &mdash; one card per narrative
+section &mdash; instead of one raw yaml textarea.  Every card gets:
+
+* **a name** (the section key, editable; the `entrypoint` card is tagged),
+* **a markdown editor** for that section's jinja-templated body, with a
+  toolbar for headings/bold/italic/code/quotes/lists and for dropping in
+  `{{ ... }}` expressions,
+* **link tools for `explore` and `choice`**: pick the kind, the display text
+  and the target section (autocomplete over the sections already in the
+  story); `choice` links get any number of `name=value` variables which are
+  formatted for you (numbers and `True`/`False` stay bare, everything else
+  is quoted).  The finished markdown link is inserted at the cursor or
+  copied to the clipboard,
+* **a links inspector** listing every explore/choice link in the section,
+  highlighting targets that are not defined yet with a one-click "create
+  section" button,
+* **a live preview** of the section: jinja is rendered (sandboxed) and the
+  markdown converted, so you can see what the page will look like without
+  building the book.
+
+Around the cards the studio shows an outline of section chips (click to jump),
+a stats line (sections/links/broken links), autosave validation on every
+keystroke (missing entrypoint, undefined linked sections, duplicate or empty
+names) and a save button (`ctrl`/`cmd`+S works too).  Saving serializes the
+cards back into canonical narrative yaml: `---` document start, one block per
+section, literal `body: |` scalars so jinja stays readable.  Per-section keys
+other than `body` are preserved untouched.
+
+The studio talks to these json endpoints (all scoped to the served root):
+
+```text
+POST /write/<story>       save cards from the studio     -> {ok, errors}
+POST /create/<story>      create a new story (payload)   -> {ok, errors}
+POST /validate/<story>    autosave validation            -> {errors}
+POST /preview/<story>     render one body for preview    -> {html} or {error}
+```
+
+Previews run in a jinja `SandboxedEnvironment` with `explore`/`choice`
+mapped to inert anchors, and raw html tags in story bodies are escaped before
+markdown runs, so editing never executes or injects anything into the editor.
+
+### The raw yaml editor (`/raw/<story>`)
+
+The original full-file textarea remains available ("raw yaml" link on every
+studio page) for power editing: it edits the whole yaml text with autosave
+validation (yaml syntax, jinja syntax, missing entrypoint or undefined linked
+sections), can create new stories, and reloads files from disk so external
+edits are picked up.  Story text is escaped in the editor pages (bodies
+contain raw markup safely).
 
 ## Safety limits
 
@@ -314,7 +364,22 @@ It covers: building html pages, every README example (simple links, world
 state via choice, loops with and without breaks), missing entrypoint or
 section errors, metadata config parsing (yaml/json), epub packaging
 (mimetype placement, href rewriting inside the book, well-formed xhtml,
-cover image inclusion) and the cli commands.
+cover image inclusion) and the cli commands.  The studio editor is covered
+too: `beware.sections` round-trips narrative yaml through the canonical
+serializer (trailing newlines, leading whitespace, extras and odd section
+names included), plus tests for the studio pages, payload save/create
+endpoints, autosave validation and sandboxed previews.
+
+The section studio's own parser/serializer lives in `beware.sections` and can
+be used directly:
+
+```python
+from beware.sections import parse_sections, serialize_sections
+
+text = open('story.yaml').read()
+sections = parse_sections(text)          # [{'name', 'body', 'extra'}, ...]
+text = serialize_sections(sections)      # canonical narrative yaml again
+```
 
 ## TODO
 
