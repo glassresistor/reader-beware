@@ -95,11 +95,17 @@ def build_book(name):
 
 
 def file_url(path):
-    """A file:// url that tolerates braces/quotes in filenames."""
-    from pathlib import Path
-    from urllib.parse import quote_from_path
+    """A file:// url that tolerates braces/quotes in filenames.
 
-    return "file://" + quote_from_path(str(Path(path).absolute()))
+    Percent-encodes with the public ``urllib.parse.quote`` (keeping ``/``
+    safe) so characters like ``{}"`` in built section filenames survive;
+    no private stdlib helpers are used so this works on python 3.8+.
+    """
+    from pathlib import Path
+    from urllib.parse import quote
+
+    absolute = str(Path(path).absolute())
+    return "file://" + quote(absolute, "/")
 
 
 def shot(page, path, full_page=True):
