@@ -1,79 +1,94 @@
 {% extends "layout.html.j2" %}
-{% block title %}{% if story %}{{ story }}{% else %}New story{% endif %}{% endblock %}
+{% block title %}{% if story %}{{ story }}{% else %}New story{% endif %} &middot; raw{% endblock %}
+{% block head %}
+<style>
+  textarea.code {
+    width: 100%; height: 70vh; resize: vertical;
+    font-size: .85rem; line-height: 1.45;
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: .6rem .8rem; tab-size: 4;
+  }
+  textarea.code:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,110,199,.25); }
+  .raw-note { color: var(--ink-faint); font-size: .85rem; }
+</style>
+{% endblock %}
 {% block content %}
 <h1>
-  {% if story %}<code>{{ story }}</code>{% else %}New story{% endif %}
+  {% if story %}<code>{{ story }}</code>{% else %}New story (raw yaml){% endif %}
 </h1>
-
-<form method="post"
-      action="{{ url_for('save', rel=story) if story else '' }}">
-  <textarea class="code" name="body" id="editor" spellcheck="false">{{ text }}</textarea>
-  {% if not created and story %}
-    <p><button type="submit">Save</button></p>
+<p class="raw-note">
+  Raw yaml editing &mdash;
+  {% if story %}
+    <a href="{{ url_for('edit', rel=story) }}">back to the section studio</a>
+  {% else %}
+    <a href="{{ url_for('new_story_form') }}">use the section studio instead</a>
   {% endif %}
-</form>
-
-{% if created or not story %}
-<form method="post" id="create-form">
-  <input type="hidden" name="body" id="new-body-field" value="{{ text }}">
-  <label>Filename (relative to root, e.g. <code>my-story.yaml</code>):
-    <input type="text" name="rel_new" placeholder="my-story.yaml" required></label>
-  <p><button type="submit">Create story</button></p>
-</form>
-{% endif %}
+</p>
 
 {% if errors %}
-<div class="errors">
+<div class="problems panel">
   <strong>Problems found:</strong>
   <ul>{% for error in errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
 </div>
 {% endif %}
 
-<p><a href="/">Back to stories</a></p>
+{% if story and not created %}
+<form method="post" action="{{ url_for('save', rel=story) }}">
+  <textarea class="code" name="body" id="editor" spellcheck="false">{{ text }}</textarea>
+  <p><button type="submit">Save</button></p>
+</form>
+{% else %}
+<form method="post" id="create-form" action="/create/story.yaml">
+  <textarea class="code" name="body" id="editor" spellcheck="false">{{ text }}</textarea>
+  <p>
+    <label>Filename (relative to root):
+      <input type="text" name="rel_new" placeholder="my-story.yaml" required
+             style="min-width:20em">
+    </label>
+    <button type="submit">Create story</button>
+  </p>
+</form>
+{% endif %}
 
 <script>
+// point the create form at whichever filename the user typed
 var createForm = document.getElementById('create-form');
 if (createForm) {
-  // send to /create/<filename> chosen by the user
   var relInput = createForm.querySelector('[name=rel_new]');
-  var bodyField = createForm.querySelector('#new-body-field');
-  if (editor && !bodyField.value) { bodyField.value = editor.value; }
-  createForm.action = '/create/' + encodeURIComponent(relInput.value || 'story.yaml');
+  createForm.addEventListener('submit', function () {
+    var name = relInput.value || 'story.yaml';
+    createForm.action = '/create/' + encodeURIComponent(name);
+  });
 }
-// Autosave: debounce typing, validate via /validate/<rel>, show errors inline.
+// autosave validation for existing files
 var editor = document.getElementById('editor');
-function relPath() {
-  var path = window.location.pathname;
-  if (path === '/' || path.indexOf('/edit/') !== 0 && \
-      path.indexOf('/save/') !== 0) return null;
-  var m = location.pathname.match(/^\/save\/(.*)$/);
-  return m ? decodeURIComponent(m[1]) : null;
-}
-var rel = relPath();
-if (rel) {
+var m = location.pathname.match(/^\/raw\/(.*)$/);
+var rel = m ? decodeURIComponent(m[1]) : null;
+if (rel && editor) {
   var timer = null;
   editor.addEventListener('input', function () {
     clearTimeout(timer);
     timer = setTimeout(function () { validateNow(rel, editor.value); }, 900);
   });
 }
-function validateNow(relPathName, body) {
+function validateNow(relName, body) {
   var fd = new FormData();
   fd.append('body', body);
-  fetch('/validate/' + encodeURIComponent(relPathName), {method: 'POST', body: fd})
+  fetch('/validate/' + encodeURIComponent(relName), {method: 'POST', body: fd})
     .then(function (r) { return r.json(); })
     .then(function (data) {
-      var box = document.querySelector('.errors');
+      var box = document.querySelector('.problems');
       if (!box && data.errors.length) {
         box = document.createElement('div');
-        box.className = 'errors';
+        box.className = 'problems panel';
         editor.parentNode.insertBefore(box, editor);
       }
       if (box) {
         box.innerHTML = '<strong>Problems found:</strong><ul>' +
           data.errors.map(function (e) { return '<li>' + e + '</li>'; }).join('') +
           '</ul>';
-        if (!data.errors.length) box.style.display = 'none';
+        box.style.display = data.errors.length ? '' : 'none';
       }
     });
 }

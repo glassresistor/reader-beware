@@ -4,10 +4,18 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>{{ path }}</title>
+<meta charset="utf-8"/>
+  <title>{{ narative_name }}</title>
+{% if css_prefix is defined and css_prefix %}
+  <link href="{{ css_prefix }}default.css" rel="stylesheet" type="text/css" />
+{% else %}
   <link href="template.css" rel="stylesheet" type="text/css" />
+{% endif %}
 </head>
-<body>
+<body class="story-page">
+{% if breadcrumb is defined and breadcrumb %}
+<div class="breadcrumbs"><b>Reader Beware</b> &#183; {{ breadcrumb }}</div>
+{% endif %}
 <div class="story">
     <span class="header"><a id="{{ section_id }}"></a></span>
     <div id="{{ path }}" xml:lang="en-US">

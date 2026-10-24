@@ -4,7 +4,7 @@ import click
 
 from beware.build_html import NarativeWorldBuilder
 from beware.build_epub import EPubWorldBuilder
-from beware.mobi import MobiWorldBuilder, calibre_available
+from beware.mobi import MobiWorldBuilder
 from beware.meta import BookMetadata
 
 

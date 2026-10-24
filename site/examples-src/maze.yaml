@@ -1,0 +1,48 @@
+---
+entrypoint:
+  body: |
+    # The Little Square
+
+    You are dropped off on the roof of a huge square maze. Only one room
+    leads out; many rooms will kill you the moment you enter them.
+
+    Primes are death. `(42, 69)` is freedom.
+
+    [go down through the hole]({{ 'go'|choice(x=0, y=0) }})
+
+go:
+  body: |
+    ## Room {{ x }}, {{ y }}
+
+    You enter a room with four doors and the numbers {{ x }}, {{ y }} painted
+    on the floor.
+
+    {% if x + y in [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97] %}
+    Monsters and horrible machines eat you!
+
+    *THE END*
+    {% else %}
+    {% if x == 42 and y == 69 %}
+    [Exit]({{ 'exit'|explore }}) the room through a hole in the floor.
+    {% endif %}
+    {% if x > -10 %}
+    [left]({{ 'go'|choice(x=x-1, y=y) }})
+    {% endif %}
+    {% if x < 10 %}
+    [right]({{ 'go'|choice(x=x+1, y=y) }})
+    {% endif %}
+    {% if y < 10 %}
+    [up]({{ 'go'|choice(x=x, y=y+1) }})
+    {% endif %}
+    {% if y > -10 %}
+    [down]({{ 'go'|choice(x=x, y=y-1) }})
+    {% endif %}
+    {% endif %}
+
+exit:
+  body: |
+    # You survive!
+
+    The maze spat you out onto a bus bench. Some readers prefer the monsters.
+
+    [try again]({{ 'entrypoint'|explore }})

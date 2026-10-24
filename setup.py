@@ -24,7 +24,10 @@ setup(
         "flask",
     ],
     extras_require={
-        "test": ["pytest"],
+        "test": [
+            "pytest",
+            "black",
+        ],
     },
     entry_points="""
         [console_scripts]

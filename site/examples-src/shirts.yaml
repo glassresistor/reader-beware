@@ -1,0 +1,40 @@
+---
+entrypoint:
+  body: |
+    # Red or Green?
+
+    You wake up in a tiny flat above a kebab shop. There is one clean shirt
+    left in the drawer, and two colours to choose from.
+
+    [put on the red shirt]({{ 'put-on-shirt'|choice(shirt_color='red') }})
+
+    [put on the green shirt]({{ 'put-on-shirt'|choice(shirt_color='green') }})
+
+put-on-shirt:
+  body: |
+    You put on the {{ shirt_color }} shirt. It smells faintly of lavender
+    and rebellion.
+
+    [And go outside]({{ 'go-outside'|explore }})
+
+go-outside:
+  body: |
+    Outside you see Jane and she says "{% if shirt_color == 'green' %}I like
+    your green shirt very much.{% else %}I dislike that colour on
+    you.{% endif %}"
+
+    {% if shirt_color == 'green' %}
+    She buys you a coffee, and the day starts bright.
+
+    [The end (warm one)]({{ 'end'|explore }})
+    {% else %}
+    She sends you home to change. The day starts damp.
+
+    [The end (wet one)]({{ 'end'|explore }})
+    {% endif %}
+
+end:
+  body: |
+    *THE END* — shirt colour: `{{ shirt_color }}`.
+
+    [start again]({{ 'entrypoint'|explore }})

@@ -1,4 +1,5 @@
 *.swp
+*-swp
 *.pyc
 __pycache__
 output
@@ -7,4 +8,9 @@ output
 nbproject/private/
 build/
 dist/
-
+venv/
+venv_test/
+.unsloth_sandbox_remap.json
+_baseline/
+*_fails.txt
+site/books/

@@ -64,7 +64,6 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         markdown = self.env.from_string(body, globals=dict(world)).render()
         html_body = self.markdown_to_html(markdown)
         xmlid = _xml_id(self.section_id(narative_name, world))
-        xhtml_path = self.xhtml_name(path)
         self._spine_entries.append((xmlid, path))
         template = self.env.get_template("html/narative.html.j2")
         page = template.render(
@@ -125,7 +124,6 @@ class EPubWorldBuilder(NarativeWorldBuilder):
 
     def build_epub(self, meta=None):
         """Package the rendered pages into a real .epub file."""
-        import ebooklib  # noqa: F401  (ensures helpful error if missing)
         from ebooklib import epub
 
         if meta is not None:
@@ -144,6 +142,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
             if value:
                 book.add_metadata("DC", name, str(value))
 
+        add_dc("subject", self.meta.subject)
         add_dc("description", self.meta.description)
         add_dc("publisher", self.meta.publisher)
         add_dc("rights", self.meta.rights)
@@ -171,6 +170,12 @@ class EPubWorldBuilder(NarativeWorldBuilder):
                 file_name=self.xhtml_name(section_path),
                 media_type=XHTML_MEDIA_TYPE,
                 lang=self.meta.language or "en-US",
+            )
+            # link the package stylesheet into every chapter so readers
+            # apply the book theme (ebooklib drops <link> tags written
+            # into the page head, so register them on the item instead)
+            chapter.add_link(
+                href="../style/default.css", rel="stylesheet", type="text/css"
             )
             chapter.content = page_content
             book.add_item(chapter)

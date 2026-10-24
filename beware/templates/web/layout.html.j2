@@ -2,27 +2,95 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}Reader Beware Editor{% endblock %}</title>
 <style>
-  body { font-family: Georgia, serif; margin: 0; background:#faf7f2; color:#3b2f2a; }
-  header { background:#452f1e; color:#f8efe6; padding:.7rem 1.2rem; display:flex; align-items:center; gap:1rem;}
-  header a { color:#f8efe6; text-decoration:none; font-weight:bold; }
-  main { max-width: 900px; margin: 1.5rem auto; padding:0 1rem; }
-  h1 { font-size:1.3rem; }
-  .stories { list-style:none; padding:0; }
-  .stories li { border-bottom:1px solid #ddd; padding:.4rem .2rem; display:flex; justify-content:space-between;}
-  .stories a { color:#7a4f2e; text-decoration:none;}
-  textarea.code { width:100%; height:60vh; font-family:"DejaVu Sans Mono", monospace; font-size:.85rem; background:#fffdf7; border:1px solid #b9a37e; padding:.5rem; }
-  .errors { color:#a11; background:#ffecec; border:1px solid #c55;padding:.6rem; margin-bottom:1rem;}
-  button, input[type=submit] { background:#452f1e;color:#fff;border:none;padding:.4rem .8rem;cursor:pointer;margin-right:.3rem;}
-  .flash-ok { color:green; }
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, "Iowan Old Style", serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: "DejaVu Sans Mono", Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
 </style>
 {% block head %}{% endblock %}
 </head>
 <body>
-<header>
-  <a href="{{ url_for('index') }}">Reader Beware &mdash; story editor</a>
-  {% if root is defined and root %}<span style="opacity:.7;font-size:.85em">{{ root }}</span>{% endif %}
+<header class="top">
+  <a class="brand" href="{{ url_for('index') }}">Reader <b>Beware</b> &mdash; story editor</a>
+  {% if root is defined and root %}<span class="root">{{ root }}</span>{% endif %}
 </header>
 <main>
 {% block content %}{% endblock %}

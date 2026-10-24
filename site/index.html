@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reader Beware &mdash; gamebooks that run anywhere</title>
+<meta name="description" content="Reader Beware: build choose-your-own-adventure style ebooks from yaml + jinja + markdown. Real epub and mobi files with branching state as deep as Twine, persistence as simple as a book.">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" type="image/png" href="images/cover.png">
+</head>
+<body>
+
+<nav class="topbar">
+  <a class="brand" href="#top">Reader <b>Beware</b></a>
+  <span class="links">
+    <a href="#why">Why</a>
+    <a href="#syntax">Syntax</a>
+    <a href="#builds">Builds</a>
+    <a href="#books">Books</a>
+    <a href="#editor">Editor</a>
+    <a href="#install">Install</a>
+    <a href="https://github.com/glassresistor/reader-beware">GitHub</a>
+  </span>
+</nav>
+
+<header class="hero" id="top">
+  <h1>READER <span class="pink">BEWARE</span></h1>
+  <p class="tagline">
+    Branching gamebooks with state as deep as Twine, the soul of a printed
+    novel, and output that is a <em>real ebook file</em> &mdash; epub and mobi,
+    readable on any Kindle, reader app, or browser. No special software,
+    no browser extensions, no proprietary runtime: just yaml, jinja2 and
+    markdown compiled into a book.
+  </p>
+  <div class="cta-row">
+    <a class="btn" href="#install">pip install it</a>
+    <a class="btn ghost" href="books/shirts/shirts.epub">read a built book</a>
+    <a class="btn ghost" href="https://github.com/glassresistor/reader-beware">source on GitHub</a>
+  </div>
+  <figure class="shot device" style="margin-top:2rem">
+    <img src="images/cover.png" alt="Reader Beware cover art" width="240" height="360">
+  </figure>
+</header>
+
+<section class="wrap" id="why">
+  <h2><span class="num">&sect;</span> Why Reader Beware is awesome</h2>
+  <p class="lede">Most interactive fiction tools make <em>apps</em>: Twine files
+  need a player, ChoiceScript needs a runner. Reader Beware compiles your story
+  into ordinary ebooks &mdash; every branch is a chapter, every choice a link
+  &mdash; so the book opens in whatever you already use, from a Kindle at the
+  beach to a phone offline, and it will outlive every browser on earth.</p>
+
+  <div class="grid3">
+    <div class="card-panel feature">
+      <h3>A real ebook, not an app</h3>
+      <p>EPUB 3 packages (proper mimetype, spine, metadata, cover) and mobi via
+      Calibre. No runtime required on the reader's side.</p>
+    </div>
+    <div class="card-panel feature">
+      <h3>State that follows you</h3>
+      <p>The <code class="inline">choice</code> filter carries world state into every
+      future section. Shirts, credits, dead dorks: the story remembers.</p>
+    </div>
+    <div class="card-panel feature">
+      <h3>Yaml + jinja + markdown</h3>
+      <p>No new language to learn. Sections are markdown templated with jinja2;
+      conditionals and loops come free from the template engine.</p>
+    </div>
+    <div class="card-panel feature">
+      <h3>Generate stories, don't hand-write them</h3>
+      <p>A narrative section can generate thousands of rooms: this site's maze
+      book is one yaml file that compiled into 811 chapters.</p>
+    </div>
+    <div class="card-panel feature">
+      <h3>Pluggable everything</h3>
+      <p>jinja filters, markdown2 extensions, metadata and cover via a config
+      file &mdash; register your own filters before the build runs.</p>
+    </div>
+    <div class="card-panel feature">
+      <h3>An editor you run locally</h3>
+      <p><code class="inline">beware serve</code> gives you a flask web studio: cards per
+      section, link tools, live preview and autosave validation.</p>
+    </div>
+  </div>
+
+  <div class="figrow">
+    <figure class="shot device">
+      <img src="images/device-red-shirt.png" alt="E-reader showing the red shirt chapter of a reader-beware epub">
+      <figcaption>An epub built by <code class="inline">beware build-epub</code>, opened on an e-reader: the red shirt chapter.</figcaption>
+    </figure>
+    <figure class="shot device">
+      <img src="images/device-green-shirt.png" alt="E-reader showing the green shirt chapter of a reader-beware epub">
+      <figcaption>The same yaml, another world state: Jane approves the green shirt. Every choice is a real link inside a real ebook.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap" id="syntax">
+  <h2><span class="num">&sect;</span> The syntax, in ninety seconds</h2>
+  <p class="lede">A story is a yaml file of named sections. Each body is markdown
+  run through jinja2. Links to other sections are written with two filters:
+  <code class="inline">explore</code> (plain jump) and <code class="inline">choice</code>
+  (jump, and update the world state on the way).</p>
+
+<pre class="code"><span class="cm"># narative.yaml &mdash; a whole book</span>
+---
+entrypoint:
+  body: |
+    This is your opening page.
+
+    [put on red shirt]({{ <span class="hl">'put-on-shirt'|choice(shirt_color='red')</span> }})
+
+    [put on green shirt]({{ <span class="hl">'put-on-shirt'|choice(shirt_color='green')</span> }})
+
+put-on-shirt:
+  body: |
+    You put on the {{ shirt_color }} shirt.
+
+    [And go outside]({{ 'go-outside'|explore }})
+
+go-outside:
+  body: |
+    Outside you see Jane and she says "{% if shirt_color == 'green' %}I like your green shirt.{% else %}I dislike that colour on you.{% endif %}"</pre>
+
+  <p class="lede">That's the whole surface. Each section+world pair becomes its own
+  chapter of the ebook &mdash; so Jane really did say different things to the two
+  readers.</p>
+</section>
+
+<section class="wrap" id="builds">
+  <h2><span class="num">&sect;</span> Walk-through: from yaml to a book</h2>
+  <div class="steps">
+    <ol>
+      <li><b>Write the story.</b> A folder of yaml files, or one file. The section named <code class="inline">entrypoint</code> opens the book.</li>
+      <li><b>Build html pages</b> for fast preview: <code class="inline">beware build-html --narative-path narative.yaml --output output_folder</code></li>
+      <li><b>Build the ebook:</b> <code class="inline">beware build-epub --narative-path narative.yaml --output book --book-config book.yaml</code> writes a real <code class="inline">book.epub</code> (plus an unzipped debug folder).</li>
+      <li><b>Kindle-ready:</b> <code class="inline">beware build-mobi &hellip;</code> converts through Calibre's ebook-convert, or falls back to a Kindle-ready epub.</li>
+      <li><b>Read anywhere.</b> Transfer the file to any reader app &mdash; no player, no runtime.</li>
+    </ol>
+  </div>
+
+  <figure class="shot">
+    <img src="images/story-entry.png" alt="A built reader-beware html story page">
+    <figcaption>Built html output (debug pages): the entrypoint of "Red or Green?" after <code class="inline">beware build-html</code>.</figcaption>
+  </figure>
+
+  <p class="lede">The same build pipeline powers this website: every book linked below was
+  compiled by CI from a yaml file in <code class="inline">site/examples-src/</code> &mdash; click a link, open your reader app, play.</p>
+</section>
+
+<section class="wrap" id="books">
+  <h2><span class="num">&sect;</span> Example books built from it</h2>
+  <ul class="booklist">
+    <li><b>Red or Green?</b> &mdash; world-state demo. <a href="books/shirts/shirts.epub">epub</a> &middot; <a href="books/shirts/entrypoint-%7B%7D.html">html pages</a></li>
+    <li><b>The Little Square</b> &mdash; one yaml file, 811 generated chapters of prime-number death maze. <a href="books/maze/maze.epub">epub</a> &middot; <a href="books/maze/entrypoint-%7B%7D.html">html pages</a></li>
+    <li><b>Prince of Belair</b> &mdash; the repo's classic example story. <a href="books/belair/belair.epub">epub</a></li>
+  </ul>
+
+  <figure class="shot">
+    <img src="images/story-state.png" alt="A built story page showing world state">
+    <figcaption>A chapter from "Red or Green?" &mdash; the go-outside section with <code class="inline">shirt_color=green</code> baked into its filename: Jane approves.</figcaption>
+  </figure>
+
+  <div class="figrow">
+    <figure class="shot">
+      <img src="images/story-maze.png" alt="Maze book entrypoint">
+      <figcaption>The Little Square, entrypoint</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="images/story-belair.png" alt="Belair example page">
+      <figcaption>Prince of Belair, a generated section</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap" id="editor">
+  <h2><span class="num">&sect;</span> The studio editor</h2>
+  <p class="lede"><code class="inline">beware serve --root stories/</code> starts a flask webapp that edits
+  stories as a stack of cards &mdash; one per section &mdash; with markdown toolbars, an
+  explore/choice link builder (autocomplete over your sections, quoted args done for you),
+  a links inspector, and a sandboxed live preview. Autosave validation flags missing
+  entrypoints or undefined targets while you type; <code class="inline">ctrl</code>+S writes canonical yaml.</p>
+
+  <figure class="shot">
+    <img src="images/editor-index.png" alt="Story index page of the reader-beware editor">
+    <figcaption>The story index: every yaml under your root folder, click to open the studio.</figcaption>
+  </figure>
+
+  <figure class="shot">
+    <img src="images/editor-studio-preview.png" alt="Section studio with live preview open">
+    <figcaption>The section studio with a live preview open on the entrypoint card &mdash; jinja rendered, markdown converted, no build needed.</figcaption>
+  </figure>
+
+  <figure class="shot">
+    <img src="images/editor-studio-link.png" alt="Explore and choice link tool">
+    <figcaption>The explore/choice link tool building a state-carrying link; the finished markdown lands at your cursor.</figcaption>
+  </figure>
+
+  <figure class="shot">
+    <img src="images/editor-raw.png" alt="Raw yaml editor">
+    <figcaption>Power-editing: the raw yaml editor with autosave validation stays one click away.</figcaption>
+  </figure>
+</section>
+
+<section class="wrap" id="install">
+  <h2><span class="num">&sect;</span> Try it</h2>
+<pre class="code"><span class="cm"># python 3.8+; linux tested, contributions welcome elsewhere</span>
+pip install -e git+https://github.com/glassresistor/reader-beware.git#egg=reader-beware
+
+<span class="cm"># or clone it and run the tests: green across python 3.8 through 3.13</span>
+git clone https://github.com/glassresistor/reader-beware.git
+cd reader-beware &amp;&amp; pip install -e .[test] &amp;&amp; pytest</pre>
+  <p class="lede">This very page was built by GitHub Actions from the same pipeline:
+  tests, black formatting checks, package installs, book builds and every screenshot on it
+  &mdash; see the <code class="inline">deploy.yml</code> workflow. Reader beware indeed.</p>
+</section>
+
+<footer>
+  <p class="big">Reader Beware</p>
+  <p>by Margaret Killjoy &middot; <a href="https://github.com/glassresistor/reader-beware">glassresistor/reader-beware</a> &middot; screenshots captured by CI from real builds, no mockups.</p>
+</footer>
+
+</body>
+</html>

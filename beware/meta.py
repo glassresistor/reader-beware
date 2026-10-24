@@ -20,7 +20,6 @@ A minimal config looks like::
 
 import json
 import mimetypes
-import os
 from dataclasses import asdict, dataclass, field
 from typing import Any, Dict, Optional
 
