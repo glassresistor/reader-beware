@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ title }}</title>
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; background: #111016; }
+  body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  .device {
+    width: 420px; height: 760px;
+    background: #1c1a24; border-radius: 26px;
+    padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 0 1px #3d3950;
+  }
+  .screen {
+    width: 100%; height: 640px; background: #f7f5ef; border-radius: 6px;
+    overflow: hidden; position: relative;
+  }
+  iframe { width: 100%; height: 100%; border: 0; }
+  .chrome {
+    margin-top: 14px; text-align: center; color: #8d86a0;
+    font-family: "IBM Plex Mono", Menlo, monospace; font-size: 13px;
+  }
+  .chrome b { color: #ffb0df; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="screen"><iframe src="{{ page }}" title="book page"></iframe></div>
+  <div class="chrome"><b>{{ title }}</b> &#183; {{ chrome }}</div>
+</div>
+</body>
+</html>

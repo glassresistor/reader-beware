@@ -351,6 +351,36 @@ drive:
 builder.max_sections = 5000
 ```
 
+## Continuous integration
+
+Two GitHub Actions workflows cover the repo:
+
+* **`Tests`** (`.github/workflows/test.yml`) runs on every pull request and
+  push to master, across python 3.8 through 3.13: it installs the package
+  with `pip install -e .[test]`, confirms the installed `beware` entry
+  point works (`beware --help`), checks formatting with
+  `black --check .` and runs the pytest suite.
+* **`Deploy advertisement site`** (`.github/workflows/deploy.yml`) builds
+  the single-page promotional site in `site/`: it installs playwright,
+  builds the example books into `site/books/` (real epubs plus their html
+  pages), captures screenshots of built story pages and of the editor
+  itself (story index, section studio with live preview and link tool,
+  raw yaml editor) via `site/scripts/capture_screenshots.py`, fails the
+  run if any screenshot is missing or suspiciously small, and publishes
+  `site/` to github.io with the official pages actions.
+
+## Advertisement site (`site/`)
+
+`site/` is a static single page advertising reader beware: why it is
+awesome, a syntax walk-through, build instructions, example books built
+from the repo's own narratives in `site/examples-src/`, and screenshots.
+The screenshot capture script doubles as the book builder:
+
+```bash
+python site/scripts/capture_screenshots.py --books-only   # build site/books/
+python site/scripts/capture_screenshots.py               # + screenshots (needs playwright)
+```
+
 ## Running tests
 
 The test suite uses pytest and lives in `tests/`.  Run it from the repo root:

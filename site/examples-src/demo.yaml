@@ -1,0 +1,55 @@
+---
+entrypoint:
+  body: |
+    # The Night Market
+
+    Rain slicks the neon-lit streets of New Avalon. You have **two** choices
+    and one very overpowered jinja template engine.
+
+    [Visit the hacker]({{ 'hacker'|choice(credits=10) }})
+
+    [Visit the droid arena]({{ 'arena'|choice(credits=5) }})
+
+hacker:
+  body: |
+    ## The Hacker's Den
+
+    She slides a keyboard across the table. `{% if credits > 8 %}` she says,
+    *"you can afford the good decrypt."*
+
+    ```python
+    def hack_the_planet(credits):
+        return credits > 8 and "rebellion" or "poverty"
+    ```
+
+    [Jack in]({{ 'jack'|explore }})
+
+arena:
+  body: |
+    ## The Droid Arena
+
+    The crowd roars. Your credits: {{ credits }}.
+
+    {% if credits > 6 %}
+    You bribe the guard and pick the *easy* droid.
+
+    [Fight]({{ 'fight'|explore }})
+    {% else %}
+    You fight the *hard* droid.
+
+    [Fight](#not-here)
+    {% endif %}
+
+jack:
+  body: |
+    You jack in. The ICE is thick but the data is sweet.
+
+    > Victory! You are famous now.
+
+    [Celebrate]({{ 'entrypoint'|explore }})
+
+fight:
+  body: |
+    The easy droid goes down in one hit. The crowd loves you.
+
+    [Back to the streets]({{ 'entrypoint'|explore }})

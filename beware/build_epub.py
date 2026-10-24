@@ -171,6 +171,12 @@ class EPubWorldBuilder(NarativeWorldBuilder):
                 media_type=XHTML_MEDIA_TYPE,
                 lang=self.meta.language or "en-US",
             )
+            # link the package stylesheet into every chapter so readers
+            # apply the book theme (ebooklib drops <link> tags written
+            # into the page head, so register them on the item instead)
+            chapter.add_link(
+                href="../style/default.css", rel="stylesheet", type="text/css"
+            )
             chapter.content = page_content
             book.add_item(chapter)
             spine_ids.append(xmlid)

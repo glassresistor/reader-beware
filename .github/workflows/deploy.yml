@@ -1,0 +1,97 @@
+name: Deploy advertisement site
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+# allow the "Tests" workflow to run alongside; pages deployment is scoped
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build-site:
+    name: Build site, books and screenshots
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # pinned so the cached browser below always matches the installed
+      # playwright version (bump both together when updating)
+      - name: Install reader-beware and screenshot tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e .
+          # playwright version and the browser cache key below must agree:
+          # bump `key` when this pin changes so a stale chromium is never
+          # restored for a newer playwright build
+          python -m pip install "playwright==1.50.0"
+
+      - name: Cache the playwright browser download
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          # static key on purpose (paired with the pinned playwright above);
+          # bump the trailing number whenever the pin changes so a stale
+          # browser is never restored for a newer playwright build
+          key: playwright-chromium-1.50-p0
+          restore-keys: playwright-chromium-
+
+      - name: Install chromium (playwright)
+        run: python -m playwright install --with-deps chromium
+
+      - name: Build example books into site/books/ (epub + html)
+        run: python site/scripts/capture_screenshots.py --books-only
+
+      - name: Capture screenshots for the advertisement site
+        run: python site/scripts/capture_screenshots.py
+
+      - name: Check every screenshot landed on disk
+        run: |
+          python - <<'PY'
+          import os, sys
+          images = "site/images"
+          expected = [
+              "cover.png",
+              "story-entry.png", "story-state.png", "story-maze.png",
+              "story-belair.png",
+              "device-red-shirt.png", "device-green-shirt.png",
+              "editor-index.png", "editor-studio-preview.png",
+              "editor-studio-link.png", "editor-raw.png",
+          ]
+          missing = [n for n in expected if not os.path.exists(os.path.join(images, n))]
+          tiny = [
+              n for n in os.listdir(images)
+              if os.path.getsize(os.path.join(images, n)) < 10_000
+          ]
+          print("captured:", sorted(os.listdir(images)))
+          if missing or tiny:
+              sys.exit("missing or suspicious screenshots: %s %s" % (missing, tiny))
+          PY
+
+      - name: Upload pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build-site
+    name: Publish to github.io
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

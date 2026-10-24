@@ -157,6 +157,7 @@ class NarativeWorldBuilder(object):
             section_id=self.anchor_id(raw_id),
             path=self.anchor_id(raw_id),
             body=html_body,
+            breadcrumb=self.breadcrumb(narative_name, world),
         )
         output_file = os.path.join(self.output_path, path)
         with open(output_file, "w", encoding="utf-8") as output:
@@ -168,3 +169,12 @@ class NarativeWorldBuilder(object):
 
         digest = hashlib.md5(raw.encode("utf-8")).hexdigest()[:16]
         return "sid-" + digest
+
+    def breadcrumb(self, narative_name, world):
+        """Human-readable page label: section name plus current world state."""
+        if not world:
+            return narative_name
+        parts = ", ".join(
+            "%s=%s" % (key, value) for key, value in sorted(world.items())
+        )
+        return "%s (%s)" % (narative_name, parts)
