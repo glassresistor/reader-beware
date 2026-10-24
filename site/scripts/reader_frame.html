@@ -5,8 +5,14 @@
 <title>{{ title }}</title>
 <style>
   :root { color-scheme: light; }
-  html, body { margin: 0; background: #111016; }
-  body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+  html, body { margin: 0; }
+  body {
+    display: flex; align-items: center; justify-content: center; min-height: 100vh;
+    background:
+      radial-gradient(700px 300px at 80% 15%, #4a2f6e66 0%, transparent 60%),
+      radial-gradient(500px 300px at 15% 85%, #ff6ec733 0%, transparent 55%),
+      #111016;
+  }
   .device {
     width: 420px; height: 760px;
     background: #1c1a24; border-radius: 26px;

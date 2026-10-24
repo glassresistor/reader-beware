@@ -108,9 +108,14 @@ def file_url(path):
     return "file://" + quote(absolute, "/")
 
 
-def shot(page, path, full_page=True):
+def shot(page, path, full_page=True, element=None):
+    """Screenshot the page (or one css-selector element) to ``path``."""
     page.wait_for_timeout(500)  # let webfonts/paint settle
-    page.screenshot(path=path, full_page=full_page)
+    if element is not None:
+        page.wait_for_selector(element)
+        page.locator(element).screenshot(path=path)
+    else:
+        page.screenshot(path=path, full_page=full_page)
     print("captured", os.path.basename(path))
 
 
@@ -163,9 +168,12 @@ def device_pages(browser):
         wrapper = os.path.join(BUILD_ROOT, "frame-" + png)
         with open(wrapper, "w", encoding="utf-8") as f:
             f.write(rendered)
-        page = browser.new_page(viewport={"width": 500, "height": 860})
+        page = browser.new_page(viewport={"width": 520, "height": 900})
         page.goto(file_url(wrapper))
-        shot(page, os.path.join(IMAGES, png), full_page=False)
+        # wait for the framed epub page to finish loading inside the iframe
+        page.wait_for_selector("iframe")
+        page.wait_for_timeout(800)
+        shot(page, os.path.join(IMAGES, png), element="body")
         page.close()
 
 
