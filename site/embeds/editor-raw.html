@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>demo.yaml &middot; raw</title>
+<title>demo.yaml · raw</title>
 <style>
   :root {
     --ink: #f2ecf5;          /* milky white text */
@@ -101,16 +100,16 @@
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="/">Reader <b>Beware</b> &mdash; story editor</a>
-  <span class="root">/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src</span>
+  <a class="brand" href="/">Reader <b>Beware</b> — story editor</a>
+  <span class="root">stories/</span>
 </header>
 <main>
 
 <h1>
-  <code>demo.yaml</code>
+  <code>stories/</code>
 </h1>
 <p class="raw-note">
-  Raw yaml editing &mdash;
+  Raw yaml editing —
   
     <a href="/demo.yaml">back to the section studio</a>
   
@@ -119,7 +118,7 @@
 
 <div class="problems panel">
   <strong>Problems found:</strong>
-  <ul><li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#39;elif&#39; or &#39;else&#39; or &#39;endif&#39;. The innermost block that needs to be closed is &#39;if&#39;.</li></ul>
+  <ul><li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.</li></ul>
 </div>
 
 
@@ -133,23 +132,23 @@ entrypoint:
     Rain slicks the neon-lit streets of New Avalon. You have **two** choices
     and one very overpowered jinja template engine.
 
-    [Visit the hacker]({{ &#39;hacker&#39;|choice(credits=10) }})
+    [Visit the hacker]({{ 'hacker'|choice(credits=10) }})
 
-    [Visit the droid arena]({{ &#39;arena&#39;|choice(credits=5) }})
+    [Visit the droid arena]({{ 'arena'|choice(credits=5) }})
 
 hacker:
   body: |
-    ## The Hacker&#39;s Den
+    ## The Hacker's Den
 
     She slides a keyboard across the table. `{% if credits &gt; 8 %}` she says,
-    *&#34;you can afford the good decrypt.&#34;*
+    *"you can afford the good decrypt."*
 
     ```python
     def hack_the_planet(credits):
-        return credits &gt; 8 and &#34;rebellion&#34; or &#34;poverty&#34;
+        return credits &gt; 8 and "rebellion" or "poverty"
     ```
 
-    [Jack in]({{ &#39;jack&#39;|explore }})
+    [Jack in]({{ 'jack'|explore }})
 
 arena:
   body: |
@@ -160,7 +159,7 @@ arena:
     {% if credits &gt; 6 %}
     You bribe the guard and pick the *easy* droid.
 
-    [Fight]({{ &#39;fight&#39;|explore }})
+    [Fight]({{ 'fight'|explore }})
     {% else %}
     You fight the *hard* droid.
 
@@ -173,13 +172,13 @@ jack:
 
     &gt; Victory! You are famous now.
 
-    [Celebrate]({{ &#39;entrypoint&#39;|explore }})
+    [Celebrate]({{ 'entrypoint'|explore }})
 
 fight:
   body: |
     The easy droid goes down in one hit. The crowd loves you.
 
-    [Back to the streets]({{ &#39;entrypoint&#39;|explore }})
+    [Back to the streets]({{ 'entrypoint'|explore }})
 </textarea>
   <p><button type="submit">Save</button></p>
 </form>

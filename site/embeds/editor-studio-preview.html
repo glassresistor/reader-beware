@@ -1,9 +1,8 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>demo.yaml &middot; studio</title>
+<title>demo.yaml · studio</title>
 <style>
   :root {
     --ink: #f2ecf5;          /* milky white text */
@@ -196,8 +195,8 @@
 </head>
 <body>
 <header class="top">
-  <a class="brand" href="/">Reader <b>Beware</b> &mdash; story editor</a>
-  <span class="root">/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src</span>
+  <a class="brand" href="/">Reader <b>Beware</b> — story editor</a>
+  <span class="root">stories/</span>
 </header>
 <main>
 
@@ -222,7 +221,7 @@
 <div class="problems panel" id="problems">
   <strong>Problems found:</strong>
   <ul id="problem-list">
-    <li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#39;elif&#39; or &#39;else&#39; or &#39;endif&#39;. The innermost block that needs to be closed is &#39;if&#39;.</li>
+    <li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.</li>
   </ul>
 </div>
 
@@ -233,12 +232,11 @@
   <article class="card" data-card>
     <header class="card-top">
       <span class="tag" data-tag>entrypoint</span>
-      <input class="sec-name" value="entrypoint" spellcheck="false"
-             autocomplete="off" aria-label="section name">
+      <input class="sec-name" value="entrypoint" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up">⇧</button>
+      <button class="ghost" data-action="down" title="move down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
@@ -258,12 +256,12 @@
 Rain slicks the neon-lit streets of New Avalon. You have **two** choices
 and one very overpowered jinja template engine.
 
-[Visit the hacker]({{ &#39;hacker&#39;|choice(credits=10) }})
+[Visit the hacker]({{ 'hacker'|choice(credits=10) }})
 
-[Visit the droid arena]({{ &#39;arena&#39;|choice(credits=5) }})
+[Visit the droid arena]({{ 'arena'|choice(credits=5) }})
 </textarea>
     <details class="linktool" hidden>
-      <summary>link tool &mdash; build an explore or choice link</summary>
+      <summary>link tool — build an explore or choice link</summary>
       <div class="lt-fields">
         <div class="lt-row">
           <label>kind</label>
@@ -315,12 +313,11 @@ and one very overpowered jinja template engine.</p>
   <article class="card" data-card>
     <header class="card-top">
       <span class="tag" data-tag hidden>entrypoint</span>
-      <input class="sec-name" value="hacker" spellcheck="false"
-             autocomplete="off" aria-label="section name">
+      <input class="sec-name" value="hacker" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up">⇧</button>
+      <button class="ghost" data-action="down" title="move down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
@@ -335,20 +332,20 @@ and one very overpowered jinja template engine.</p>
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">## The Hacker&#39;s Den
+    <textarea class="sec-body" spellcheck="false">## The Hacker's Den
 
 She slides a keyboard across the table. `{% if credits &gt; 8 %}` she says,
-*&#34;you can afford the good decrypt.&#34;*
+*"you can afford the good decrypt."*
 
 ```python
 def hack_the_planet(credits):
-    return credits &gt; 8 and &#34;rebellion&#34; or &#34;poverty&#34;
+    return credits &gt; 8 and "rebellion" or "poverty"
 ```
 
-[Jack in]({{ &#39;jack&#39;|explore }})
+[Jack in]({{ 'jack'|explore }})
 </textarea>
     <details class="linktool" hidden>
-      <summary>link tool &mdash; build an explore or choice link</summary>
+      <summary>link tool — build an explore or choice link</summary>
       <div class="lt-fields">
         <div class="lt-row">
           <label>kind</label>
@@ -392,12 +389,11 @@ def hack_the_planet(credits):
   <article class="card" data-card>
     <header class="card-top">
       <span class="tag" data-tag hidden>entrypoint</span>
-      <input class="sec-name" value="arena" spellcheck="false"
-             autocomplete="off" aria-label="section name">
+      <input class="sec-name" value="arena" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up">⇧</button>
+      <button class="ghost" data-action="down" title="move down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
@@ -419,7 +415,7 @@ The crowd roars. Your credits: {{ credits }}.
 {% if credits &gt; 6 %}
 You bribe the guard and pick the *easy* droid.
 
-[Fight]({{ &#39;fight&#39;|explore }})
+[Fight]({{ 'fight'|explore }})
 {% else %}
 You fight the *hard* droid.
 
@@ -427,7 +423,7 @@ You fight the *hard* droid.
 {% endif %}
 </textarea>
     <details class="linktool" hidden>
-      <summary>link tool &mdash; build an explore or choice link</summary>
+      <summary>link tool — build an explore or choice link</summary>
       <div class="lt-fields">
         <div class="lt-row">
           <label>kind</label>
@@ -471,12 +467,11 @@ You fight the *hard* droid.
   <article class="card" data-card>
     <header class="card-top">
       <span class="tag" data-tag hidden>entrypoint</span>
-      <input class="sec-name" value="jack" spellcheck="false"
-             autocomplete="off" aria-label="section name">
+      <input class="sec-name" value="jack" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up">⇧</button>
+      <button class="ghost" data-action="down" title="move down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
@@ -495,10 +490,10 @@ You fight the *hard* droid.
 
 &gt; Victory! You are famous now.
 
-[Celebrate]({{ &#39;entrypoint&#39;|explore }})
+[Celebrate]({{ 'entrypoint'|explore }})
 </textarea>
     <details class="linktool" hidden>
-      <summary>link tool &mdash; build an explore or choice link</summary>
+      <summary>link tool — build an explore or choice link</summary>
       <div class="lt-fields">
         <div class="lt-row">
           <label>kind</label>
@@ -542,12 +537,11 @@ You fight the *hard* droid.
   <article class="card" data-card>
     <header class="card-top">
       <span class="tag" data-tag hidden>entrypoint</span>
-      <input class="sec-name" value="fight" spellcheck="false"
-             autocomplete="off" aria-label="section name">
+      <input class="sec-name" value="fight" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up">⇧</button>
+      <button class="ghost" data-action="down" title="move down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
@@ -564,10 +558,10 @@ You fight the *hard* droid.
     </div>
     <textarea class="sec-body" spellcheck="false">The easy droid goes down in one hit. The crowd loves you.
 
-[Back to the streets]({{ &#39;entrypoint&#39;|explore }})
+[Back to the streets]({{ 'entrypoint'|explore }})
 </textarea>
     <details class="linktool" hidden>
-      <summary>link tool &mdash; build an explore or choice link</summary>
+      <summary>link tool — build an explore or choice link</summary>
       <div class="lt-fields">
         <div class="lt-row">
           <label>kind</label>

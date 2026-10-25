@@ -74,6 +74,89 @@ jobs:
               )
           PY
 
+      - name: Check every story link on the site resolves to a real file
+        run: |
+          python - <<'PY'
+          import os, re, sys, html
+          root = "site"
+          problems = []
+
+          def unquote(target):
+              from urllib.parse import unquote as raw_unquote
+              return raw_unquote(target)
+
+          # 1. every relative link in every published book page must point
+          # at a file that exists next to it (choice links the demos invite
+          # the reader to click: they used to aim inside the .epub package,
+          # where no static host can serve them).
+          pages = []
+          for base, _dirs, files in os.walk(os.path.join(root, "books")):
+              for name in files:
+                  if name.endswith(".html"):
+                      pages.append(os.path.join(base, name))
+          for page in pages:
+              with open(page, encoding="utf-8") as f:
+                  body = f.read()
+              for match in re.finditer(r'href="([^"]+)"', body):
+                  target = html.unescape(match.group(1))
+                  if target.startswith(("http:", "https:", "#", "mailto:")):
+                      continue
+                  resolved = os.path.normpath(os.path.join(os.path.dirname(page), target))
+                  if not os.path.exists(resolved):
+                      problems.append("broken link %s -> %s" % (page, target))
+          print("checked %d published pages" % len(pages))
+
+          # 2. the story embeds are live demos: every choice link in them
+          # must resolve against the site root (srcdoc documents have no
+          # base url of their own) to a real published page.  hrefs aim at
+          # percent-encoded filenames, so match the written spelling first;
+          # on disk the pages are published exactly as encoded.
+          for name in ("story-entry", "story-state", "story-maze", "story-belair"):
+              path = os.path.join(root, "embeds", name + ".html")
+              with open(path, encoding="utf-8") as f:
+                  body = f.read()
+              hrefs = re.findall(r'href="([^"]+)"', body)
+              if not hrefs:
+                  problems.append("%s has no links at all" % path)
+              for target in hrefs:
+                  decoded = html.unescape(target)
+                  if decoded.startswith(("http:", "https:", "#", "mailto:")):
+                      continue
+                  joined = os.path.normpath(os.path.join(root, decoded.lstrip("/")))
+                  if not os.path.exists(joined):
+                      problems.append("embed link %s -> %s" % (path, target))
+
+          # 3. no iframe srcdoc may hold escaped-up-once markup: after the
+          # attribute decodes, nothing inside it may still be entities.
+          # The story pages name their targets with literal quote marks
+          # (put-on-shirt-{"shirt_color": "red"}.html), so an embed whose
+          # href carries &quot; after one decode was escaped twice on the
+          # way in -- the browser's parser then sees a bare & character,
+          # never matches the quoted target, and no link inside renders
+          # (this is how the deployed demos lost their clickable choices).
+          with open(os.path.join(root, "index.html"), encoding="utf-8") as f:
+              index = f.read()
+          for match in re.finditer(r'<iframe class="embed" srcdoc="([^"]*)"', index):
+              once = html.unescape(match.group(1))
+              if "&quot;" in once or "&lt;" in once:
+                  problems.append("srcdoc embed is double-escaped")
+
+          # 4. every relative link written in the index markup itself must
+          # exist (the books list links straight into site/books/).
+          for match in re.finditer(r'<a[^>]+href="([^"]+)"', index):
+              target = html.unescape(match.group(1))
+              if target.startswith(("http:", "https:", "#", "mailto:")):
+                  continue
+              resolved = os.path.normpath(os.path.join(root, target))
+              if not os.path.exists(resolved):
+                  problems.append("index link -> %s" % target)
+          if problems:
+              for problem in problems[:40]:
+                  print("PROBLEM:", problem)
+              sys.exit("%d broken links on the site" % len(problems))
+          print("all site links resolve to real files")
+          PY
+
       - name: Check the index embeds every example
         run: |
           python - <<'PY'

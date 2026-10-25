@@ -80,25 +80,32 @@ section.wrap > h2 .num { color: var(--pink); }
 .feature p { color: var(--ink-dim); font-size: .95rem; }
 
 figure.shot { margin: 1.6rem 0; text-align: center; }
-figure.shot img,
-figure.shot iframe.embed {
+figure.shot img {
   width: 100%; height: auto; border-radius: 8px;
   border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   background: #0b0a10;
 }
 figure.shot.device img { width: auto; max-width: 320px; border: none; box-shadow: none; }
-/* the framed e-reader embeds: small and centred like the cover image */
-figure.shot.device iframe.embed {
-  width: min(420px, 90vw); aspect-ratio: 420 / 760;
-  border: none; box-shadow: none; background: transparent;
-}
 figure.shot figcaption { color: var(--ink-faint); font-size: .85rem; margin-top: .6rem; }
-/* rendered examples embed the real build output via srcdoc */
+/* Rendered examples embed the real build output via srcdoc.  Each embed
+   carries its own aspect ratio inline (one per example, written by the
+   render script) and no height of its own: width fills the figure, height
+   follows the ratio.  Height must stay unset here -- an explicit height:
+   auto on a replaced element falls back to the user agent default (~150px)
+   before the ratio gets any say, which is what collapsed every demo to a
+   letterbox strip.  overflow: hidden keeps a scrolled page inside the
+   rounded frame instead of drawing a scrollbar across it. */
 iframe.embed {
   display: inline-block; vertical-align: bottom;
   width: min(920px, 100%); max-width: 100%;
   border: 1px solid var(--line); border-radius: 8px;
-  background: #0b0a10;
+  background: #0b0a10; overflow: hidden;
+}
+/* the framed e-reader embeds: small and centred like the cover image */
+figure.shot.device iframe.embed {
+  width: min(420px, 90vw); max-width: 100%;
+  aspect-ratio: 420 / 760;
+  border: none; box-shadow: none; background: transparent;
 }
 .figrow { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; justify-content: center; }
 .figrow figure.shot { flex: 1 1 300px; }

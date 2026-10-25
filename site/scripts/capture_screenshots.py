@@ -33,10 +33,12 @@ Usage::
 import argparse
 import html as html_module
 import os
+import posixpath
 import re
 import shutil
 import sys
 import tempfile
+import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE_DIR = os.path.abspath(os.path.join(HERE, os.pardir))
@@ -58,12 +60,15 @@ BUILD_ROOT = os.path.join(tempfile.gettempdir(), "reader-beware-embeds")
 #: demo story only powers the editor captures, it is not a buildable book
 BOOKS_TO_BUILD = ("shirts", "maze", "belair")
 
-#: story page embeds: (book, built filename, embed name)
+
+#: story page embeds: (book, built filename, embed name).  The pages must
+#: carry links (the demos invite the reader to click through them), so a
+#: terminal section like prince-of-belair is not what this shows.
 STORY_EMBEDS = [
     ("shirts", "entrypoint-{}.html", "story-entry"),
     ("shirts", 'go-outside-{"shirt_color": "green"}.html', "story-state"),
     ("maze", "entrypoint-{}.html", "story-maze"),
-    ("belair", "prince-of-belair-{}.html", "story-belair"),
+    ("belair", "take-a-minute-{}.html", "story-belair"),
 ]
 
 #: device-framed captures of epub-rendered pages: (book, filename in the
@@ -134,6 +139,103 @@ def copy_template_css():
     print("embedded template.css")
 
 
+def publish_filename(filename):
+    """Url filename a built section page is published under in site/books/.
+
+    The epub builder writes its unzipped debug pages with percent-encoded
+    names already (encode_filenames), but the story embed targets are
+    written raw (``entrypoint-{}.html``); decoding then re-encoding keeps
+    both spellings landing on the same served file, which is what a
+    browser resolves when it follows one of those choice links."""
+    stem = os.path.splitext(filename)[0]
+    if "%" in stem:
+        stem = urllib.parse.unquote(stem)
+    return urllib.parse.quote(stem, safe="") + ".html"
+
+
+def breadcrumb_of(stem):
+    """Human page label for a section filename stem (entrypoint-{a: 1}).
+
+    Mirrors the breadcrumb strip the plain html builder puts on its pages:
+    section name plus the world state baked into the filename.
+    """
+    import json
+
+    name, _, world = stem.rpartition("-")
+    try:
+        loaded = json.loads(world)
+    except (ValueError, TypeError):
+        return None
+    if not isinstance(loaded, dict):
+        return None
+    if not loaded:
+        return name
+    parts = ", ".join("%s=%s" % (k, loaded[k]) for k in sorted(loaded))
+    return "%s (%s)" % (name, parts)
+
+
+#: story pages published next to each book in site/books/.  The epub builder
+#: writes its unzipped html debug pages with xhtml package targets (hrefs
+#: pointing at ../xhtml/<name>.xhtml inside the .epub file); those files
+#: cannot be served on a static host, so before publishing them they are
+#: rewritten back to plain sibling pages: percent-encoded filenames (the
+#: raw ones carry braces, quotes and spaces which github pages does not
+#: serve), a real stylesheet link, breadcrumbs, and hrefs that resolve to
+#: the other published .html files.  That makes every choice link in every
+#: demo page a clickable link on the site.
+PAGE_CSS_LINK = '<link href="template.css" rel="stylesheet" type="text/css"/>'
+
+
+def publishable_page(page_html, breadcrumb=None):
+    """Rewrite an unzipped epub debug page into a standalone html page."""
+    from lxml import etree
+
+    parser = etree.HTMLParser(remove_comments=False)
+    root = etree.fromstring(page_html.encode("utf-8"), parser)
+    # the head stylesheet link is dropped and re-added below so it runs
+    # after the href rewriting, otherwise the fresh css link would get
+    # rewritten with itself (template.css -> template.css.html)
+    for head_link in root.xpath("/html/head/link"):
+        head_link.getparent().remove(head_link)
+    for elem in root.iter():
+        href = elem.get("href")
+        if not href or href.startswith(("http:", "https:", "#")):
+            continue
+        # the unzipped package pages link with percent-encoded xhtml
+        # targets (xhtml/<name>.xhtml); decode before re-encoding so
+        # nothing escapes twice, and never trust splitext here: the stem
+        # may legitimately end in %7B ({), which .html would eat whole.
+        base = os.path.basename(urllib.parse.unquote(href))
+        if base == "template.xhtml":
+            # the package stylesheet is published beside the pages as
+            # template.css (the plain html builder's filename)
+            elem.set("href", "template.css")
+            continue
+        for suffix in (".xhtml", ".html"):
+            if base.endswith(suffix):
+                base = base[: -len(suffix)]
+                break
+        encoded = urllib.parse.quote(base, safe="") + ".html"
+        elem.set("href", encoded)
+    head = root.xpath("/html/head")[0]
+    style = etree.SubElement(head, "link")
+    style.set("href", "template.css")
+    style.set("rel", "stylesheet")
+    style.set("type", "text/css")
+    if breadcrumb:
+        body = root.xpath("/html/body")[0]
+        story_div = body.xpath('div[contains(@class, "story")]')
+        index = body.index(story_div[0]) if story_div else 0
+        strip = etree.Element("div")
+        strip.set("class", "breadcrumbs")
+        brand = etree.SubElement(strip, "b")
+        brand.text = "Reader Beware"
+        brand.tail = " \u00b7 " + breadcrumb
+        body.insert(index, strip)
+    rendered = etree.tostring(root, encoding="unicode", method="html")
+    return "<!DOCTYPE html>\n" + rendered
+
+
 def build_book(name):
     """Build html pages + a real epub for a narrative into site/books/<name>."""
     from beware.build_epub import EPubWorldBuilder
@@ -147,9 +249,18 @@ def build_book(name):
     epub_file = builder.build_epub()
     dest = os.path.join(BOOKS, name)
     os.makedirs(dest, exist_ok=True)
-    for entry in os.listdir(html_dir):
-        if entry.endswith(".html") or entry == "template.css":
+    for entry in sorted(os.listdir(html_dir)):
+        if entry == "template.css":
             shutil.copyfile(os.path.join(html_dir, entry), os.path.join(dest, entry))
+        elif entry.endswith(".html"):
+            # unzip-style filename: decode it so the url always matches
+            stem = os.path.splitext(urllib.parse.unquote(entry))[0]
+            safe = urllib.parse.quote(stem, safe="") + ".html"
+            with open(os.path.join(html_dir, entry), "r", encoding="utf-8") as f:
+                page_html = f.read()
+            page_html = publishable_page(page_html, breadcrumb_of(stem))
+            with open(os.path.join(dest, safe), "w", encoding="utf-8") as f:
+                f.write(page_html)
     shutil.move(epub_file, os.path.join(dest, name + ".epub"))
     print("book built into", dest)
 
@@ -176,8 +287,12 @@ def device_pages():
 
 def screen_markup(page_html):
     """Pull the breadcrumb and story divs out of a built page (the bits an
-    e-reader screen would show) using lxml; ids are dropped so nothing
-    clashes when two pages share a document."""
+    e-reader screen would show) using lxml.
+
+    The framed device is a still: its document lives at about:srcdoc with
+    no base url, so every link inside it points nowhere.  Anchors are
+    unwrapped to their text (and ids dropped, since unique xml ids would
+    clash when two pages share a document) before serialising."""
     from lxml import etree
 
     parser = etree.HTMLParser(remove_comments=True)
@@ -187,8 +302,40 @@ def screen_markup(page_html):
         found = tree.xpath('//div[contains(@class, "%s")]' % selector)
         for node in found:
             strip_ids(node)
+            unwrap_links(node)
             parts.append(etree.tostring(node, encoding="unicode", method="html"))
     return "\n".join(parts) if parts else page_html
+
+
+def unwrap_links(node):
+    """Replace every anchor in a subtree with plain text (its children and
+    its tail), keeping the surrounding markup intact."""
+    from lxml import etree
+
+    for anchor in node.xpath(".//a"):
+        parent = anchor.getparent()
+        if parent is None:
+            continue
+        index = parent.index(anchor)
+        # text of the anchor merges into the preceding text node
+        merged = anchor.text or ""
+        for child in list(anchor):
+            merged += etree.tostring(child, encoding="unicode", method="html")
+            if child.tail:
+                merged += child.tail
+        previous = anchor.getprevious()
+        if previous is not None:
+            previous.tail = (previous.tail or "") + merged
+        else:
+            parent.text = (parent.text or "") + merged
+        if anchor.tail:
+            # the tail belongs after the removed element: append it onto
+            # whatever we just merged, so nothing is lost
+            if previous is not None:
+                previous.tail = previous.tail + anchor.tail
+            else:
+                parent.text = (parent.text or "") + merged + anchor.tail
+        parent.remove(anchor)
 
 
 def strip_ids(node):
@@ -202,13 +349,22 @@ def strip_ids(node):
 def story_pages():
     """Render each built story page into site/embeds/; the stylesheet is
     inlined so every embed is fully self-contained (srcdoc pages load
-    their own resources poorly, and self-contained renders anywhere)."""
+    their own resources poorly, and self-contained renders anywhere).  The
+    pages are taken from site/books/ after build_book publishes them, which
+    keeps what the demos show identical to what the site actually serves.
+
+    A srcdoc document lives at about:srcdoc with no base url of its own, so
+    relative targets in it resolve against nothing and never reach a real
+    file; the demo pages therefore link absolute paths into the published
+    books (/books/<name>/<page>.html), which is exactly where a reader who
+    clicks a choice ends up."""
     css = template_css_source()
     for book, filename, embed in STORY_EMBEDS:
-        folder = build_story(book)
-        target = os.path.join(folder, filename)
+        target = os.path.join(BOOKS, book, publish_filename(filename))
         if not os.path.exists(target):
-            raise FileNotFoundError(target)
+            raise FileNotFoundError(
+                "%s missing; run the full script (build_book publishes it)" % target
+            )
         with open(target, "r", encoding="utf-8") as f:
             page_html = f.read()
         page_html = re.sub(
@@ -217,7 +373,46 @@ def story_pages():
             page_html,
             count=1,
         )
+        page_html = link_into_published_books(page_html, book)
         write_embed(embed, page_html)
+
+
+#: the unzipped epub pages never carry this breadcrumb suffix; a demo page
+#: keeps its own breadcrumb strip but its links must aim at real files
+BOOK_PATH_PREFIX = "/books/"
+
+
+def link_into_published_books(page_html, book):
+    """Rewrite relative story hrefs into /books/<book>/<file>.html paths.
+
+    The embed renders inside an iframe whose document has no filesystem
+    location, so the sibling files of the page it was built from only
+    exist as served urls; make that url explicit in every link.  These
+    pages are already html-escaped for their embed (the build writes them
+    with &amp; entities), hence unescape first, escape back last.
+    """
+    import urllib.parse
+
+    def rewrite(match):
+        href = html_module.unescape(match.group(1))
+        if href.startswith(("http:", "https:", "#", "/", "mailto:")):
+            return match.group(0)
+        base = os.path.basename(urllib.parse.unquote(href))
+        for suffix in (".xhtml", ".html"):
+            if base.endswith(suffix):
+                base = base[: -len(suffix)]
+                break
+        safe = urllib.parse.quote(base, safe="") + ".html"
+        target = html_module.escape(BOOK_PATH_PREFIX + book + "/" + safe, quote=True)
+        # group(0) ends at the closing quote of the href attribute and
+        # group(1) is the value between the quotes, so everything up to
+        # start(1) plus the new target plus one quote is the whole
+        # replacement; the old closing quote belongs to the untouched
+        # tail after end(1)
+        prefix = page_html[match.start() : match.start(1)]
+        return prefix + target + '"'
+
+    return re.sub(r'<a[^>]*?href="([^"]*)"', rewrite, page_html)
 
 
 def inline_css(css):
@@ -364,13 +559,46 @@ def open_link_tool(html):
     segment = replace_once(
         segment, '<div class="lt-vars"></div>', '<div class="lt-vars">%s</div>' % rows
     )
-    snippet = html_module.escape(build_snippet(), quote=False)
+    # the snippet goes into a dom that will itself be html-escaped for
+    # srcdoc injection, so it must carry plain text here; quote=False
+    # would leave raw " characters that escape twice later on
+    snippet = html_module.escape(build_snippet(), quote=True)
     segment = replace_once(
         segment,
         '<code class="snippet"></code>',
         '<code class="snippet">%s</code>' % snippet,
     )
     return html[:start] + segment + html[end:]
+
+
+#: the demo editor pages show their story root as this label instead of
+#: the render machine's absolute checkout path (which in CI reads
+#: /home/runner/work/... and tells a reader nothing about their own box)
+DEMO_ROOT_LABEL = "stories/"
+
+
+def caption_editor_root(html_text):
+    """Swap the absolute story root printed by the editor index for the
+    demo label, both where it shows as the header path and in the page
+    heading.  Parsed with lxml so text nodes are replaced whole."""
+    from lxml import etree
+
+    parser = etree.HTMLParser()
+    root = etree.fromstring(html_text.encode("utf-8"), parser)
+    changed = False
+    for span in root.xpath(
+        '//*[contains(concat(" ", normalize-space(@class), " "), " root ")]'
+    ):
+        if (span.text or "").strip():
+            span.text = DEMO_ROOT_LABEL
+            changed = True
+    for code in root.xpath("//h1/code"):
+        if (code.text or "").strip():
+            code.text = DEMO_ROOT_LABEL
+            changed = True
+    if not changed:
+        return html_text
+    return etree.tostring(root, encoding="unicode", method="html")
 
 
 def editor_pages():
@@ -381,16 +609,17 @@ def editor_pages():
     app.config["TESTING"] = True
     client = app.test_client()
 
-    write_embed("editor-index", client.get("/").get_data(as_text=True))
+    index = caption_editor_root(client.get("/").get_data(as_text=True))
+    write_embed("editor-index", index)
 
-    studio = client.get("/" + DEMO_STORY).get_data(as_text=True)
+    studio = caption_editor_root(client.get("/" + DEMO_STORY).get_data(as_text=True))
     previewed = inject_preview(studio, client, "entrypoint")
     write_embed("editor-studio-preview", previewed)
 
-    studio = client.get("/" + DEMO_STORY).get_data(as_text=True)
+    studio = caption_editor_root(client.get("/" + DEMO_STORY).get_data(as_text=True))
     write_embed("editor-studio-link", open_link_tool(studio))
 
-    raw = client.get("/raw/" + DEMO_STORY).get_data(as_text=True)
+    raw = caption_editor_root(client.get("/raw/" + DEMO_STORY).get_data(as_text=True))
     write_embed("editor-raw", raw)
 
 
@@ -426,7 +655,12 @@ def embed_height(embed_name):
 
 def srcdoc_embed(embed_name):
     """The iframe tag embedding a rendered page via srcdoc (html-escaped so
-    it survives as an attribute; the browser parses it as real html)."""
+    it survives as an attribute; the browser parses it as real html).
+
+    The demo pages live at about:srcdoc with no base url, so only the
+    absolute targets (/books/...) written into them can ever resolve --
+    nothing else breaks out to the network from a srcdoc document.
+    """
     with open(os.path.join(EMBEDS, embed_name + ".html"), "r", encoding="utf-8") as f:
         source = f.read()
     escaped = html_module.escape(source, quote=True)
@@ -503,14 +737,16 @@ def main():
         help="build site/books/ without rendering embeds",
     )
     args = parser.parse_args()
+    # books first: the story/device embeds and the index link lists read
+    # the pages build_book publishes into site/books/
+    for name in BOOKS_TO_BUILD:
+        build_book(name)
     if not args.books_only:
         copy_template_css()
         story_pages()
         device_pages()
         editor_pages()
         inject_index()
-    for name in BOOKS_TO_BUILD:
-        build_book(name)
 
 
 if __name__ == "__main__":
