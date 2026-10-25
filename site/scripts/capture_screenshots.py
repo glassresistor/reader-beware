@@ -171,7 +171,7 @@ def device_pages(browser):
         page = browser.new_page(viewport={"width": 520, "height": 900})
         page.goto(file_url(wrapper))
         # wait for the framed epub page to finish loading inside the iframe
-        page.wait_for_selector("iframe", timeout=6000)
+        page.wait_for_selector("iframe", timeout=60000)
         page.wait_for_timeout(800)
         shot(page, os.path.join(IMAGES, png), element="body")
         page.close()
