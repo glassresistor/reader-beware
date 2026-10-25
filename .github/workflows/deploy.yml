@@ -185,6 +185,74 @@ jobs:
           print("index embeds all %d examples" % len(needed))
           PY
 
+      # upload-pages-artifact uploads what git tracks under site/, so an
+      # ignored folder (site/books/ used to be) silently never reached the
+      # served site: every link into a built book 404ed while the local
+      # filesystem audit above passed, because the build outputs always
+      # exist in the runner's checkout.  This checks what git actually
+      # carries instead of what the build wrote.
+      - name: Check the tracked tree carries everything the site links to
+        run: |
+          python - <<'PY'
+          import os, re, subprocess, sys, html
+
+          tracked = set(
+              subprocess.run(
+                  ["git", "ls-files", "site"],
+                  capture_output=True,
+                  check=True,
+                  text=True,
+              )
+              .stdout.splitlines()
+          )
+          print("tracked files under site/: %d" % len(tracked))
+          problems = []
+
+          # the books list and every story embed link out of the index into
+          # built pages; both must name files git carries to github.io
+          for src, base in (
+              ("site/index.html", "site"),
+              ("site/embeds/story-entry.html", "site"),
+              ("site/embeds/story-state.html", "site"),
+              ("site/embeds/story-maze.html", "site"),
+              ("site/embeds/story-belair.html", "site"),
+          ):
+              body = open(src, encoding="utf-8").read()
+              for match in re.finditer(r'href="([^"]+)"', body):
+                  target = html.unescape(match.group(1))
+                  if target.startswith(("http:", "https:", "#", "mailto:")):
+                      continue
+                  if src != "site/index.html":
+                      # embed hrefs are absolute urls (/books/...): map
+                      # them back onto the site folder git publishes
+                      key = "site" + target
+                  else:
+                      key = os.path.normpath(os.path.join(base, target))
+                  if key not in tracked:
+                      problems.append("untracked target %s -> %s" % (src, key))
+
+          # the epubs and their css must be carried too, or "read a built
+          # book" and the page stylesheets 404 exactly like before
+          epubs = [p for p in sorted(tracked) if p.endswith(".epub")]
+          print("epubs tracked:", epubs)
+          if len(epubs) < 3:
+              problems.append(
+                  "only %d epubs tracked; the built books are not committed" % len(epubs)
+              )
+          books = {p for p in tracked if os.path.sep + "books" + os.path.sep in p}
+          if len(books) < 100:
+              problems.append(
+                  "only %d tracked files under site/books/; the built pages "
+                  "and epubs are not committed, so nothing on the site can "
+                  "link to them" % len(books)
+              )
+          if problems:
+              for problem in problems[:40]:
+                  print("PROBLEM:", problem)
+              sys.exit("%d untracked site targets" % len(problems))
+          print("git carries every linked file")
+          PY
+
       - name: Upload pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
