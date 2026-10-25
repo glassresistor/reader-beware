@@ -62,22 +62,38 @@ jobs:
           python - <<'PY'
           import os, sys
           images = "site/images"
-          expected = [
-              "cover.png",
-              "story-entry.png", "story-state.png", "story-maze.png",
-              "story-belair.png",
-              "device-red-shirt.png", "device-green-shirt.png",
-              "editor-index.png", "editor-studio-preview.png",
-              "editor-studio-link.png", "editor-raw.png",
-          ]
-          missing = [n for n in expected if not os.path.exists(os.path.join(images, n))]
+          # per-image minimum byte sizes: a blank or broken capture is a
+          # few hundred bytes at most, so these floors are generous but
+          # well above the blank-page floor.  the device-framed shots use
+          # a small viewport (500x860) over a mostly-dark background and
+          # compress tiny, hence their lower floor.
+          minimums = {
+              "cover.png": 10_000,
+              "story-entry.png": 20_000,
+              "story-state.png": 20_000,
+              "story-maze.png": 20_000,
+              "story-belair.png": 20_000,
+              "device-red-shirt.png": 15_000,
+              "device-green-shirt.png": 15_000,
+              "editor-index.png": 20_000,
+              "editor-studio-preview.png": 40_000,
+              "editor-studio-link.png": 40_000,
+              "editor-raw.png": 40_000,
+          }
+          missing = [n for n in minimums if not os.path.exists(os.path.join(images, n))]
+          sizes = {n: os.path.getsize(os.path.join(images, n)) for n in minimums}
           tiny = [
-              n for n in os.listdir(images)
-              if os.path.getsize(os.path.join(images, n)) < 10_000
+              (n, sizes[n])
+              for n in minimums
+              if n in sizes and sizes[n] < minimums[n]
           ]
           print("captured:", sorted(os.listdir(images)))
+          print("sizes:", {n: sizes.get(n) for n in sorted(minimums)})
           if missing or tiny:
-              sys.exit("missing or suspicious screenshots: %s %s" % (missing, tiny))
+              sys.exit(
+                  "missing or suspicious screenshots: missing=%s tiny=%s"
+                  % (missing, tiny)
+              )
           PY
 
       - name: Upload pages artifact
