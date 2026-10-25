@@ -1,3 +1,5 @@
+{% raw %}
+~~~
 # Reader Beware
 
 Reader Beware is a set of cli tools for creating gamebooks.  Gamebooks are typically works of fiction written in the 2nd person which offers the reader choices throughout the book which affects how the story moves forward.  Often times these are referred to Choose Your Own Adventure novels.
@@ -425,3 +427,5 @@ text = serialize_sections(sections)      # canonical narrative yaml again
 - Work on compressing large ass files.
 - Move to folder of yaml files?  How to merge? Namespacing?
 - Codify book folder structure?
+~~~
+{% endraw %}
