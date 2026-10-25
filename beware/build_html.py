@@ -9,6 +9,11 @@ import yaml
 from markdown2 import Markdown
 from jinja2 import Environment, FileSystemLoader
 
+#: language stamped onto every rendered page, so assistive tech voices the
+#: prose correctly instead of falling back to whatever the reader's system
+#: happens to speak (an xml:lang alone is not read by html user agents)
+DEFAULT_LANGUAGE = "en-US"
+
 
 class NarativeWorldBuilder(object):
 
@@ -158,6 +163,7 @@ class NarativeWorldBuilder(object):
             path=self.anchor_id(raw_id),
             body=html_body,
             breadcrumb=self.breadcrumb(narative_name, world),
+            language=getattr(self, "language", DEFAULT_LANGUAGE),
         )
         output_file = os.path.join(self.output_path, path)
         with open(output_file, "w", encoding="utf-8") as output:

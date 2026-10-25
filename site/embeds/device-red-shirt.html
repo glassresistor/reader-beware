@@ -29,12 +29,15 @@
   .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
   .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
   .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  /* the screen is e-ink paper, so it needs dark ink: these are the web
+     palette's greys inverted (#9c95ad -> #756e7d clears AA at .75rem); a
+     light-palette grey would sit at 2.6:1 on the paper */
   .screen .breadcrumbs {
-    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    font-size: .75rem; color: #756e7d; padding: .4rem .8rem;
     border-bottom: 1px solid #ddd6c9;
   }
   .chrome {
-    margin-top: 14px; text-align: center; color: #8d86a0;
+    margin-top: 14px; text-align: center; color: #9c95ad;
     font-family: "IBM Plex Mono", Menlo, monospace; font-size: 13px;
   }
   .chrome b { color: #ffb0df; }

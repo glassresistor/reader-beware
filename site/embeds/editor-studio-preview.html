@@ -7,7 +7,10 @@
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -43,16 +46,35 @@
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -67,7 +89,7 @@
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -194,11 +216,12 @@
 
 </head>
 <body>
+<a class="skip-link" href="#content">Skip to content</a>
 <header class="top">
   <a class="brand" href="/">Reader <b>Beware</b> — story editor</a>
   <span class="root">stories/</span>
 </header>
-<main>
+<main id="content">
 
 <div class="bar">
   <span class="file">
@@ -206,8 +229,8 @@
   </span>
   
   <button id="save-btn">Save</button>
-  <span class="status" id="status"></span>
-  <span class="stats" id="stats"></span>
+  <span class="status" id="status" role="status" aria-live="polite"></span>
+  <span class="stats" id="stats" aria-live="polite">5 sections</span>
   <span class="right">
     
       <a href="/raw/demo.yaml">raw yaml</a>
@@ -218,7 +241,7 @@
 
 
 
-<div class="problems panel" id="problems">
+<div class="problems panel" id="problems" role="alert" aria-atomic="true">
   <strong>Problems found:</strong>
   <ul id="problem-list">
     <li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.</li>
@@ -235,15 +258,15 @@
       <input class="sec-name" value="entrypoint" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">⇧</button>
-      <button class="ghost" data-action="down" title="move down">⇩</button>
+      <button class="ghost" data-action="up" title="move up" aria-label="move this section up">⇧</button>
+      <button class="ghost" data-action="down" title="move down" aria-label="move this section down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -251,7 +274,7 @@
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false"># The Night Market
+    <textarea class="sec-body" spellcheck="false" aria-label="markdown body of this section"># The Night Market
 
 Rain slicks the neon-lit streets of New Avalon. You have **two** choices
 and one very overpowered jinja template engine.
@@ -272,11 +295,11 @@ and one very overpowered jinja template engine.
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left" aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name" aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -307,7 +330,7 @@ and one very overpowered jinja template engine.</p>
 <p><a href="#arena">Visit the droid arena</a></p>
 </div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false"></textarea>
+    <textarea class="sec-extra" hidden spellcheck="false" aria-label="extra yaml keys of this section"></textarea>
   </article>
   
   <article class="card" data-card>
@@ -316,15 +339,15 @@ and one very overpowered jinja template engine.</p>
       <input class="sec-name" value="hacker" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">⇧</button>
-      <button class="ghost" data-action="down" title="move down">⇩</button>
+      <button class="ghost" data-action="up" title="move up" aria-label="move this section up">⇧</button>
+      <button class="ghost" data-action="down" title="move down" aria-label="move this section down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -332,7 +355,7 @@ and one very overpowered jinja template engine.</p>
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">## The Hacker's Den
+    <textarea class="sec-body" spellcheck="false" aria-label="markdown body of this section">## The Hacker's Den
 
 She slides a keyboard across the table. `{% if credits &gt; 8 %}` she says,
 *"you can afford the good decrypt."*
@@ -356,11 +379,11 @@ def hack_the_planet(credits):
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left" aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name" aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -383,7 +406,7 @@ def hack_the_planet(credits):
     <div class="preview" hidden>
       <div class="preview-out"></div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false"></textarea>
+    <textarea class="sec-extra" hidden spellcheck="false" aria-label="extra yaml keys of this section"></textarea>
   </article>
   
   <article class="card" data-card>
@@ -392,15 +415,15 @@ def hack_the_planet(credits):
       <input class="sec-name" value="arena" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">⇧</button>
-      <button class="ghost" data-action="down" title="move down">⇩</button>
+      <button class="ghost" data-action="up" title="move up" aria-label="move this section up">⇧</button>
+      <button class="ghost" data-action="down" title="move down" aria-label="move this section down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -408,7 +431,7 @@ def hack_the_planet(credits):
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">## The Droid Arena
+    <textarea class="sec-body" spellcheck="false" aria-label="markdown body of this section">## The Droid Arena
 
 The crowd roars. Your credits: {{ credits }}.
 
@@ -434,11 +457,11 @@ You fight the *hard* droid.
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left" aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name" aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -461,7 +484,7 @@ You fight the *hard* droid.
     <div class="preview" hidden>
       <div class="preview-out"></div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false"></textarea>
+    <textarea class="sec-extra" hidden spellcheck="false" aria-label="extra yaml keys of this section"></textarea>
   </article>
   
   <article class="card" data-card>
@@ -470,15 +493,15 @@ You fight the *hard* droid.
       <input class="sec-name" value="jack" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">⇧</button>
-      <button class="ghost" data-action="down" title="move down">⇩</button>
+      <button class="ghost" data-action="up" title="move up" aria-label="move this section up">⇧</button>
+      <button class="ghost" data-action="down" title="move down" aria-label="move this section down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -486,7 +509,7 @@ You fight the *hard* droid.
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">You jack in. The ICE is thick but the data is sweet.
+    <textarea class="sec-body" spellcheck="false" aria-label="markdown body of this section">You jack in. The ICE is thick but the data is sweet.
 
 &gt; Victory! You are famous now.
 
@@ -504,11 +527,11 @@ You fight the *hard* droid.
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left" aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name" aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -531,7 +554,7 @@ You fight the *hard* droid.
     <div class="preview" hidden>
       <div class="preview-out"></div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false"></textarea>
+    <textarea class="sec-extra" hidden spellcheck="false" aria-label="extra yaml keys of this section"></textarea>
   </article>
   
   <article class="card" data-card>
@@ -540,15 +563,15 @@ You fight the *hard* droid.
       <input class="sec-name" value="fight" spellcheck="false" autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">⇧</button>
-      <button class="ghost" data-action="down" title="move down">⇩</button>
+      <button class="ghost" data-action="up" title="move up" aria-label="move this section up">⇧</button>
+      <button class="ghost" data-action="down" title="move down" aria-label="move this section down">⇩</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -556,7 +579,7 @@ You fight the *hard* droid.
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">The easy droid goes down in one hit. The crowd loves you.
+    <textarea class="sec-body" spellcheck="false" aria-label="markdown body of this section">The easy droid goes down in one hit. The crowd loves you.
 
 [Back to the streets]({{ 'entrypoint'|explore }})
 </textarea>
@@ -572,11 +595,11 @@ You fight the *hard* droid.
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left" aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name" aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -599,7 +622,7 @@ You fight the *hard* droid.
     <div class="preview" hidden>
       <div class="preview-out"></div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false"></textarea>
+    <textarea class="sec-extra" hidden spellcheck="false" aria-label="extra yaml keys of this section"></textarea>
   </article>
   
 </div>
@@ -819,8 +842,9 @@ function toggleVars(card) {
 function addVarRow(card) {
   var row = document.createElement('div');
   row.className = 'lt-row lt-var';
-  row.innerHTML = '<input class="vname" placeholder="shirt_color">'
-    + '<input class="vvalue" placeholder="red">'
+  row.innerHTML = '<input class="vname" placeholder="shirt_color" '
+    + 'aria-label="variable name">'
+    + '<input class="vvalue" placeholder="red" aria-label="variable value">'
     + '<button class="danger ghost rm" type="button">&times;</button>';
   $('.lt-vars', card).appendChild(row);
 }

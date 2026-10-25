@@ -2,7 +2,10 @@
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair on the site must clear WCAG 2.2 AA (4.5:1
+     for normal text); site/scripts/contrast_audit.py re-checks them in CI,
+     which is why --ink-faint sits at #9c95ad and not a dimmer lilac-grey. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --grey-2: #211e29;
@@ -40,6 +43,25 @@ nav.topbar {
 nav.topbar a.brand { font-weight: bold; color: var(--ink); font-size: 1.05rem; }
 nav.topbar a.brand b { color: var(--pink); }
 nav.topbar .links { display: flex; gap: .9rem; margin-left: auto; font-size: .9rem; }
+/* the nav links are hidden below 760px, which strands them on a phone with
+   no way to reach the sections; show them as a wrapping strip instead */
+nav.topbar { flex-wrap: wrap; }
+/* keyboard-only entry point, visually hidden until focused */
+.skip-link {
+  position: absolute; left: -9999px; top: auto;
+  width: 1px; height: 1px; overflow: hidden;
+}
+.skip-link:focus, .skip-link:focus-visible {
+  position: fixed; left: .8rem; top: .6rem; z-index: 100;
+  width: auto; height: auto; padding: .5rem .9rem;
+  background: var(--grey-2); color: var(--pink-soft);
+  border: 1px solid var(--pink); border-radius: 6px;
+}
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
 
 .hero {
   position: relative; overflow: hidden;
@@ -59,11 +81,13 @@ nav.topbar .links { display: flex; gap: .9rem; margin-left: auto; font-size: .9r
 .hero .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem; }
 .btn {
   display: inline-block; padding: .65rem 1.3rem; border-radius: 6px;
-  background: linear-gradient(180deg, var(--purple), var(--purple-deep));
+  /* white text on the #a06ae8 top stop measured 3.7:1; #8a55d6 carries the
+     same violet at 4.8:1, so the button clears AA across its whole face */
+  background: linear-gradient(180deg, #8a55d6, var(--purple-deep));
   color: #fff !important; border: 1px solid rgba(255, 110, 199, .4);
   font-size: .95rem;
 }
-.btn:hover { background: var(--pink); color: #1a0b16 !important; }
+.btn:hover { background: var(--pink); color: #140712 !important; }
 .btn.ghost { background: transparent; color: var(--ink-dim) !important; border-color: var(--line); }
 
 section.wrap { max-width: 1040px; margin: 0 auto; padding: 3rem 1.4rem; }
@@ -80,7 +104,8 @@ section.wrap > h2 .num { color: var(--pink); }
 .feature p { color: var(--ink-dim); font-size: .95rem; }
 
 figure.shot { margin: 1.6rem 0; text-align: center; }
-figure.shot img {
+figure.shot img,
+figure.shot iframe.embed {
   width: 100%; height: auto; border-radius: 8px;
   border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   background: #0b0a10;
@@ -139,7 +164,10 @@ footer {
 }
 footer .big { font-size: 1.2rem; color: var(--pink-soft); }
 
+/* the embeds are dark-themed documents; declaring that keeps a reader
+   agent from dropping its own light form-control defaults over them */
+iframe.embed { color-scheme: dark; }
+
 @media (max-width: 760px) {
   .grid2, .grid3 { grid-template-columns: 1fr; }
-  nav.topbar .links { display: none; }
 }

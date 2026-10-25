@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
 <head>
 <meta charset="utf-8">
   <title>take-a-minute</title>
@@ -13,7 +13,11 @@
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --line: #3a3348;

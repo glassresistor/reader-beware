@@ -7,7 +7,10 @@
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -43,16 +46,35 @@
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -67,7 +89,7 @@
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -99,11 +121,12 @@
 
 </head>
 <body>
+<a class="skip-link" href="#content">Skip to content</a>
 <header class="top">
   <a class="brand" href="/">Reader <b>Beware</b> — story editor</a>
   <span class="root">stories/</span>
 </header>
-<main>
+<main id="content">
 
 <h1>
   <code>stories/</code>
@@ -116,7 +139,7 @@
 </p>
 
 
-<div class="problems panel">
+<div class="problems panel" role="alert" aria-atomic="true">
   <strong>Problems found:</strong>
   <ul><li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: 'elif' or 'else' or 'endif'. The innermost block that needs to be closed is 'if'.</li></ul>
 </div>
@@ -124,6 +147,7 @@
 
 
 <form method="post" action="/save/demo.yaml">
+  <label class="raw-note" for="editor">yaml source of demo.yaml</label>
   <textarea class="code" name="body" id="editor" spellcheck="false">---
 entrypoint:
   body: |
@@ -215,13 +239,20 @@ function validateNow(relName, body) {
       if (!box && data.errors.length) {
         box = document.createElement('div');
         box.className = 'problems panel';
+        // the created node is a live-region announcement, not just ink
+        box.setAttribute('role', 'alert');
+        box.setAttribute('aria-atomic', 'true');
         editor.parentNode.insertBefore(box, editor);
       }
       if (box) {
+        var count = data.errors.length;
         box.innerHTML = '<strong>Problems found:</strong><ul>' +
           data.errors.map(function (e) { return '<li>' + e + '</li>'; }).join('') +
           '</ul>';
-        box.style.display = data.errors.length ? '' : 'none';
+        // the list alone is silent to assistive tech once hidden
+        box.setAttribute('aria-label',
+          count ? count + ' problems found in this yaml' : '');
+        box.style.display = count ? '' : 'none';
       }
     });
 }

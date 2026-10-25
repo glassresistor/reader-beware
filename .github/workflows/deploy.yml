@@ -74,6 +74,9 @@ jobs:
               )
           PY
 
+      - name: Check the palette stays readable (WCAG AA contrast)
+        run: python site/scripts/contrast_audit.py
+
       - name: Check every story link on the site resolves to a real file
         run: |
           python - <<'PY'

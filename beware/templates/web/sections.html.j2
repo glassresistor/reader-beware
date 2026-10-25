@@ -119,8 +119,8 @@
     </label>
   {% endif %}
   <button id="save-btn">{% if created %}Create story{% else %}Save{% endif %}</button>
-  <span class="status" id="status"></span>
-  <span class="stats" id="stats"></span>
+  <span class="status" id="status" role="status" aria-live="polite"></span>
+  <span class="stats" id="stats" aria-live="polite">{% if sections %}{{ sections|length }} sections{% endif %}</span>
   <span class="right">
     {% if story %}
       <a href="{{ url_for('edit_raw', rel=story) }}">raw yaml</a>
@@ -140,7 +140,8 @@
 </div>
 {% endif %}
 
-<div class="problems panel" id="problems"{% if not errors %} hidden{% endif %}>
+<div class="problems panel" id="problems" role="alert" aria-atomic="true"
+     {% if not errors %}hidden{% endif %}>
   <strong>Problems found:</strong>
   <ul id="problem-list">
     {% for error in errors %}<li>{{ error|e }}</li>{% endfor %}
@@ -158,15 +159,17 @@
              autocomplete="off" aria-label="section name">
       <span class="meta" data-meta></span>
       <span class="spacer"></span>
-      <button class="ghost" data-action="up" title="move up">&#8679;</button>
-      <button class="ghost" data-action="down" title="move down">&#8681;</button>
+      <button class="ghost" data-action="up" title="move up"
+              aria-label="move this section up">&#8679;</button>
+      <button class="ghost" data-action="down" title="move down"
+              aria-label="move this section down">&#8681;</button>
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
-      <button class="ghost" data-md="bold"><b>B</b></button>
-      <button class="ghost" data-md="italic"><i>I</i></button>
+      <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
+      <button class="ghost" data-md="italic" aria-label="italic"><i>I</i></button>
       <button class="ghost" data-md="code">code</button>
       <button class="ghost" data-md="quote">quote</button>
       <button class="ghost" data-md="list">list</button>
@@ -174,7 +177,8 @@
       <button class="accent" data-open="link">explore/choice link</button>
       <button class="ghost" data-open="preview">preview</button>
     </div>
-    <textarea class="sec-body" spellcheck="false">{{ section.body }}</textarea>
+    <textarea class="sec-body" spellcheck="false"
+              aria-label="markdown body of this section">{{ section.body }}</textarea>
     <details class="linktool" hidden>
       <summary>link tool &mdash; build an explore or choice link</summary>
       <div class="lt-fields">
@@ -187,11 +191,13 @@
         </div>
         <div class="lt-row">
           <label>text shown</label>
-          <input class="lt-text" placeholder="go left">
+          <input class="lt-text" placeholder="go left"
+                 aria-label="link text shown to the reader">
         </div>
         <div class="lt-row">
           <label>target</label>
-          <input class="lt-target" list="section-names" placeholder="section name">
+          <input class="lt-target" list="section-names" placeholder="section name"
+                 aria-label="target section name">
         </div>
         <div class="lt-vars"></div>
         <div class="lt-row">
@@ -214,7 +220,8 @@
     <div class="preview" hidden>
       <div class="preview-out"></div>
     </div>
-    <textarea class="sec-extra" hidden spellcheck="false">{{ section.extra_yaml }}</textarea>
+    <textarea class="sec-extra" hidden spellcheck="false"
+              aria-label="extra yaml keys of this section">{{ section.extra_yaml }}</textarea>
   </article>
   {% endfor %}
 </div>
@@ -434,8 +441,9 @@ function toggleVars(card) {
 function addVarRow(card) {
   var row = document.createElement('div');
   row.className = 'lt-row lt-var';
-  row.innerHTML = '<input class="vname" placeholder="shirt_color">'
-    + '<input class="vvalue" placeholder="red">'
+  row.innerHTML = '<input class="vname" placeholder="shirt_color" '
+    + 'aria-label="variable name">'
+    + '<input class="vvalue" placeholder="red" aria-label="variable value">'
     + '<button class="danger ghost rm" type="button">&times;</button>';
   $('.lt-vars', card).appendChild(row);
 }

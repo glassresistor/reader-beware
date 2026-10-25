@@ -185,6 +185,10 @@ def breadcrumb_of(stem):
 #: demo page a clickable link on the site.
 PAGE_CSS_LINK = '<link href="template.css" rel="stylesheet" type="text/css"/>'
 
+#: language of the example narratives, published onto every book page so
+#: screen readers voice them correctly instead of guessing
+BOOK_LANGUAGE = "en-US"
+
 
 def publishable_page(page_html, breadcrumb=None):
     """Rewrite an unzipped epub debug page into a standalone html page."""
@@ -217,6 +221,9 @@ def publishable_page(page_html, breadcrumb=None):
                 break
         encoded = urllib.parse.quote(base, safe="") + ".html"
         elem.set("href", encoded)
+    # the language travels with the page: assistive tech needs it to pick a
+    # voice, and an xml:lang on an html document is not read by browsers
+    root.xpath("/html")[0].set("lang", BOOK_LANGUAGE)
     head = root.xpath("/html/head")[0]
     style = etree.SubElement(head, "link")
     style.set("href", "template.css")
@@ -551,7 +558,8 @@ def open_link_tool(html):
     )
     rows = "".join(
         '<div class="lt-row lt-var"><input class="vname" placeholder="shirt_color" '
-        'value="%s"><input class="vvalue" placeholder="red" value="%s">'
+        'aria-label="variable name" value="%s"><input class="vvalue" '
+        'placeholder="red" aria-label="variable value" value="%s">'
         '<button class="danger ghost rm" type="button">&times;</button></div>'
         % (name, value)
         for name, value in VARIABLES

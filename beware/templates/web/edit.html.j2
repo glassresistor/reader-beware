@@ -27,7 +27,7 @@
 </p>
 
 {% if errors %}
-<div class="problems panel">
+<div class="problems panel" role="alert" aria-atomic="true">
   <strong>Problems found:</strong>
   <ul>{% for error in errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
 </div>
@@ -35,11 +35,13 @@
 
 {% if story and not created %}
 <form method="post" action="{{ url_for('save', rel=story) }}">
+  <label class="raw-note" for="editor">yaml source of {{ story }}</label>
   <textarea class="code" name="body" id="editor" spellcheck="false">{{ text }}</textarea>
   <p><button type="submit">Save</button></p>
 </form>
 {% else %}
 <form method="post" id="create-form" action="/create/story.yaml">
+  <label class="raw-note" for="editor">yaml source of the new story</label>
   <textarea class="code" name="body" id="editor" spellcheck="false">{{ text }}</textarea>
   <p>
     <label>Filename (relative to root):
@@ -82,13 +84,20 @@ function validateNow(relName, body) {
       if (!box && data.errors.length) {
         box = document.createElement('div');
         box.className = 'problems panel';
+        // the created node is a live-region announcement, not just ink
+        box.setAttribute('role', 'alert');
+        box.setAttribute('aria-atomic', 'true');
         editor.parentNode.insertBefore(box, editor);
       }
       if (box) {
+        var count = data.errors.length;
         box.innerHTML = '<strong>Problems found:</strong><ul>' +
           data.errors.map(function (e) { return '<li>' + e + '</li>'; }).join('') +
           '</ul>';
-        box.style.display = data.errors.length ? '' : 'none';
+        // the list alone is silent to assistive tech once hidden
+        box.setAttribute('aria-label',
+          count ? count + ' problems found in this yaml' : '');
+        box.style.display = count ? '' : 'none';
       }
     });
 }

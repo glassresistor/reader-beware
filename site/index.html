@@ -10,7 +10,9 @@
 </head>
 <body>
 
-<nav class="topbar">
+<a class="skip-link" href="#why">Skip to content</a>
+
+<nav class="topbar" aria-label="Sections of this page">
   <a class="brand" href="#top">Reader <b>Beware</b></a>
   <span class="links">
     <a href="#why">Why</a>
@@ -116,12 +118,15 @@
   .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
   .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
   .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  /* the screen is e-ink paper, so it needs dark ink: these are the web
+     palette&#x27;s greys inverted (#9c95ad -&gt; #756e7d clears AA at .75rem); a
+     light-palette grey would sit at 2.6:1 on the paper */
   .screen .breadcrumbs {
-    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    font-size: .75rem; color: #756e7d; padding: .4rem .8rem;
     border-bottom: 1px solid #ddd6c9;
   }
   .chrome {
-    margin-top: 14px; text-align: center; color: #8d86a0;
+    margin-top: 14px; text-align: center; color: #9c95ad;
     font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace; font-size: 13px;
   }
   .chrome b { color: #ffb0df; }
@@ -185,12 +190,15 @@ left in the drawer, and two colours to choose from.&lt;/p&gt;
   .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
   .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
   .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  /* the screen is e-ink paper, so it needs dark ink: these are the web
+     palette&#x27;s greys inverted (#9c95ad -&gt; #756e7d clears AA at .75rem); a
+     light-palette grey would sit at 2.6:1 on the paper */
   .screen .breadcrumbs {
-    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    font-size: .75rem; color: #756e7d; padding: .4rem .8rem;
     border-bottom: 1px solid #ddd6c9;
   }
   .chrome {
-    margin-top: 14px; text-align: center; color: #8d86a0;
+    margin-top: 14px; text-align: center; color: #9c95ad;
     font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace; font-size: 13px;
   }
   .chrome b { color: #ffb0df; }
@@ -269,7 +277,7 @@ go-outside:
 
   <figure class="shot">
     <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en-US&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
   &lt;title&gt;entrypoint&lt;/title&gt;
@@ -283,7 +291,11 @@ go-outside:
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --line: #3a3348;
@@ -399,7 +411,7 @@ left in the drawer, and two colours to choose from.&lt;/p&gt;
 
   <figure class="shot">
     <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en-US&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
   &lt;title&gt;go-outside&lt;/title&gt;
@@ -413,7 +425,11 @@ left in the drawer, and two colours to choose from.&lt;/p&gt;
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --line: #3a3348;
@@ -516,7 +532,7 @@ your green shirt very much.&quot;&lt;/p&gt;
   <div class="figrow">
     <figure class="shot">
       <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en-US&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
   &lt;title&gt;entrypoint&lt;/title&gt;
@@ -530,7 +546,11 @@ your green shirt very much.&quot;&lt;/p&gt;
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --line: #3a3348;
@@ -633,7 +653,7 @@ leads out; many rooms will kill you the moment you enter them.&lt;/p&gt;
     </figure>
     <figure class="shot">
       <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
-&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;en-US&quot;&gt;
 &lt;head&gt;
 &lt;meta charset=&quot;utf-8&quot;&gt;
   &lt;title&gt;take-a-minute&lt;/title&gt;
@@ -647,7 +667,11 @@ leads out; many rooms will kill you the moment you enter them.&lt;/p&gt;
 :root {
   --ink: #f2ecf5;
   --ink-dim: #c3b9cc;
-  --ink-faint: #8d86a0;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
   --black: #0b0a10;
   --grey: #17161f;
   --line: #3a3348;
@@ -768,7 +792,10 @@ body.story-page {
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -804,16 +831,35 @@ body.story-page {
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -828,7 +874,7 @@ body.story-page {
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -848,11 +894,12 @@ body.story-page {
 
 &lt;/head&gt;
 &lt;body&gt;
+&lt;a class=&quot;skip-link&quot; href=&quot;#content&quot;&gt;Skip to content&lt;/a&gt;
 &lt;header class=&quot;top&quot;&gt;
   &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; — story editor&lt;/a&gt;
   &lt;span class=&quot;root&quot;&gt;stories/&lt;/span&gt;
 &lt;/header&gt;
-&lt;main&gt;
+&lt;main id=&quot;content&quot;&gt;
 
 &lt;h1&gt;Stories in &lt;code&gt;stories/&lt;/code&gt;&lt;/h1&gt;
 
@@ -910,7 +957,10 @@ body.story-page {
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -946,16 +996,35 @@ body.story-page {
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -970,7 +1039,7 @@ body.story-page {
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -1097,11 +1166,12 @@ body.story-page {
 
 &lt;/head&gt;
 &lt;body&gt;
+&lt;a class=&quot;skip-link&quot; href=&quot;#content&quot;&gt;Skip to content&lt;/a&gt;
 &lt;header class=&quot;top&quot;&gt;
   &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; — story editor&lt;/a&gt;
   &lt;span class=&quot;root&quot;&gt;stories/&lt;/span&gt;
 &lt;/header&gt;
-&lt;main&gt;
+&lt;main id=&quot;content&quot;&gt;
 
 &lt;div class=&quot;bar&quot;&gt;
   &lt;span class=&quot;file&quot;&gt;
@@ -1109,8 +1179,8 @@ body.story-page {
   &lt;/span&gt;
   
   &lt;button id=&quot;save-btn&quot;&gt;Save&lt;/button&gt;
-  &lt;span class=&quot;status&quot; id=&quot;status&quot;&gt;&lt;/span&gt;
-  &lt;span class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;status&quot; id=&quot;status&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;stats&quot; id=&quot;stats&quot; aria-live=&quot;polite&quot;&gt;5 sections&lt;/span&gt;
   &lt;span class=&quot;right&quot;&gt;
     
       &lt;a href=&quot;/raw/demo.yaml&quot;&gt;raw yaml&lt;/a&gt;
@@ -1121,7 +1191,7 @@ body.story-page {
 
 
 
-&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot;&gt;
+&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot; role=&quot;alert&quot; aria-atomic=&quot;true&quot;&gt;
   &lt;strong&gt;Problems found:&lt;/strong&gt;
   &lt;ul id=&quot;problem-list&quot;&gt;
     &lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#x27;elif&#x27; or &#x27;else&#x27; or &#x27;endif&#x27;. The innermost block that needs to be closed is &#x27;if&#x27;.&lt;/li&gt;
@@ -1138,15 +1208,15 @@ body.story-page {
       &lt;input class=&quot;sec-name&quot; value=&quot;entrypoint&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -1154,7 +1224,7 @@ body.story-page {
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;# The Night Market
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;# The Night Market
 
 Rain slicks the neon-lit streets of New Avalon. You have **two** choices
 and one very overpowered jinja template engine.
@@ -1175,11 +1245,11 @@ and one very overpowered jinja template engine.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -1210,7 +1280,7 @@ and one very overpowered jinja template engine.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;#arena&quot;&gt;Visit the droid arena&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -1219,15 +1289,15 @@ and one very overpowered jinja template engine.&lt;/p&gt;
       &lt;input class=&quot;sec-name&quot; value=&quot;hacker&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -1235,7 +1305,7 @@ and one very overpowered jinja template engine.&lt;/p&gt;
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Hacker&#x27;s Den
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;## The Hacker&#x27;s Den
 
 She slides a keyboard across the table. `{% if credits &amp;gt; 8 %}` she says,
 *&quot;you can afford the good decrypt.&quot;*
@@ -1259,11 +1329,11 @@ def hack_the_planet(credits):
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -1286,7 +1356,7 @@ def hack_the_planet(credits):
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -1295,15 +1365,15 @@ def hack_the_planet(credits):
       &lt;input class=&quot;sec-name&quot; value=&quot;arena&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -1311,7 +1381,7 @@ def hack_the_planet(credits):
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Droid Arena
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;## The Droid Arena
 
 The crowd roars. Your credits: {{ credits }}.
 
@@ -1337,11 +1407,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -1364,7 +1434,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -1373,15 +1443,15 @@ You fight the *hard* droid.
       &lt;input class=&quot;sec-name&quot; value=&quot;jack&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -1389,7 +1459,7 @@ You fight the *hard* droid.
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;You jack in. The ICE is thick but the data is sweet.
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;You jack in. The ICE is thick but the data is sweet.
 
 &amp;gt; Victory! You are famous now.
 
@@ -1407,11 +1477,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -1434,7 +1504,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -1443,15 +1513,15 @@ You fight the *hard* droid.
       &lt;input class=&quot;sec-name&quot; value=&quot;fight&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -1459,7 +1529,7 @@ You fight the *hard* droid.
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
 
 [Back to the streets]({{ &#x27;entrypoint&#x27;|explore }})
 &lt;/textarea&gt;
@@ -1475,11 +1545,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -1502,7 +1572,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
 &lt;/div&gt;
@@ -1722,8 +1792,9 @@ function toggleVars(card) {
 function addVarRow(card) {
   var row = document.createElement(&#x27;div&#x27;);
   row.className = &#x27;lt-row lt-var&#x27;;
-  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot;&gt;&#x27;
-    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot;&gt;&#x27;
+  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot; &#x27;
+    + &#x27;aria-label=&quot;variable name&quot;&gt;&#x27;
+    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot; aria-label=&quot;variable value&quot;&gt;&#x27;
     + &#x27;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&#x27;;
   $(&#x27;.lt-vars&#x27;, card).appendChild(row);
 }
@@ -2027,7 +2098,10 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -2063,16 +2137,35 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -2087,7 +2180,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -2214,11 +2307,12 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
 
 &lt;/head&gt;
 &lt;body&gt;
+&lt;a class=&quot;skip-link&quot; href=&quot;#content&quot;&gt;Skip to content&lt;/a&gt;
 &lt;header class=&quot;top&quot;&gt;
   &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; — story editor&lt;/a&gt;
   &lt;span class=&quot;root&quot;&gt;stories/&lt;/span&gt;
 &lt;/header&gt;
-&lt;main&gt;
+&lt;main id=&quot;content&quot;&gt;
 
 &lt;div class=&quot;bar&quot;&gt;
   &lt;span class=&quot;file&quot;&gt;
@@ -2226,8 +2320,8 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   &lt;/span&gt;
   
   &lt;button id=&quot;save-btn&quot;&gt;Save&lt;/button&gt;
-  &lt;span class=&quot;status&quot; id=&quot;status&quot;&gt;&lt;/span&gt;
-  &lt;span class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;status&quot; id=&quot;status&quot; role=&quot;status&quot; aria-live=&quot;polite&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;stats&quot; id=&quot;stats&quot; aria-live=&quot;polite&quot;&gt;5 sections&lt;/span&gt;
   &lt;span class=&quot;right&quot;&gt;
     
       &lt;a href=&quot;/raw/demo.yaml&quot;&gt;raw yaml&lt;/a&gt;
@@ -2238,7 +2332,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
 
 
 
-&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot;&gt;
+&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot; role=&quot;alert&quot; aria-atomic=&quot;true&quot;&gt;
   &lt;strong&gt;Problems found:&lt;/strong&gt;
   &lt;ul id=&quot;problem-list&quot;&gt;
     &lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#x27;elif&#x27; or &#x27;else&#x27; or &#x27;endif&#x27;. The innermost block that needs to be closed is &#x27;if&#x27;.&lt;/li&gt;
@@ -2255,15 +2349,15 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
       &lt;input class=&quot;sec-name&quot; value=&quot;entrypoint&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -2271,7 +2365,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;# The Night Market
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;# The Night Market
 
 Rain slicks the neon-lit streets of New Avalon. You have **two** choices
 and one very overpowered jinja template engine.
@@ -2292,13 +2386,13 @@ and one very overpowered jinja template engine.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; value=&quot;visit the hacker&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; value=&quot;hacker&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
-        &lt;div class=&quot;lt-vars&quot;&gt;&lt;div class=&quot;lt-row lt-var&quot;&gt;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot; value=&quot;credits&quot;&gt;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot; value=&quot;10&quot;&gt;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;div class=&quot;lt-row lt-var&quot;&gt;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot; aria-label=&quot;variable name&quot; value=&quot;credits&quot;&gt;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot; aria-label=&quot;variable value&quot; value=&quot;10&quot;&gt;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
           &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
@@ -2319,7 +2413,7 @@ and one very overpowered jinja template engine.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -2328,15 +2422,15 @@ and one very overpowered jinja template engine.
       &lt;input class=&quot;sec-name&quot; value=&quot;hacker&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -2344,7 +2438,7 @@ and one very overpowered jinja template engine.
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Hacker&#x27;s Den
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;## The Hacker&#x27;s Den
 
 She slides a keyboard across the table. `{% if credits &amp;gt; 8 %}` she says,
 *&quot;you can afford the good decrypt.&quot;*
@@ -2368,11 +2462,11 @@ def hack_the_planet(credits):
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -2395,7 +2489,7 @@ def hack_the_planet(credits):
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -2404,15 +2498,15 @@ def hack_the_planet(credits):
       &lt;input class=&quot;sec-name&quot; value=&quot;arena&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -2420,7 +2514,7 @@ def hack_the_planet(credits):
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Droid Arena
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;## The Droid Arena
 
 The crowd roars. Your credits: {{ credits }}.
 
@@ -2446,11 +2540,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -2473,7 +2567,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -2482,15 +2576,15 @@ You fight the *hard* droid.
       &lt;input class=&quot;sec-name&quot; value=&quot;jack&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -2498,7 +2592,7 @@ You fight the *hard* droid.
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;You jack in. The ICE is thick but the data is sweet.
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;You jack in. The ICE is thick but the data is sweet.
 
 &amp;gt; Victory! You are famous now.
 
@@ -2516,11 +2610,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -2543,7 +2637,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
   &lt;article class=&quot;card&quot; data-card&gt;
@@ -2552,15 +2646,15 @@ You fight the *hard* droid.
       &lt;input class=&quot;sec-name&quot; value=&quot;fight&quot; spellcheck=&quot;false&quot; autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
       &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
       &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;⇧&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;⇩&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot; aria-label=&quot;move this section up&quot;&gt;⇧&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot; aria-label=&quot;move this section down&quot;&gt;⇩&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
       &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
     &lt;/header&gt;
     &lt;div class=&quot;toolbar&quot;&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
-      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot; aria-label=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot; aria-label=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
@@ -2568,7 +2662,7 @@ You fight the *hard* droid.
       &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
       &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot; aria-label=&quot;markdown body of this section&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
 
 [Back to the streets]({{ &#x27;entrypoint&#x27;|explore }})
 &lt;/textarea&gt;
@@ -2584,11 +2678,11 @@ You fight the *hard* droid.
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;text shown&lt;/label&gt;
-          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; aria-label=&quot;link text shown to the reader&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
           &lt;label&gt;target&lt;/label&gt;
-          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; aria-label=&quot;target section name&quot;&gt;
         &lt;/div&gt;
         &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
         &lt;div class=&quot;lt-row&quot;&gt;
@@ -2611,7 +2705,7 @@ You fight the *hard* droid.
     &lt;div class=&quot;preview&quot; hidden&gt;
       &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
     &lt;/div&gt;
-    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot; aria-label=&quot;extra yaml keys of this section&quot;&gt;&lt;/textarea&gt;
   &lt;/article&gt;
   
 &lt;/div&gt;
@@ -2831,8 +2925,9 @@ function toggleVars(card) {
 function addVarRow(card) {
   var row = document.createElement(&#x27;div&#x27;);
   row.className = &#x27;lt-row lt-var&#x27;;
-  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot;&gt;&#x27;
-    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot;&gt;&#x27;
+  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot; &#x27;
+    + &#x27;aria-label=&quot;variable name&quot;&gt;&#x27;
+    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot; aria-label=&quot;variable value&quot;&gt;&#x27;
     + &#x27;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&#x27;;
   $(&#x27;.lt-vars&#x27;, card).appendChild(row);
 }
@@ -3136,7 +3231,10 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   :root {
     --ink: #f2ecf5;          /* milky white text */
     --ink-dim: #c3b9cc;
-    --ink-faint: #8d86a0;
+    /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+       text); site/scripts/contrast_audit.py re-checks them in CI, which is
+       why the dimmest ink in this palette sits at #9c95ad. */
+    --ink-faint: #9c95ad;
     --black: #0b0a10;        /* main background */
     --grey: #17161f;         /* panels */
     --grey-2: #211e29;
@@ -3172,16 +3270,35 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   }
   header.top a.brand { font-weight: bold; color: var(--ink); }
   header.top a.brand b { color: var(--pink); }
-  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  header.top .root { color: var(--ink-faint); font-size: .85em; overflow-wrap: anywhere; }
+  /* the keyboard entry point, hidden until it takes focus */
+  .skip-link {
+    position: absolute; left: -9999px; top: auto;
+    width: 1px; height: 1px; overflow: hidden;
+  }
+  .skip-link:focus, .skip-link:focus-visible {
+    position: fixed; left: .8rem; top: .6rem; z-index: 100;
+    width: auto; height: auto; padding: .5rem .9rem;
+    background: var(--grey-2); color: var(--pink-soft);
+    border: 1px solid var(--pink); border-radius: 6px;
+  }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { transition: none !important; animation: none !important; }
+  }
   main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
   h1, h2, h3 { color: var(--lilac); font-weight: normal; }
   button, input[type=submit] {
-    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    /* #a06ae8 with white text is only 3.7:1, so the gradient starts one
+       shade down (#8a55d6, 4.8:1) and keeps its sheen through the deep end */
+    background: linear-gradient(180deg, #8a55d6 0%, var(--purple-deep) 100%);
     color: #fff; border: 1px solid rgba(255, 110, 199, .35);
     padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
     font-size: .85rem;
   }
-  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  /* the hover state is dark text on hot pink: #140712 keeps the pair above
+     AA without pulling a pure black into a lilac palette */
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #140712; }
   button.ghost, .ghost {
     background: transparent; color: var(--ink-dim);
     border: 1px solid var(--line);
@@ -3196,7 +3313,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
   }
   input:focus, textarea:focus, select:focus, button:focus {
     outline: none; border-color: var(--pink);
-    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .55);
   }
   label { color: var(--ink-dim); font-size: .85rem; }
   .panel {
@@ -3228,11 +3345,12 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
 
 &lt;/head&gt;
 &lt;body&gt;
+&lt;a class=&quot;skip-link&quot; href=&quot;#content&quot;&gt;Skip to content&lt;/a&gt;
 &lt;header class=&quot;top&quot;&gt;
   &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; — story editor&lt;/a&gt;
   &lt;span class=&quot;root&quot;&gt;stories/&lt;/span&gt;
 &lt;/header&gt;
-&lt;main&gt;
+&lt;main id=&quot;content&quot;&gt;
 
 &lt;h1&gt;
   &lt;code&gt;stories/&lt;/code&gt;
@@ -3245,7 +3363,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
 &lt;/p&gt;
 
 
-&lt;div class=&quot;problems panel&quot;&gt;
+&lt;div class=&quot;problems panel&quot; role=&quot;alert&quot; aria-atomic=&quot;true&quot;&gt;
   &lt;strong&gt;Problems found:&lt;/strong&gt;
   &lt;ul&gt;&lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#x27;elif&#x27; or &#x27;else&#x27; or &#x27;endif&#x27;. The innermost block that needs to be closed is &#x27;if&#x27;.&lt;/li&gt;&lt;/ul&gt;
 &lt;/div&gt;
@@ -3253,6 +3371,7 @@ $(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
 
 
 &lt;form method=&quot;post&quot; action=&quot;/save/demo.yaml&quot;&gt;
+  &lt;label class=&quot;raw-note&quot; for=&quot;editor&quot;&gt;yaml source of demo.yaml&lt;/label&gt;
   &lt;textarea class=&quot;code&quot; name=&quot;body&quot; id=&quot;editor&quot; spellcheck=&quot;false&quot;&gt;---
 entrypoint:
   body: |
@@ -3344,13 +3463,20 @@ function validateNow(relName, body) {
       if (!box &amp;&amp; data.errors.length) {
         box = document.createElement(&#x27;div&#x27;);
         box.className = &#x27;problems panel&#x27;;
+        // the created node is a live-region announcement, not just ink
+        box.setAttribute(&#x27;role&#x27;, &#x27;alert&#x27;);
+        box.setAttribute(&#x27;aria-atomic&#x27;, &#x27;true&#x27;);
         editor.parentNode.insertBefore(box, editor);
       }
       if (box) {
+        var count = data.errors.length;
         box.innerHTML = &#x27;&lt;strong&gt;Problems found:&lt;/strong&gt;&lt;ul&gt;&#x27; +
           data.errors.map(function (e) { return &#x27;&lt;li&gt;&#x27; + e + &#x27;&lt;/li&gt;&#x27;; }).join(&#x27;&#x27;) +
           &#x27;&lt;/ul&gt;&#x27;;
-        box.style.display = data.errors.length ? &#x27;&#x27; : &#x27;none&#x27;;
+        // the list alone is silent to assistive tech once hidden
+        box.setAttribute(&#x27;aria-label&#x27;,
+          count ? count + &#x27; problems found in this yaml&#x27; : &#x27;&#x27;);
+        box.style.display = count ? &#x27;&#x27; : &#x27;none&#x27;;
       }
     });
 }
