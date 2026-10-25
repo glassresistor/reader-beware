@@ -116,11 +116,16 @@ jobs:
           print("checked %d published pages" % len(pages))
 
           # 2. the story embeds are live demos: every choice link in them
-          # must resolve against the site root (srcdoc documents have no
-          # base url of their own) to a real published page.  hrefs aim at
-          # percent-encoded filenames; pages decodes once and looks that
-          # up on the artifact tree, so existence is checked against the
-          # decoded spelling.
+          # must resolve to a real published page.  A srcdoc document has
+          # no url of its own -- it inherits the base url of the page that
+          # embeds it (the index at site/), so relative targets inside an
+          # embed resolve from the site root, and only those can ever land:
+          # a leading slash would instead resolve against the bare domain
+          # root (<host>/books/...), missing any project page served under
+          # a path such as github.io/reader-beware/ and 404ing there.
+          # hrefs aim at percent-encoded filenames; pages decodes once and
+          # looks that up on the artifact tree, so existence is checked
+          # against the decoded spelling.
           for name in ("story-entry", "story-state", "story-maze", "story-belair"):
               path = os.path.join(root, "embeds", name + ".html")
               with open(path, encoding="utf-8") as f:
@@ -132,11 +137,45 @@ jobs:
                   decoded = html.unescape(target)
                   if decoded.startswith(("http:", "https:", "#", "mailto:")):
                       continue
+                  if decoded.startswith("/"):
+                      problems.append(
+                          "embed %s links host-root absolute %s" % (path, target)
+                      )
+                      continue
                   joined = os.path.normpath(
                       os.path.join(root, unquote(decoded.lstrip("/")))
                   )
                   if not os.path.exists(joined):
                       problems.append("embed link %s -> %s" % (path, target))
+
+          # 2b. the editor captures are screenshots of a running flask app:
+          # left untouched they would carry anchors at app routes (/new,
+          # /belair.yaml), forms posting to it and scripts fetching it --
+          # all absolute paths that resolve against the bare host root from
+          # inside a srcdoc frame, so every click or autosave in a demo 404s
+          # at a static github.io host.  They must render inert instead.
+          for name in (
+              "editor-index",
+              "editor-studio-preview",
+              "editor-studio-link",
+              "editor-raw",
+          ):
+              path = os.path.join(root, "embeds", name + ".html")
+              with open(path, encoding="utf-8") as f:
+                  body = f.read()
+              navigable = re.findall(r'<a\b[^>]*?href="', body)
+              if navigable:
+                  problems.append(
+                      "%s keeps %d navigable anchors" % (path, len(navigable))
+                  )
+              forms = re.findall(r"<form\b", body)
+              if forms:
+                  problems.append("%s keeps %d live forms" % (path, len(forms)))
+              scripts = re.findall(r"<script", body)
+              if scripts:
+                  problems.append(
+                      "%s keeps %d inline scripts" % (path, len(scripts))
+                  )
 
           # 3. no iframe srcdoc may hold escaped-up-once markup: after the
           # attribute decodes, nothing inside it may still be entities.
@@ -246,13 +285,12 @@ jobs:
                       continue
                   # pages decodes the request path once before resolving
                   # it, so compare the decoded spelling against git's
-                  # recorded filenames (which are raw filesystem names)
-                  if src != "site/index.html":
-                      # embed hrefs are absolute urls (/books/...): map
-                      # them back onto the site folder git publishes
-                      key = "site" + unquote(target)
-                  else:
-                      key = os.path.normpath(os.path.join(base, unquote(target)))
+                  # recorded filenames (which are raw filesystem names).
+                  # Embed hrefs are relative and resolve against the base
+                  # url a srcdoc document inherits from the embedding page
+                  # -- that is the index at site/, never the embed file's
+                  # own location -- so every link lands under site/ too.
+                  key = os.path.normpath(os.path.join(base, unquote(target)))
                   if key not in tracked:
                       problems.append("untracked target %s -> %s" % (src, key))
 

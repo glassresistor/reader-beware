@@ -368,11 +368,13 @@ def story_pages():
     pages are taken from site/books/ after build_book publishes them, which
     keeps what the demos show identical to what the site actually serves.
 
-    A srcdoc document lives at about:srcdoc with no base url of its own, so
-    relative targets in it resolve against nothing and never reach a real
-    file; the demo pages therefore link absolute paths into the published
-    books (/books/<name>/<page>.html), which is exactly where a reader who
-    clicks a choice ends up."""
+    A srcdoc document inherits the base url of the page that embeds it,
+    so relative targets inside it resolve against the *embedding* page's
+    location, not against nothing: the demo pages link relative into the
+    published books (books/<name>/<page>.html).  That is what makes the
+    demos clickable on any host -- a leading slash would instead aim at
+    the bare domain root (<host>/books/...), which misses a project page
+    served under a path such as github.io/reader-beware/ and 404s."""
     css = template_css_source()
     for book, filename, embed in STORY_EMBEDS:
         target = os.path.join(BOOKS, book, publish_filename(filename))
@@ -392,19 +394,25 @@ def story_pages():
         write_embed(embed, page_html)
 
 
-#: the unzipped epub pages never carry this breadcrumb suffix; a demo page
-#: keeps its own breadcrumb strip but its links must aim at real files
-BOOK_PATH_PREFIX = "/books/"
+#: where story embeds aim their choice links: relative to the base url of
+#: the page that embeds them (a srcdoc document inherits that base), so
+#: "books/..." lands under whatever path the site is served from.  A
+#: leading slash would resolve against the bare domain root instead and
+#: 404 on a project page such as github.io/reader-beware/
+BOOK_PATH_PREFIX = "books/"
 
 
 def link_into_published_books(page_html, book):
-    """Rewrite relative story hrefs into /books/<book>/<file>.html paths.
+    """Rewrite relative story hrefs into books/<book>/<file>.html paths.
 
     The embed renders inside an iframe whose document has no filesystem
-    location, so the sibling files of the page it was built from only
-    exist as served urls; make that url explicit in every link.  These
-    pages are already html-escaped for their embed (the build writes them
-    with &amp; entities), hence unescape first, escape back last.
+    location of its own, so the sibling files of the page it was built
+    from only exist as served urls; make those urls explicit in every
+    link, but relative (no leading slash): a srcdoc document resolves
+    them against the base url it inherits from the embedding page, which
+    is where the books actually live.  These pages are already
+    html-escaped for their embed (the build writes them with &amp;
+    entities), hence unescape first, escape back last.
     """
     import urllib.parse
 
@@ -617,26 +625,68 @@ def caption_editor_root(html_text):
     return etree.tostring(root, encoding="unicode", method="html")
 
 
+def inert_editor_markup(html_text):
+    """Turn a rendered editor page into a static capture.
+
+    The studio pages are rendered from a running flask app: their anchors
+    point at app routes (/belair.yaml, /new), their forms post to it
+    (/delete/..., /save/...) and their inline scripts fetch it (/validate,
+    /preview) -- all absolute paths.  Inside a srcdoc frame those resolve
+    against the *embedding page's* base url, i.e. the bare host root on
+    github.io, where no such route exists: every click or autosave fired
+    by a demo would 404 (and worse, a form could POST at the static
+    host).  A capture must therefore show the app without being able to
+    talk to it: drop anchors' hrefs outright -- even same-document
+    fragments (#content), since a fragment-only url resolves against the
+    inherited base and would navigate the frame out of its capture --
+    demote forms to divs so there is nothing left to submit, and delete
+    inline scripts so nothing can reach the network from inside a
+    screenshot."""
+    from lxml import etree
+
+    parser = etree.HTMLParser(remove_comments=True)
+    root = etree.fromstring(html_text.encode("utf-8"), parser)
+    for anchor in root.xpath("//a[@href]"):
+        del anchor.attrib["href"]
+    # a <form> with no action submits to its own document's url, which for
+    # a srcdoc frame is inherited from the embedding page -- still a live
+    # request at the static host.  Demote the forms to plain divs (the
+    # studio css has no form selectors, so layout survives) so there is
+    # nothing left to submit.
+    for form in root.xpath("//form"):
+        form.tag = "div"
+        for attribute in list(form.attrib):
+            if attribute in ("action", "method", "enctype") or attribute.startswith(
+                "on"
+            ):
+                del form.attrib[attribute]
+    for script in root.xpath("//script"):
+        script.getparent().remove(script)
+    return etree.tostring(root, encoding="unicode", method="html")
+
+
 def editor_pages():
     """Render the flask editor pages through the test client and embed them:
     story index, section studio with the live preview open on the entrypoint
-    card, the explore/choice link tool mid-build, raw yaml editor."""
+    card, the explore/choice link tool mid-build, raw yaml editor.  Each
+    capture is made inert last (see inert_editor_markup), after every
+    injection has run."""
     app = create_app(EXAMPLE_SRC)
     app.config["TESTING"] = True
     client = app.test_client()
 
     index = caption_editor_root(client.get("/").get_data(as_text=True))
-    write_embed("editor-index", index)
+    write_embed("editor-index", inert_editor_markup(index))
 
     studio = caption_editor_root(client.get("/" + DEMO_STORY).get_data(as_text=True))
     previewed = inject_preview(studio, client, "entrypoint")
-    write_embed("editor-studio-preview", previewed)
+    write_embed("editor-studio-preview", inert_editor_markup(previewed))
 
     studio = caption_editor_root(client.get("/" + DEMO_STORY).get_data(as_text=True))
-    write_embed("editor-studio-link", open_link_tool(studio))
+    write_embed("editor-studio-link", inert_editor_markup(open_link_tool(studio)))
 
     raw = caption_editor_root(client.get("/raw/" + DEMO_STORY).get_data(as_text=True))
-    write_embed("editor-raw", raw)
+    write_embed("editor-raw", inert_editor_markup(raw))
 
 
 #: device-framed embeds render at their own aspect ratio (mock e-reader)
@@ -673,9 +723,11 @@ def srcdoc_embed(embed_name):
     """The iframe tag embedding a rendered page via srcdoc (html-escaped so
     it survives as an attribute; the browser parses it as real html).
 
-    The demo pages live at about:srcdoc with no base url, so only the
-    absolute targets (/books/...) written into them can ever resolve --
-    nothing else breaks out to the network from a srcdoc document.
+    A srcdoc document inherits this page's base url, so relative targets
+    inside it (books/...) resolve against wherever this page itself is
+    served; the editor captures in these frames carry no links, forms or
+    scripts at all (see inert_editor_markup), so nothing else can break
+    out to the network from a srcdoc document.
     """
     with open(os.path.join(EMBEDS, embed_name + ".html"), "r", encoding="utf-8") as f:
         source = f.read()

@@ -121,9 +121,9 @@
 
 </head>
 <body>
-<a class="skip-link" href="#content">Skip to content</a>
+<a class="skip-link">Skip to content</a>
 <header class="top">
-  <a class="brand" href="/">Reader <b>Beware</b> — story editor</a>
+  <a class="brand">Reader <b>Beware</b> — story editor</a>
   <span class="root">stories/</span>
 </header>
 <main id="content">
@@ -134,7 +134,7 @@
 <p class="raw-note">
   Raw yaml editing —
   
-    <a href="/demo.yaml">back to the section studio</a>
+    <a>back to the section studio</a>
   
 </p>
 
@@ -146,7 +146,7 @@
 
 
 
-<form method="post" action="/save/demo.yaml">
+<div>
   <label class="raw-note" for="editor">yaml source of demo.yaml</label>
   <textarea class="code" name="body" id="editor" spellcheck="false">---
 entrypoint:
@@ -205,58 +205,8 @@ fight:
     [Back to the streets]({{ 'entrypoint'|explore }})
 </textarea>
   <p><button type="submit">Save</button></p>
-</form>
+</div>
 
-
-<script>
-// point the create form at whichever filename the user typed
-var createForm = document.getElementById('create-form');
-if (createForm) {
-  var relInput = createForm.querySelector('[name=rel_new]');
-  createForm.addEventListener('submit', function () {
-    var name = relInput.value || 'story.yaml';
-    createForm.action = '/create/' + encodeURIComponent(name);
-  });
-}
-// autosave validation for existing files
-var editor = document.getElementById('editor');
-var m = location.pathname.match(/^\/raw\/(.*)$/);
-var rel = m ? decodeURIComponent(m[1]) : null;
-if (rel && editor) {
-  var timer = null;
-  editor.addEventListener('input', function () {
-    clearTimeout(timer);
-    timer = setTimeout(function () { validateNow(rel, editor.value); }, 900);
-  });
-}
-function validateNow(relName, body) {
-  var fd = new FormData();
-  fd.append('body', body);
-  fetch('/validate/' + encodeURIComponent(relName), {method: 'POST', body: fd})
-    .then(function (r) { return r.json(); })
-    .then(function (data) {
-      var box = document.querySelector('.problems');
-      if (!box && data.errors.length) {
-        box = document.createElement('div');
-        box.className = 'problems panel';
-        // the created node is a live-region announcement, not just ink
-        box.setAttribute('role', 'alert');
-        box.setAttribute('aria-atomic', 'true');
-        editor.parentNode.insertBefore(box, editor);
-      }
-      if (box) {
-        var count = data.errors.length;
-        box.innerHTML = '<strong>Problems found:</strong><ul>' +
-          data.errors.map(function (e) { return '<li>' + e + '</li>'; }).join('') +
-          '</ul>';
-        // the list alone is silent to assistive tech once hidden
-        box.setAttribute('aria-label',
-          count ? count + ' problems found in this yaml' : '');
-        box.style.display = count ? '' : 'none';
-      }
-    });
-}
-</script>
 
 </main>
 </body>
