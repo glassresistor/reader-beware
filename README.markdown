@@ -1,4 +1,3 @@
-{% raw %}
 ~~~
 # Reader Beware
 
@@ -428,4 +427,3 @@ text = serialize_sections(sections)      # canonical narrative yaml again
 - Move to folder of yaml files?  How to merge? Namespacing?
 - Codify book folder structure?
 ~~~
-{% endraw %}
