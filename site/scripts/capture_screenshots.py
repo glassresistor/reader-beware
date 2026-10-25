@@ -140,17 +140,23 @@ def copy_template_css():
 
 
 def publish_filename(filename):
-    """Url filename a built section page is published under in site/books/.
+    """Filesystem name a built section page is published under in site/books/.
 
     The epub builder writes its unzipped debug pages with percent-encoded
-    names already (encode_filenames), but the story embed targets are
-    written raw (``entrypoint-{}.html``); decoding then re-encoding keeps
-    both spellings landing on the same served file, which is what a
-    browser resolves when it follows one of those choice links."""
+    names already (encode_filenames), and the story embed targets are
+    written raw (``entrypoint-{}.html``); publish both spellings as the
+    *decoded* name, because github pages decodes a request path exactly
+    once before looking it up on the artifact tree.  A file stored as
+    ``entrypoint-%7B%7D.html`` is therefore only reachable by a request
+    that decodes to that literal string (``%257B...``, twice-encoded),
+    while every real link in the site is written once-encoded and decodes
+    to ``entrypoint-{}.html`` -- which is exactly the name stored here,
+    so those links hit.  Storing encoded names instead was what made
+    every choice link on the deployed site 404."""
     stem = os.path.splitext(filename)[0]
     if "%" in stem:
         stem = urllib.parse.unquote(stem)
-    return urllib.parse.quote(stem, safe="") + ".html"
+    return stem + ".html"
 
 
 def breadcrumb_of(stem):
@@ -260,9 +266,11 @@ def build_book(name):
         if entry == "template.css":
             shutil.copyfile(os.path.join(html_dir, entry), os.path.join(dest, entry))
         elif entry.endswith(".html"):
-            # unzip-style filename: decode it so the url always matches
+            # unzip-style filename: publish under the decoded name so a
+            # once-encoded request (what every href on the site writes)
+            # decodes to exactly this file on the pages artifact tree
             stem = os.path.splitext(urllib.parse.unquote(entry))[0]
-            safe = urllib.parse.quote(stem, safe="") + ".html"
+            safe = stem + ".html"
             with open(os.path.join(html_dir, entry), "r", encoding="utf-8") as f:
                 page_html = f.read()
             page_html = publishable_page(page_html, breadcrumb_of(stem))
