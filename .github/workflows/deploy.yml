@@ -206,15 +206,23 @@ jobs:
           python - <<'PY'
           import os, re, subprocess, sys, html
 
+          # -z matters here: the built book pages are named with literal
+          # quote characters (put-on-shirt-{"shirt_color": "red"}.html), and
+          # git ls-files c-style-quotes any path containing a double quote --
+          # it wraps the whole path in quotes and escapes them as \.  Splitting
+          # the quoted output on newlines would put "site/books/shirts/...{\""
+          # ... in the set, which never matches a decoded href, so every
+          # quoted name looked untracked even though git carried it.  With -z
+          # paths are emitted raw and separated by NULs, with no quoting.
           tracked = set(
               subprocess.run(
-                  ["git", "ls-files", "site"],
+                  ["git", "ls-files", "-z", "site"],
                   capture_output=True,
                   check=True,
-                  text=True,
               )
-              .stdout.splitlines()
-          )
+              .stdout.decode("utf-8")
+              .split("\0")
+          ) - {""}
           print("tracked files under site/: %d" % len(tracked))
           problems = []
 
