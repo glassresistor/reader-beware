@@ -85,11 +85,139 @@
 
   <div class="figrow">
     <figure class="shot device">
-      <img src="images/device-red-shirt.png" alt="E-reader showing the red shirt chapter of a reader-beware epub">
+      <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Red or Green?&lt;/title&gt;
+&lt;style&gt;
+  :root { color-scheme: light; }
+  html, body { margin: 0; }
+  body {
+    display: flex; align-items: center; justify-content: center; min-height: 100vh;
+    background:
+      radial-gradient(700px 300px at 80% 15%, #4a2f6e66 0%, transparent 60%),
+      radial-gradient(500px 300px at 15% 85%, #ff6ec733 0%, transparent 55%),
+      #111016;
+  }
+  .device {
+    width: 420px; height: 760px;
+    background: #1c1a24; border-radius: 26px;
+    padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 0 1px #3d3950;
+  }
+  /* the built epub page inlined into the screen: e-ink paper colours
+     instead of the dark web theme, so it reads like a real device */
+  .screen {
+    width: 100%; height: 640px; background: #f7f5ef; border-radius: 6px;
+    overflow: hidden; position: relative;
+    font-family: &quot;Iowan Old Style&quot;, Georgia, serif; color: #201c28;
+  }
+  .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
+  .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
+  .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  .screen .breadcrumbs {
+    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    border-bottom: 1px solid #ddd6c9;
+  }
+  .chrome {
+    margin-top: 14px; text-align: center; color: #8d86a0;
+    font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace; font-size: 13px;
+  }
+  .chrome b { color: #ffb0df; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;device&quot;&gt;
+  &lt;div class=&quot;screen&quot;&gt;&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; · entrypoint (shirt_color=red)&lt;/div&gt;
+
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div xml:lang=&quot;en-US&quot;&gt;
+        &lt;h1&gt;Red or Green?&lt;/h1&gt;
+
+&lt;p&gt;You wake up in a tiny flat above a kebab shop. There is one clean shirt
+left in the drawer, and two colours to choose from.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#x27;put-on-shirt-{&quot;shirt_color&quot;:%20&quot;red&quot;}.html&#x27;&gt;put on the red shirt&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#x27;put-on-shirt-{&quot;shirt_color&quot;:%20&quot;green&quot;}.html&#x27;&gt;put on the green shirt&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;chrome&quot;&gt;&lt;b&gt;Red or Green?&lt;/b&gt; &amp;#183; chapter 2 of 9 &amp;#183; world: shirt_color=red&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.810;" title="reader-beware device red shirt"></iframe>
       <figcaption>An epub built by <code class="inline">beware build-epub</code>, opened on an e-reader: the red shirt chapter.</figcaption>
     </figure>
     <figure class="shot device">
-      <img src="images/device-green-shirt.png" alt="E-reader showing the green shirt chapter of a reader-beware epub">
+      <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Red or Green?&lt;/title&gt;
+&lt;style&gt;
+  :root { color-scheme: light; }
+  html, body { margin: 0; }
+  body {
+    display: flex; align-items: center; justify-content: center; min-height: 100vh;
+    background:
+      radial-gradient(700px 300px at 80% 15%, #4a2f6e66 0%, transparent 60%),
+      radial-gradient(500px 300px at 15% 85%, #ff6ec733 0%, transparent 55%),
+      #111016;
+  }
+  .device {
+    width: 420px; height: 760px;
+    background: #1c1a24; border-radius: 26px;
+    padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 0 1px #3d3950;
+  }
+  /* the built epub page inlined into the screen: e-ink paper colours
+     instead of the dark web theme, so it reads like a real device */
+  .screen {
+    width: 100%; height: 640px; background: #f7f5ef; border-radius: 6px;
+    overflow: hidden; position: relative;
+    font-family: &quot;Iowan Old Style&quot;, Georgia, serif; color: #201c28;
+  }
+  .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
+  .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
+  .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  .screen .breadcrumbs {
+    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    border-bottom: 1px solid #ddd6c9;
+  }
+  .chrome {
+    margin-top: 14px; text-align: center; color: #8d86a0;
+    font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace; font-size: 13px;
+  }
+  .chrome b { color: #ffb0df; }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;device&quot;&gt;
+  &lt;div class=&quot;screen&quot;&gt;&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; · go-outside (shirt_color=green)&lt;/div&gt;
+
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div xml:lang=&quot;en-US&quot;&gt;
+        &lt;p&gt;Outside you see Jane and she says &quot;I like
+your green shirt very much.&quot;&lt;/p&gt;
+
+&lt;p&gt;She buys you a coffee, and the day starts bright.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#x27;end-{&quot;shirt_color&quot;:%20&quot;green&quot;}.html&#x27;&gt;The end (warm one)&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+  &lt;div class=&quot;chrome&quot;&gt;&lt;b&gt;Red or Green?&lt;/b&gt; &amp;#183; chapter 6 of 9 &amp;#183; world: shirt_color=green&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.810;" title="reader-beware device green shirt"></iframe>
       <figcaption>The same yaml, another world state: Jane approves the green shirt. Every choice is a real link inside a real ebook.</figcaption>
     </figure>
   </div>
@@ -140,7 +268,127 @@ go-outside:
   </div>
 
   <figure class="shot">
-    <img src="images/story-entry.png" alt="A built reader-beware html story page">
+    <iframe class="embed" srcdoc="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;/&gt;
+  &lt;title&gt;entrypoint&lt;/title&gt;
+
+  &lt;style&gt;
+/* Reader Beware book page styling (html builds).
+   Dark &quot;ebook reader&quot; theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+;
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  --ink-faint: #8d86a0;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: &quot;Iowan Old Style&quot;, Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^=&quot;#&quot;]) { }
+
+.story code, .story pre {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body class=&quot;story-page&quot;&gt;
+
+&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; &amp;#183; entrypoint&lt;/div&gt;
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a id=&quot;sid-df124086ef3c9193&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div id=&quot;sid-df124086ef3c9193&quot; xml:lang=&quot;en-US&quot;&gt;
+        &lt;h1&gt;Red or Green?&lt;/h1&gt;
+
+&lt;p&gt;You wake up in a tiny flat above a kebab shop. There is one clean shirt
+left in the drawer, and two colours to choose from.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;put-on-shirt-{&amp;quot;shirt_color&amp;quot;: &amp;quot;red&amp;quot;}.html&quot;&gt;put on the red shirt&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;put-on-shirt-{&amp;quot;shirt_color&amp;quot;: &amp;quot;green&amp;quot;}.html&quot;&gt;put on the green shirt&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.900;" title="reader-beware story entry"></iframe>
     <figcaption>Built html output (debug pages): the entrypoint of "Red or Green?" after <code class="inline">beware build-html</code>.</figcaption>
   </figure>
 
@@ -157,17 +405,368 @@ go-outside:
   </ul>
 
   <figure class="shot">
-    <img src="images/story-state.png" alt="A built story page showing world state">
+    <iframe class="embed" srcdoc="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;/&gt;
+  &lt;title&gt;go-outside&lt;/title&gt;
+
+  &lt;style&gt;
+/* Reader Beware book page styling (html builds).
+   Dark &quot;ebook reader&quot; theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+;
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  --ink-faint: #8d86a0;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: &quot;Iowan Old Style&quot;, Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^=&quot;#&quot;]) { }
+
+.story code, .story pre {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body class=&quot;story-page&quot;&gt;
+
+&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; &amp;#183; go-outside (shirt_color=green)&lt;/div&gt;
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a id=&quot;sid-363b811f763b585d&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div id=&quot;sid-363b811f763b585d&quot; xml:lang=&quot;en-US&quot;&gt;
+        &lt;p&gt;Outside you see Jane and she says &quot;I like
+your green shirt very much.&quot;&lt;/p&gt;
+
+&lt;p&gt;She buys you a coffee, and the day starts bright.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;end-{&amp;quot;shirt_color&amp;quot;: &amp;quot;green&amp;quot;}.html&quot;&gt;The end (warm one)&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.900;" title="reader-beware story state"></iframe>
     <figcaption>A chapter from "Red or Green?" &mdash; the go-outside section with <code class="inline">shirt_color=green</code> baked into its filename: Jane approves.</figcaption>
   </figure>
 
   <div class="figrow">
     <figure class="shot">
-      <img src="images/story-maze.png" alt="Maze book entrypoint">
+      <iframe class="embed" srcdoc="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;/&gt;
+  &lt;title&gt;entrypoint&lt;/title&gt;
+
+  &lt;style&gt;
+/* Reader Beware book page styling (html builds).
+   Dark &quot;ebook reader&quot; theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+;
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  --ink-faint: #8d86a0;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: &quot;Iowan Old Style&quot;, Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^=&quot;#&quot;]) { }
+
+.story code, .story pre {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body class=&quot;story-page&quot;&gt;
+
+&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; &amp;#183; entrypoint&lt;/div&gt;
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a id=&quot;sid-df124086ef3c9193&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div id=&quot;sid-df124086ef3c9193&quot; xml:lang=&quot;en-US&quot;&gt;
+        &lt;h1&gt;The Little Square&lt;/h1&gt;
+
+&lt;p&gt;You are dropped off on the roof of a huge square maze. Only one room
+leads out; many rooms will kill you the moment you enter them.&lt;/p&gt;
+
+&lt;p&gt;Primes are death. &lt;code&gt;(42, 69)&lt;/code&gt; is freedom.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;go-{&amp;quot;x&amp;quot;: 0, &amp;quot;y&amp;quot;: 0}.html&quot;&gt;go down through the hole&lt;/a&gt;&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.900;" title="reader-beware story maze"></iframe>
       <figcaption>The Little Square, entrypoint</figcaption>
     </figure>
     <figure class="shot">
-      <img src="images/story-belair.png" alt="Belair example page">
+      <iframe class="embed" srcdoc="&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot;
+  &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;/&gt;
+  &lt;title&gt;prince-of-belair&lt;/title&gt;
+
+  &lt;style&gt;
+/* Reader Beware book page styling (html builds).
+   Dark &quot;ebook reader&quot; theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+;
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  --ink-faint: #8d86a0;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: &quot;Iowan Old Style&quot;, Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^=&quot;#&quot;]) { }
+
+.story code, .story pre {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: &quot;IBM Plex Mono&quot;, Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body class=&quot;story-page&quot;&gt;
+
+&lt;div class=&quot;breadcrumbs&quot;&gt;&lt;b&gt;Reader Beware&lt;/b&gt; &amp;#183; prince-of-belair&lt;/div&gt;
+
+&lt;div class=&quot;story&quot;&gt;
+    &lt;span class=&quot;header&quot;&gt;&lt;a id=&quot;sid-aa6fd01e6990a9f9&quot;&gt;&lt;/a&gt;&lt;/span&gt;
+    &lt;div id=&quot;sid-aa6fd01e6990a9f9&quot; xml:lang=&quot;en-US&quot;&gt;
+        &lt;p&gt;i forgot what happens at this point&lt;/p&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.900;" title="reader-beware story belair"></iframe>
       <figcaption>Prince of Belair, a generated section</figcaption>
     </figure>
   </div>
@@ -182,22 +781,2624 @@ go-outside:
   entrypoints or undefined targets while you type; <code class="inline">ctrl</code>+S writes canonical yaml.</p>
 
   <figure class="shot">
-    <img src="images/editor-index.png" alt="Story index page of the reader-beware editor">
+    <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Reader Beware Editor&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, &quot;Iowan Old Style&quot;, serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: &quot;DejaVu Sans Mono&quot;, Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;top&quot;&gt;
+  &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; &amp;mdash; story editor&lt;/a&gt;
+  &lt;span class=&quot;root&quot;&gt;/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src&lt;/span&gt;
+&lt;/header&gt;
+&lt;main&gt;
+
+&lt;h1&gt;Stories in &lt;code&gt;/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src&lt;/code&gt;&lt;/h1&gt;
+
+&lt;div class=&quot;panel&quot;&gt;
+
+&lt;ul class=&quot;stories&quot;&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&quot;/belair.yaml&quot;&gt;&lt;strong&gt;belair.yaml&lt;/strong&gt;&lt;/a&gt;
+    &lt;form method=&quot;post&quot; action=&quot;/delete/belair.yaml&quot;
+          onsubmit=&quot;return confirm(&#x27;Delete belair.yaml?&#x27;);&quot;&gt;
+      &lt;button class=&quot;danger&quot; type=&quot;submit&quot;&gt;delete&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/li&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&quot;/demo.yaml&quot;&gt;&lt;strong&gt;demo.yaml&lt;/strong&gt;&lt;/a&gt;
+    &lt;form method=&quot;post&quot; action=&quot;/delete/demo.yaml&quot;
+          onsubmit=&quot;return confirm(&#x27;Delete demo.yaml?&#x27;);&quot;&gt;
+      &lt;button class=&quot;danger&quot; type=&quot;submit&quot;&gt;delete&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/li&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&quot;/maze.yaml&quot;&gt;&lt;strong&gt;maze.yaml&lt;/strong&gt;&lt;/a&gt;
+    &lt;form method=&quot;post&quot; action=&quot;/delete/maze.yaml&quot;
+          onsubmit=&quot;return confirm(&#x27;Delete maze.yaml?&#x27;);&quot;&gt;
+      &lt;button class=&quot;danger&quot; type=&quot;submit&quot;&gt;delete&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/li&gt;
+  
+  &lt;li&gt;
+    &lt;a href=&quot;/shirts.yaml&quot;&gt;&lt;strong&gt;shirts.yaml&lt;/strong&gt;&lt;/a&gt;
+    &lt;form method=&quot;post&quot; action=&quot;/delete/shirts.yaml&quot;
+          onsubmit=&quot;return confirm(&#x27;Delete shirts.yaml?&#x27;);&quot;&gt;
+      &lt;button class=&quot;danger&quot; type=&quot;submit&quot;&gt;delete&lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/li&gt;
+  
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;a href=&quot;/new&quot;&gt;&lt;strong&gt;+ New story&amp;hellip;&lt;/strong&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 0.750;" title="reader-beware editor index"></iframe>
     <figcaption>The story index: every yaml under your root folder, click to open the studio.</figcaption>
   </figure>
 
   <figure class="shot">
-    <img src="images/editor-studio-preview.png" alt="Section studio with live preview open">
+    <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;demo.yaml &amp;middot; studio&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, &quot;Iowan Old Style&quot;, serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: &quot;DejaVu Sans Mono&quot;, Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+&lt;/style&gt;
+
+&lt;style&gt;
+  .bar {
+    display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .7rem .9rem; margin-bottom: 1rem;
+  }
+  .bar .file { font-size: 1.05rem; color: var(--ink); }
+  .bar .file code { color: var(--pink-soft); }
+  .bar .status { color: var(--ink-faint); font-size: .85rem; min-width: 9em; }
+  .bar .status.ok { color: var(--lilac); }
+  .bar .status.bad { color: var(--danger); }
+  .bar .right { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
+  .stats { color: var(--ink-faint); font-size: .85rem; }
+  .stats b.pink { color: var(--pink); }
+  .outline { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.2rem; }
+  .chip {
+    background: var(--grey-2); border: 1px solid var(--line); color: var(--ink-dim);
+    padding: .2rem .55rem; border-radius: 999px; font-size: .78rem; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--purple); color: var(--ink); }
+  .chip.entrypoint { border-color: var(--pink); color: var(--pink-soft); }
+  .chip.broken { border-color: var(--danger); color: var(--danger); }
+  .card {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 8px; margin-bottom: 1.4rem;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .35);
+  }
+  .card.flagged { border-color: rgba(255, 92, 122, .5); }
+  .card-top {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .6rem .8rem; background: var(--grey-3);
+    border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0;
+  }
+  .card-top .sec-name { min-width: 12em; flex: 0 1 auto; }
+  .card-top .tag {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--pink); border: 1px solid rgba(255, 110, 199, .4);
+    padding: .1rem .4rem; border-radius: 3px;
+  }
+  .card-top .meta { color: var(--ink-faint); font-size: .8rem; }
+  .card-top .spacer { flex: 1; }
+  .toolbar {
+    display: flex; gap: .25rem; flex-wrap: wrap;
+    padding: .45rem .8rem; border-bottom: 1px solid var(--line);
+  }
+  .toolbar button { font-size: .78rem; padding: .2rem .5rem; }
+  .toolbar .accent { background: linear-gradient(180deg, var(--pink) 0%, #c44ea0 100%); color: #20051a; border-color: var(--purple); }
+  .toolbar .accent:hover { background: var(--purple); color: #fff; }
+  textarea.sec-body {
+    display: block; width: calc(100% - 1.6rem); margin: .8rem .8rem 0;
+    min-height: 9em; max-height: 34em; resize: vertical;
+    font-size: .85rem; line-height: 1.45; tab-size: 4;
+    background: #131019; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: .6rem .7rem;
+  }
+  textarea.sec-body:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255, 110, 199, .2); }
+  details.linktool {
+    margin: .8rem; border: 1px solid var(--line); border-radius: 6px;
+    background: #181423;
+  }
+  details.linktool &gt; summary {
+    cursor: pointer; padding: .4rem .7rem; color: var(--lilac);
+    font-size: .85rem; list-style: none;
+  }
+  details.linktool &gt; summary::before { content: &quot;\2724 &quot;; color: var(--pink); }
+  details.linktool[open] &gt; summary { border-bottom: 1px solid var(--line); }
+  .lt-fields { padding: .7rem; display: grid; gap: .55rem; }
+  .lt-row { display: flex; gap: .45rem; align-items: center; flex-wrap: wrap; }
+  .lt-row label { min-width: 6.5em; }
+  .lt-row input.vname { width: 10em; }
+  .lt-row input.vvalue { width: 12em; }
+  .snippet {
+    display: block; width: 100%; background: #0d0b13; color: var(--pink-soft);
+    border: 1px solid var(--purple-deep); border-radius: 4px;
+    padding: .35rem .5rem; font-size: .82rem; overflow-x: auto; white-space: pre;
+  }
+  .inspector { padding: .6rem .8rem .8rem; }
+  .inspector h4 { margin: 0 0 .4rem; color: var(--ink-faint); font-size: .8rem; font-weight: normal; }
+  .inspector ul { list-style: none; margin: 0; padding: 0; }
+  .inspector li {
+    display: flex; gap: .5rem; align-items: baseline;
+    padding: .25rem 0; border-bottom: 1px dashed #2a2436; font-size: .85rem;
+  }
+  .kind { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+  .kind.explore { color: var(--purple); }
+  .kind.choice { color: var(--pink); }
+  .ltarget { color: var(--ink); cursor: pointer; }
+  .ltarget:hover { text-decoration: underline; }
+  .missing .ltarget { color: var(--danger); }
+  .args { color: var(--ink-faint); font-size: .8rem; }
+  .preview {
+    margin: .8rem; border: 1px solid var(--purple-deep); border-radius: 6px;
+    background: #14111c; padding: .9rem 1.1rem;
+    font-size: .95rem; line-height: 1.55;
+  }
+  .preview h2, .preview h3 { color: var(--pink-soft); }
+  .preview a { color: var(--lilac); }
+  .preview pre, .preview code {
+    background: #0d0b13; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .2rem .35rem; font-size: .85rem;
+  }
+  .preview-error { color: var(--danger); }
+  .card-actions { display: flex; gap: .6rem; margin: 1.2rem 0; }
+  .extras-note { color: var(--ink-faint); font-size: .78rem; padding: 0 .8rem .5rem; }
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;top&quot;&gt;
+  &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; &amp;mdash; story editor&lt;/a&gt;
+  &lt;span class=&quot;root&quot;&gt;/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src&lt;/span&gt;
+&lt;/header&gt;
+&lt;main&gt;
+
+&lt;div class=&quot;bar&quot;&gt;
+  &lt;span class=&quot;file&quot;&gt;
+    &lt;code&gt;demo.yaml&lt;/code&gt;
+  &lt;/span&gt;
+  
+  &lt;button id=&quot;save-btn&quot;&gt;Save&lt;/button&gt;
+  &lt;span class=&quot;status&quot; id=&quot;status&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;right&quot;&gt;
+    
+      &lt;a href=&quot;/raw/demo.yaml&quot;&gt;raw yaml&lt;/a&gt;
+    
+    &lt;a href=&quot;/&quot;&gt;all stories&lt;/a&gt;
+  &lt;/span&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot;&gt;
+  &lt;strong&gt;Problems found:&lt;/strong&gt;
+  &lt;ul id=&quot;problem-list&quot;&gt;
+    &lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &amp;#39;elif&amp;#39; or &amp;#39;else&amp;#39; or &amp;#39;endif&amp;#39;. The innermost block that needs to be closed is &amp;#39;if&amp;#39;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;outline&quot; id=&quot;outline&quot;&gt;&lt;/div&gt;
+
+&lt;div id=&quot;cards&quot;&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;entrypoint&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;# The Night Market
+
+Rain slicks the neon-lit streets of New Avalon. You have **two** choices
+and one very overpowered jinja template engine.
+
+[Visit the hacker]({{ &amp;#39;hacker&amp;#39;|choice(credits=10) }})
+
+[Visit the droid arena]({{ &amp;#39;arena&amp;#39;|choice(credits=5) }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind choice&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;hacker&lt;/span&gt; &lt;span class=&quot;args&quot;&gt;credits=10&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;kind choice&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;arena&lt;/span&gt; &lt;span class=&quot;args&quot;&gt;credits=5&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot;&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;h1&gt;The Night Market&lt;/h1&gt;
+
+&lt;p&gt;Rain slicks the neon-lit streets of New Avalon. You have &lt;strong&gt;two&lt;/strong&gt; choices
+and one very overpowered jinja template engine.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#hacker&quot;&gt;Visit the hacker&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#arena&quot;&gt;Visit the droid arena&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;hacker&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Hacker&amp;#39;s Den
+
+She slides a keyboard across the table. `{% if credits &amp;gt; 8 %}` she says,
+*&amp;#34;you can afford the good decrypt.&amp;#34;*
+
+```python
+def hack_the_planet(credits):
+    return credits &amp;gt; 8 and &amp;#34;rebellion&amp;#34; or &amp;#34;poverty&amp;#34;
+```
+
+[Jack in]({{ &amp;#39;jack&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;jack&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;arena&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Droid Arena
+
+The crowd roars. Your credits: {{ credits }}.
+
+{% if credits &amp;gt; 6 %}
+You bribe the guard and pick the *easy* droid.
+
+[Fight]({{ &amp;#39;fight&amp;#39;|explore }})
+{% else %}
+You fight the *hard* droid.
+
+[Fight](#not-here)
+{% endif %}
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;fight&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;jack&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;You jack in. The ICE is thick but the data is sweet.
+
+&amp;gt; Victory! You are famous now.
+
+[Celebrate]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;entrypoint&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;fight&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
+
+[Back to the streets]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;entrypoint&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+&lt;/div&gt;
+
+&lt;div class=&quot;card-actions&quot;&gt;
+  &lt;button id=&quot;add-btn&quot;&gt;+ add section&lt;/button&gt;
+&lt;/div&gt;
+&lt;p class=&quot;extras-note&quot;&gt;
+  Per-section keys other than &lt;code&gt;body&lt;/code&gt; are preserved untouched when the
+  studio saves.
+&lt;/p&gt;
+
+&lt;datalist id=&quot;section-names&quot;&gt;&lt;/datalist&gt;
+
+
+&lt;script&gt;
+/* Studio editor behaviour: cards, link tools, preview, autosave. */
+var CREATED = false;
+var STORY_REL = &quot;demo.yaml&quot;;
+var OPEN2 = &#x27;{&#x27; + &#x27;{&#x27;;
+var CLOSE2 = &#x27;}&#x27; + &#x27;}&#x27;;
+var LINK_SOURCE = &quot;&#x27;((?:[^&#x27;\\\\]|\\\\.)+)&#x27;\\s*\\|\\s*(explore|choice)\\b(?:\\s*\\(\\s*([^)]*)\\))?&quot;;
+
+function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+function $$(sel, ctx) {
+  return Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+}
+function esc(text) {
+  var holder = document.createElement(&#x27;div&#x27;);
+  holder.textContent = String(text == null ? &#x27;&#x27; : text);
+  return holder.innerHTML;
+}
+var cardsBox = $(&#x27;#cards&#x27;);
+var nameList = $(&#x27;#section-names&#x27;);
+var statusBox = $(&#x27;#status&#x27;);
+var statsBox = $(&#x27;#stats&#x27;);
+var problemsBox = $(&#x27;#problems&#x27;);
+var problemList = $(&#x27;#problem-list&#x27;);
+
+function cardNodes() { return $$(&#x27;.card&#x27;, cardsBox); }
+function sectionNames() {
+  return cardNodes().map(function (card) {
+    return $(&#x27;.sec-name&#x27;, card).value.trim();
+  }); }
+function bodyOf(card) { return $(&#x27;.sec-body&#x27;, card).value; }
+
+function parseLinks(text) {
+  var re = new RegExp(LINK_SOURCE, &#x27;g&#x27;);
+  var out = [];
+  var m;
+  while ((m = re.exec(String(text || &#x27;&#x27;))) !== null) {
+    out.push({
+      target: m[1].replace(/\\&#x27;/g, &quot;&#x27;&quot;),
+      kind: m[2],
+      args: (m[3] || &#x27;&#x27;).trim()
+    });
+  }
+  return out;
+}
+
+function refreshOutline() {
+  var names = sectionNames();
+  var outline = $(&#x27;#outline&#x27;);
+  outline.innerHTML = names.map(function (name) {
+    var cls = &#x27;chip&#x27; + (name === &#x27;entrypoint&#x27; ? &#x27; entrypoint&#x27; : &#x27;&#x27;);
+    return &#x27;&lt;button class=&quot;&#x27; + cls + &#x27;&quot; data-jump=&quot;&#x27; + esc(name) + &#x27;&quot;&gt;&#x27;
+      + esc(name || &#x27;(unnamed)&#x27;) + &#x27;&lt;/button&gt;&#x27;;
+  }).join(&#x27;&#x27;);
+}
+
+function refreshDatalist() {
+  nameList.innerHTML = sectionNames().map(function (name) {
+    return &#x27;&lt;option value=&quot;&#x27; + esc(name) + &#x27;&quot;&gt;&#x27;;
+  }).join(&#x27;&#x27;);
+}
+
+function allLinks() {
+  var links = [];
+  cardNodes().forEach(function (card) {
+    parseLinks(bodyOf(card)).forEach(function (link) {
+      link.from = $(&#x27;.sec-name&#x27;, card).value.trim();
+      links.push(link);
+    });
+  });
+  return links;
+}
+
+function refreshStats() {
+  var names = sectionNames();
+  var links = allLinks();
+  var broken = links.filter(function (l) { return names.indexOf(l.target) === -1; });
+  statsBox.innerHTML = names.length + &#x27; sections, &#x27; + links.length + &#x27; links&#x27; +
+    (broken.length
+      ? &#x27;, &lt;b class=&quot;pink&quot;&gt;&#x27; + broken.length + &#x27; broken&lt;/b&gt;&#x27;
+      : &#x27;&#x27;);
+}
+
+function refreshInspector(card) {
+  var names = sectionNames();
+  var links = parseLinks(bodyOf(card));
+  var ul = $(&#x27;[data-inspector]&#x27;, card);
+  ul.innerHTML = links.map(function (l) {
+    var missing = names.indexOf(l.target) === -1;
+    return &#x27;&lt;li class=&quot;&#x27; + (missing ? &#x27;missing&#x27; : &#x27;&#x27;) + &#x27;&quot;&gt;&#x27;
+      + &#x27;&lt;span class=&quot;kind &#x27; + l.kind + &#x27;&quot;&gt;&#x27; + l.kind + &#x27;&lt;/span&gt;&#x27;
+      + &#x27;&lt;span class=&quot;ltarget&quot; data-goto=&quot;&#x27; + esc(l.target) + &#x27;&quot;&gt;&#x27;
+      + esc(l.target) + &#x27;&lt;/span&gt;&#x27;
+      + &#x27;&lt;span class=&quot;args&quot;&gt;&#x27; + esc(l.args) + &#x27;&lt;/span&gt;&#x27;
+      + (missing
+          ? &#x27;&lt;button class=&quot;danger ghost lt-new&quot; data-new=&quot;&#x27; + esc(l.target) + &#x27;&quot; type=&quot;button&quot;&gt;create section&lt;/button&gt;&#x27;
+          : &#x27;&#x27;) + &#x27;&lt;/li&gt;&#x27;;
+  }).join(&#x27;&#x27;) || &#x27;&lt;li&gt;&lt;em&gt;none yet&lt;/em&gt;&lt;/li&gt;&#x27;;
+  var cardMeta = $(&#x27;[data-meta]&#x27;, card);
+  var missingCount = links.filter(function (l) {
+    return names.indexOf(l.target) === -1;
+  }).length;
+  cardMeta.innerHTML = links.length + &#x27; link&#x27; + (links.length === 1 ? &#x27;&#x27; : &#x27;s&#x27;) +
+    (missingCount ? &#x27; · &lt;span style=&quot;color:var(--danger)&quot;&gt;&#x27; + missingCount + &#x27; missing&lt;/span&gt;&#x27; : &#x27;&#x27;);
+  $(&#x27;[data-tag]&#x27;, card).hidden = $(&#x27;.sec-name&#x27;, card).value.trim() !== &#x27;entrypoint&#x27;;
+}
+
+function refreshMetaAll() {
+  var cards = cardNodes();
+  cards.forEach(refreshInspector);
+  refreshOutline();
+  refreshDatalist();
+  refreshStats();
+}
+
+/* -- markdown toolbar ------------------------------------------------ */
+function replaceRange(ta, start, end, text) {
+  ta.value = ta.value.slice(0, start) + text + ta.value.slice(end);
+  var pos = start + text.length;
+  ta.selectionStart = ta.selectionEnd = pos;
+  ta.focus();
+}
+function wrapSelection(ta, marker) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  replaceRange(ta, s, e, marker + sel + marker);
+}
+function prefixLines(ta, prefix) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var startLine = ta.value.lastIndexOf(&#x27;\n&#x27;, s - 1) + 1;
+  var chunk = ta.value.slice(startLine, e);
+  var updated = chunk.split(&#x27;\n&#x27;).map(function (line) {
+    return line ? prefix + line : line;
+  }).join(&#x27;\n&#x27;);
+  replaceRange(ta, startLine, e, updated);
+}
+function inlineCodeOrFence(ta) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  if (sel.indexOf(&#x27;\n&#x27;) !== -1) {
+    replaceRange(ta, s, e, &#x27;```\n&#x27; + sel + &#x27;\n```&#x27;);
+  } else {
+    wrapSelection(ta, &#x27;`&#x27;);
+  }
+}
+function applyMarkdown(card, action) {
+  var ta = $(&#x27;.sec-body&#x27;, card);
+  if (action === &#x27;bold&#x27;) { wrapSelection(ta, &#x27;**&#x27;); }
+  else if (action === &#x27;italic&#x27;) { wrapSelection(ta, &#x27;*&#x27;); }
+  else if (action === &#x27;code&#x27;) { inlineCodeOrFence(ta); }
+  else if (action === &#x27;quote&#x27;) { prefixLines(ta, &#x27;&gt; &#x27;); }
+  else if (action === &#x27;list&#x27;) { prefixLines(ta, &#x27;- &#x27;); }
+  else if (action === &#x27;h2&#x27;) { prefixLines(ta, &#x27;## &#x27;); }
+  else if (action === &#x27;var&#x27;) {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    var sel = ta.value.slice(s, e);
+    replaceRange(ta, s, e,
+      OPEN2 + &#x27; &#x27; + (sel || &#x27;variable&#x27;) + &#x27; &#x27; + CLOSE2);
+  }
+  scheduleValidate();
+}
+
+/* -- link tool ------------------------------------------------------- */
+function formatValue(value) {
+  var v = String(value).trim();
+  if (/^-?\d+$/.test(v)) { return v; }
+  if (/^-?\d*\.\d+$/.test(v)) { return v; }
+  if (v === &#x27;true&#x27;) { return &#x27;True&#x27;; }
+  if (v === &#x27;false&#x27;) { return &#x27;False&#x27;; }
+  return &quot;&#x27;&quot; + v.replace(/\\/g, &#x27;\\\\&#x27;).replace(/&#x27;/g, &quot;\\&#x27;&quot;) + &quot;&#x27;&quot;;
+}
+function varRows(card) {
+  return $$(&#x27;.lt-vars .lt-row&#x27;, card).map(function (row) {
+    return {
+      name: $(&#x27;.vname&#x27;, row).value.trim(),
+      value: $(&#x27;.vvalue&#x27;, row).value
+    };
+  }).filter(function (v) { return v.name; });
+}
+function buildSnippet(card) {
+  var kind = $(&#x27;.lt-kind&#x27;, card).value;
+  var target = $(&#x27;.lt-target&#x27;, card).value.trim();
+  var display = $(&#x27;.lt-text&#x27;, card).value.trim();
+  var args = &#x27;&#x27;;
+  if (kind === &#x27;choice&#x27;) {
+    var parts = varRows(card).map(function (v) {
+      return v.name + &#x27;=&#x27; + formatValue(v.value);
+    });
+    if (parts.length) { args = &#x27;(&#x27; + parts.join(&#x27;, &#x27;) + &#x27;)&#x27;; }
+  }
+  var jinja = OPEN2 + &quot; &#x27;&quot; + target + &quot;&#x27;|&quot; + kind + args + &#x27; &#x27; + CLOSE2;
+  var label = display || (&#x27;[&#x27; + target + &#x27;]&#x27;);
+  if (!display) { return &#x27;[&#x27; + jinja + &#x27;]&#x27;; }
+  return &#x27;[&#x27; + display + &#x27;](&#x27; + jinja + &#x27;)&#x27;;
+}
+function refreshSnippet(card) {
+  $(&#x27;.snippet&#x27;, card).textContent = buildSnippet(card);
+}
+function toggleVars(card) {
+  var isChoice = $(&#x27;.lt-kind&#x27;, card).value === &#x27;choice&#x27;;
+  $(&#x27;.lt-vars&#x27;, card).style.display = isChoice ? &#x27;&#x27; : &#x27;none&#x27;;
+}
+function addVarRow(card) {
+  var row = document.createElement(&#x27;div&#x27;);
+  row.className = &#x27;lt-row lt-var&#x27;;
+  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot;&gt;&#x27;
+    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot;&gt;&#x27;
+    + &#x27;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&#x27;;
+  $(&#x27;.lt-vars&#x27;, card).appendChild(row);
+}
+function insertLink(card) {
+  var ta = $(&#x27;.sec-body&#x27;, card);
+  var snippet = buildSnippet(card);
+  replaceRange(ta, ta.selectionStart || 0, ta.selectionEnd || 0,
+    (needsSpaceBefore(ta) ? &#x27; &#x27; : &#x27;&#x27;) + snippet);
+  scheduleValidate();
+}
+function needsSpaceBefore(ta) {
+  var before = ta.value.slice(0, ta.selectionStart);
+  return before.length &gt; 0 &amp;&amp; !/\s$/.test(before);
+}
+
+/* -- preview --------------------------------------------------------- */
+function togglePreview(card) {
+  var box = $(&#x27;.preview&#x27;, card);
+  if (!box.hidden) { box.hidden = true; return; }
+  box.hidden = false;
+  var out = $(&#x27;.preview-out&#x27;, card);
+  out.textContent = &#x27;rendering…&#x27;;
+  var fd = new FormData();
+  fd.append(&#x27;body&#x27;, bodyOf(card));
+  fetch(&#x27;/preview/&#x27; + encodeURIComponent(STORY_REL || &#x27;new.yaml&#x27;),
+        {method: &#x27;POST&#x27;, body: fd})
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.error) {
+        out.innerHTML = &#x27;&lt;p class=&quot;preview-error&quot;&gt;&#x27; + esc(data.error) + &#x27;&lt;/p&gt;&#x27;;
+      } else {
+        out.innerHTML = data.html || &#x27;&lt;p&gt;&lt;em&gt;empty&lt;/em&gt;&lt;/p&gt;&#x27;;
+      }
+    });
+}
+
+/* -- payload / save / validate -------------------------------------- */
+function buildPayload() {
+  var sections = cardNodes().map(function (card) {
+    return {
+      name: $(&#x27;.sec-name&#x27;, card).value.trim(),
+      body: bodyOf(card),
+      extra: $(&#x27;.sec-extra&#x27;, card).value
+    };
+  });
+  var fd = new FormData();
+  fd.append(&#x27;payload&#x27;, JSON.stringify({sections: sections}));
+  return fd;
+}
+function showErrors(errors) {
+  problemList.innerHTML = errors.map(function (e) { return &#x27;&lt;li&gt;&#x27; + esc(e) + &#x27;&lt;/li&gt;&#x27;; }).join(&#x27;&#x27;);
+  problemsBox.hidden = !errors.length;
+  cardNodes().forEach(function (card) {
+    var name = $(&#x27;.sec-name&#x27;, card).value.trim();
+    var flagged = name &amp;&amp; errors.some(function (e) {
+      return e.indexOf(name + &#x27;:&#x27;) === 0 || e.indexOf(name + &#x27; links&#x27;) === 0;
+    });
+    card.classList.toggle(&#x27;flagged&#x27;, Boolean(flagged));
+  });
+}
+function setStatus(message, cls) {
+  statusBox.textContent = message;
+  statusBox.className = &#x27;status&#x27; + (cls ? &#x27; &#x27; + cls : &#x27;&#x27;);
+}
+function saveStory() {
+  if (CREATED) { return createStory(); }
+  setStatus(&#x27;saving…&#x27;);
+  fetch(&#x27;/write/&#x27; + encodeURIComponent(STORY_REL),
+        {method: &#x27;POST&#x27;, body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok &amp;&amp; res.d.ok) {
+        setStatus(&#x27;saved&#x27;, &#x27;ok&#x27;);
+        showErrors([]);
+      } else {
+        setStatus(&#x27;not saved&#x27;, &#x27;bad&#x27;);
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function createStory() {
+  var nameField = $(&#x27;#rel-new&#x27;);
+  if (!nameField || !nameField.value.trim()) {
+    setStatus(&#x27;enter a filename first&#x27;, &#x27;bad&#x27;);
+    return;
+  }
+  setStatus(&#x27;creating…&#x27;);
+  fetch(&#x27;/create/&#x27; + encodeURIComponent(nameField.value.trim()),
+        {method: &#x27;POST&#x27;, body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok &amp;&amp; res.d.ok) {
+        location.href = &#x27;/&#x27; + encodeURIComponentPath(nameField.value.trim());
+      } else {
+        setStatus(&#x27;not created&#x27;, &#x27;bad&#x27;);
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function encodeURIComponentPath(pathname) {
+  return pathname.split(&#x27;/&#x27;).map(encodeURIComponent).join(&#x27;%2F&#x27;);
+}
+var validateTimer = null;
+function markDirty() {
+  if (CREATED) { return; }
+  setStatus(&#x27;unsaved\u2026&#x27;);
+}
+function scheduleValidate() {
+  markDirty();
+  if (CREATED) { return; }
+  clearTimeout(validateTimer);
+  validateTimer = setTimeout(function () {
+    fetch(&#x27;/validate/&#x27; + encodeURIComponent(STORY_REL),
+          {method: &#x27;POST&#x27;, body: buildPayload()})
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var errors = data.errors || [];
+        showErrors(errors);
+        if (errors.length) {
+          setStatus(errors.length + &#x27; problem&#x27; + (errors.length === 1 ? &#x27;&#x27; : &#x27;s&#x27;), &#x27;bad&#x27;);
+        } else {
+          setStatus(&#x27;looks good&#x27;, &#x27;ok&#x27;);
+        }
+      });
+  }, 900);
+}
+
+/* -- card lifecycle -------------------------------------------------- */
+function blankCard(template) {
+  var card = template.cloneNode(true);
+  $(&#x27;.sec-name&#x27;, card).value = &#x27;&#x27;;
+  $(&#x27;.sec-body&#x27;, card).value = &#x27;&#x27;;
+  $(&#x27;.sec-extra&#x27;, card).value = &#x27;&#x27;;
+  $$(&#x27;.linktool input, .linktool select&#x27;, card).forEach(function (input) {
+    if (input.tagName === &#x27;SELECT&#x27;) { input.value = &#x27;explore&#x27;; } else { input.value = &#x27;&#x27;; }
+  });
+  $(&#x27;.lt-vars&#x27;, card).innerHTML = &#x27;&#x27;;
+  $(&#x27;.preview&#x27;, card).hidden = true;
+  $(&#x27;.preview-out&#x27;, card).innerHTML = &#x27;&#x27;;
+  return card;
+}
+function addCard(name, body) {
+  if (!cardNodes().length) { return null; }
+  var card = blankCard(cardNodes()[0]);
+  $(&#x27;.sec-name&#x27;, card).value = name || &#x27;&#x27;;
+  $(&#x27;.sec-body&#x27;, card).value = body || &#x27;&#x27;;
+  cardsBox.appendChild(card);
+  wireCard(card);
+  refreshMetaAll();
+  return card;
+}
+function deleteCard(card) {
+  if (!window.confirm(&#x27;Delete section &quot;&#x27; + $(&#x27;.sec-name&#x27;, card).value.trim() + &#x27;&quot;?&#x27;)) {
+    return;
+  }
+  card.parentNode.removeChild(card);
+  refreshMetaAll();
+  scheduleValidate();
+}
+function moveCard(card, delta) {
+  var siblings = cardNodes();
+  var index = siblings.indexOf(card);
+  var target = siblings[index + delta];
+  if (!target) { return; }
+  var parent = card.parentNode;
+  if (delta &lt; 0) { parent.insertBefore(card, target); }
+  else { parent.insertBefore(target, card); }
+  refreshMetaAll();
+}
+function duplicateCard(card) {
+  var fresh = blankCard(card);
+  var base = $(&#x27;.sec-name&#x27;, card).value.trim();
+  var names = sectionNames();
+  var name = base + &#x27;-copy&#x27;;
+  var n = 2;
+  while (names.indexOf(name) !== -1) { name = base + &#x27;-copy-&#x27; + (n++); }
+  $(&#x27;.sec-name&#x27;, fresh).value = name;
+  $(&#x27;.sec-body&#x27;, fresh).value = bodyOf(card);
+  $(&#x27;.sec-extra&#x27;, fresh).value = $(&#x27;.sec-extra&#x27;, card).value;
+  card.parentNode.insertBefore(fresh, card.nextSibling);
+  wireCard(fresh);
+  refreshMetaAll();
+}
+
+function wireCard(card) {
+  $$(&#x27;.toolbar button&#x27;, card).forEach(function (btn) {
+    btn.addEventListener(&#x27;click&#x27;, function () {
+      if (btn.dataset.md) { applyMarkdown(card, btn.dataset.md); }
+      else if (btn.dataset.open === &#x27;link&#x27;) {
+        var tool = $(&#x27;.linktool&#x27;, card);
+        tool.hidden = false;
+        tool.open = true;
+        refreshSnippet(card);
+      } else if (btn.dataset.open === &#x27;preview&#x27;) { togglePreview(card); }
+    });
+  });
+  $$(&#x27;.card-top button&#x27;, card).forEach(function (btn) {
+    btn.addEventListener(&#x27;click&#x27;, function () {
+      var action = btn.dataset.action;
+      if (action === &#x27;up&#x27;) { moveCard(card, -1); scheduleValidate(); }
+      else if (action === &#x27;down&#x27;) { moveCard(card, 1); scheduleValidate(); }
+      else if (action === &#x27;dupe&#x27;) { duplicateCard(card); }
+      else if (action === &#x27;del&#x27;) { deleteCard(card); }
+    });
+  });
+  $(&#x27;.sec-name&#x27;, card).addEventListener(&#x27;input&#x27;, function () {
+    refreshMetaAll(); markDirty(); scheduleValidate();
+  });
+  $(&#x27;.sec-body&#x27;, card).addEventListener(&#x27;input&#x27;, function () {
+    refreshInspector(card); refreshStats(); markDirty(); scheduleValidate();
+  });
+  var tool = $(&#x27;.linktool&#x27;, card);
+  if (tool) {
+    $$(&#x27;.lt-kind, .lt-text, .lt-target&#x27;, card).forEach(function (field) {
+      field.addEventListener(&#x27;input&#x27;, function () { refreshSnippet(card); });
+      field.addEventListener(&#x27;change&#x27;, function () {
+        toggleVars(card); refreshSnippet(card);
+      });
+    });
+    $(&#x27;.lt-addvar&#x27;, card).addEventListener(&#x27;click&#x27;, function () {
+      addVarRow(card);
+    });
+    $(&#x27;.lt-insert&#x27;, card).addEventListener(&#x27;click&#x27;, function () { insertLink(card); });
+    $(&#x27;.lt-copy&#x27;, card).addEventListener(&#x27;click&#x27;, function () {
+      var code = $(&#x27;.snippet&#x27;, card);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code.textContent);
+      } else {
+        code.focus &amp;&amp; code.select();
+      }
+    });
+    tool.addEventListener(&#x27;click&#x27;, function (event) {
+      var rm = event.target.closest ? event.target.closest(&#x27;.rm&#x27;) : null;
+      if (rm) { rm.closest(&#x27;.lt-var&#x27;).remove(); refreshSnippet(card); }
+    });
+  }
+}
+
+/* -- global wiring --------------------------------------------------- */
+cardNodes().forEach(wireCard);
+cardNodes().forEach(refreshInspector);
+refreshMetaAll();
+
+var addBtn = $(&#x27;#add-btn&#x27;);
+if (addBtn) {
+  addBtn.addEventListener(&#x27;click&#x27;, function () {
+    var card = addCard(&#x27;&#x27;, &#x27;&#x27;);
+    if (!card) {
+      setStatus(&#x27;cannot add sections here&#x27;, &#x27;bad&#x27;);
+      return;
+    }
+    $(&#x27;.sec-name&#x27;, card).focus();
+  });
+}
+var saveBtn = $(&#x27;#save-btn&#x27;);
+if (saveBtn) { saveBtn.addEventListener(&#x27;click&#x27;, saveStory); }
+
+document.addEventListener(&#x27;keydown&#x27;, function (event) {
+  if ((event.metaKey || event.ctrlKey) &amp;&amp; String(event.key).toLowerCase() === &#x27;s&#x27;) {
+    event.preventDefault();
+    saveStory();
+  }
+});
+
+cardsBox.addEventListener(&#x27;click&#x27;, function (event) {
+  var make = event.target.closest ? event.target.closest(&#x27;.lt-new&#x27;) : null;
+  if (make) {
+    var name = make.getAttribute(&#x27;data-new&#x27;);
+    var card = addCard(name, &#x27;&#x27;);
+    if (card) { $(&#x27;.sec-body&#x27;, card).focus(); }
+    scheduleValidate();
+  }
+});
+$(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
+  var chip = event.target.closest ? event.target.closest(&#x27;[data-jump]&#x27;) : null;
+  if (chip) {
+    var name = chip.getAttribute(&#x27;data-jump&#x27;);
+    cardNodes().forEach(function (card) {
+      if ($(&#x27;.sec-name&#x27;, card).value.trim() === name) {
+        card.scrollIntoView({behavior: &#x27;smooth&#x27;, block: &#x27;start&#x27;});
+      }
+    });
+  }
+});
+&lt;/script&gt;
+
+
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 2.400;" title="reader-beware editor studio preview"></iframe>
     <figcaption>The section studio with a live preview open on the entrypoint card &mdash; jinja rendered, markdown converted, no build needed.</figcaption>
   </figure>
 
   <figure class="shot">
-    <img src="images/editor-studio-link.png" alt="Explore and choice link tool">
+    <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;demo.yaml &amp;middot; studio&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, &quot;Iowan Old Style&quot;, serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: &quot;DejaVu Sans Mono&quot;, Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+&lt;/style&gt;
+
+&lt;style&gt;
+  .bar {
+    display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .7rem .9rem; margin-bottom: 1rem;
+  }
+  .bar .file { font-size: 1.05rem; color: var(--ink); }
+  .bar .file code { color: var(--pink-soft); }
+  .bar .status { color: var(--ink-faint); font-size: .85rem; min-width: 9em; }
+  .bar .status.ok { color: var(--lilac); }
+  .bar .status.bad { color: var(--danger); }
+  .bar .right { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
+  .stats { color: var(--ink-faint); font-size: .85rem; }
+  .stats b.pink { color: var(--pink); }
+  .outline { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.2rem; }
+  .chip {
+    background: var(--grey-2); border: 1px solid var(--line); color: var(--ink-dim);
+    padding: .2rem .55rem; border-radius: 999px; font-size: .78rem; cursor: pointer;
+  }
+  .chip:hover { border-color: var(--purple); color: var(--ink); }
+  .chip.entrypoint { border-color: var(--pink); color: var(--pink-soft); }
+  .chip.broken { border-color: var(--danger); color: var(--danger); }
+  .card {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 8px; margin-bottom: 1.4rem;
+    box-shadow: 0 2px 14px rgba(0, 0, 0, .35);
+  }
+  .card.flagged { border-color: rgba(255, 92, 122, .5); }
+  .card-top {
+    display: flex; align-items: center; gap: .5rem;
+    padding: .6rem .8rem; background: var(--grey-3);
+    border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0;
+  }
+  .card-top .sec-name { min-width: 12em; flex: 0 1 auto; }
+  .card-top .tag {
+    font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
+    color: var(--pink); border: 1px solid rgba(255, 110, 199, .4);
+    padding: .1rem .4rem; border-radius: 3px;
+  }
+  .card-top .meta { color: var(--ink-faint); font-size: .8rem; }
+  .card-top .spacer { flex: 1; }
+  .toolbar {
+    display: flex; gap: .25rem; flex-wrap: wrap;
+    padding: .45rem .8rem; border-bottom: 1px solid var(--line);
+  }
+  .toolbar button { font-size: .78rem; padding: .2rem .5rem; }
+  .toolbar .accent { background: linear-gradient(180deg, var(--pink) 0%, #c44ea0 100%); color: #20051a; border-color: var(--purple); }
+  .toolbar .accent:hover { background: var(--purple); color: #fff; }
+  textarea.sec-body {
+    display: block; width: calc(100% - 1.6rem); margin: .8rem .8rem 0;
+    min-height: 9em; max-height: 34em; resize: vertical;
+    font-size: .85rem; line-height: 1.45; tab-size: 4;
+    background: #131019; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px; padding: .6rem .7rem;
+  }
+  textarea.sec-body:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255, 110, 199, .2); }
+  details.linktool {
+    margin: .8rem; border: 1px solid var(--line); border-radius: 6px;
+    background: #181423;
+  }
+  details.linktool &gt; summary {
+    cursor: pointer; padding: .4rem .7rem; color: var(--lilac);
+    font-size: .85rem; list-style: none;
+  }
+  details.linktool &gt; summary::before { content: &quot;\2724 &quot;; color: var(--pink); }
+  details.linktool[open] &gt; summary { border-bottom: 1px solid var(--line); }
+  .lt-fields { padding: .7rem; display: grid; gap: .55rem; }
+  .lt-row { display: flex; gap: .45rem; align-items: center; flex-wrap: wrap; }
+  .lt-row label { min-width: 6.5em; }
+  .lt-row input.vname { width: 10em; }
+  .lt-row input.vvalue { width: 12em; }
+  .snippet {
+    display: block; width: 100%; background: #0d0b13; color: var(--pink-soft);
+    border: 1px solid var(--purple-deep); border-radius: 4px;
+    padding: .35rem .5rem; font-size: .82rem; overflow-x: auto; white-space: pre;
+  }
+  .inspector { padding: .6rem .8rem .8rem; }
+  .inspector h4 { margin: 0 0 .4rem; color: var(--ink-faint); font-size: .8rem; font-weight: normal; }
+  .inspector ul { list-style: none; margin: 0; padding: 0; }
+  .inspector li {
+    display: flex; gap: .5rem; align-items: baseline;
+    padding: .25rem 0; border-bottom: 1px dashed #2a2436; font-size: .85rem;
+  }
+  .kind { font-size: .72rem; text-transform: uppercase; letter-spacing: .05em; }
+  .kind.explore { color: var(--purple); }
+  .kind.choice { color: var(--pink); }
+  .ltarget { color: var(--ink); cursor: pointer; }
+  .ltarget:hover { text-decoration: underline; }
+  .missing .ltarget { color: var(--danger); }
+  .args { color: var(--ink-faint); font-size: .8rem; }
+  .preview {
+    margin: .8rem; border: 1px solid var(--purple-deep); border-radius: 6px;
+    background: #14111c; padding: .9rem 1.1rem;
+    font-size: .95rem; line-height: 1.55;
+  }
+  .preview h2, .preview h3 { color: var(--pink-soft); }
+  .preview a { color: var(--lilac); }
+  .preview pre, .preview code {
+    background: #0d0b13; color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .2rem .35rem; font-size: .85rem;
+  }
+  .preview-error { color: var(--danger); }
+  .card-actions { display: flex; gap: .6rem; margin: 1.2rem 0; }
+  .extras-note { color: var(--ink-faint); font-size: .78rem; padding: 0 .8rem .5rem; }
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;top&quot;&gt;
+  &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; &amp;mdash; story editor&lt;/a&gt;
+  &lt;span class=&quot;root&quot;&gt;/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src&lt;/span&gt;
+&lt;/header&gt;
+&lt;main&gt;
+
+&lt;div class=&quot;bar&quot;&gt;
+  &lt;span class=&quot;file&quot;&gt;
+    &lt;code&gt;demo.yaml&lt;/code&gt;
+  &lt;/span&gt;
+  
+  &lt;button id=&quot;save-btn&quot;&gt;Save&lt;/button&gt;
+  &lt;span class=&quot;status&quot; id=&quot;status&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;stats&quot; id=&quot;stats&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;right&quot;&gt;
+    
+      &lt;a href=&quot;/raw/demo.yaml&quot;&gt;raw yaml&lt;/a&gt;
+    
+    &lt;a href=&quot;/&quot;&gt;all stories&lt;/a&gt;
+  &lt;/span&gt;
+&lt;/div&gt;
+
+
+
+&lt;div class=&quot;problems panel&quot; id=&quot;problems&quot;&gt;
+  &lt;strong&gt;Problems found:&lt;/strong&gt;
+  &lt;ul id=&quot;problem-list&quot;&gt;
+    &lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &amp;#39;elif&amp;#39; or &amp;#39;else&amp;#39; or &amp;#39;endif&amp;#39;. The innermost block that needs to be closed is &amp;#39;if&amp;#39;.&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;outline&quot; id=&quot;outline&quot;&gt;&lt;/div&gt;
+
+&lt;div id=&quot;cards&quot;&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;entrypoint&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;# The Night Market
+
+Rain slicks the neon-lit streets of New Avalon. You have **two** choices
+and one very overpowered jinja template engine.
+
+[Visit the hacker]({{ &amp;#39;hacker&amp;#39;|choice(credits=10) }})
+
+[Visit the droid arena]({{ &amp;#39;arena&amp;#39;|choice(credits=5) }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot;&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot; selected&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot; value=&quot;visit the hacker&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot; value=&quot;hacker&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;div class=&quot;lt-row lt-var&quot;&gt;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot; value=&quot;credits&quot;&gt;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot; value=&quot;10&quot;&gt;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&lt;/div&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;[visit the hacker]({{ &#x27;hacker&#x27;|choice(credits=10) }})&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind choice&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;hacker&lt;/span&gt; &lt;span class=&quot;args&quot;&gt;credits=10&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span class=&quot;kind choice&quot;&gt;choice&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;arena&lt;/span&gt; &lt;span class=&quot;args&quot;&gt;credits=5&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;hacker&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Hacker&amp;#39;s Den
+
+She slides a keyboard across the table. `{% if credits &amp;gt; 8 %}` she says,
+*&amp;#34;you can afford the good decrypt.&amp;#34;*
+
+```python
+def hack_the_planet(credits):
+    return credits &amp;gt; 8 and &amp;#34;rebellion&amp;#34; or &amp;#34;poverty&amp;#34;
+```
+
+[Jack in]({{ &amp;#39;jack&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;jack&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;arena&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;## The Droid Arena
+
+The crowd roars. Your credits: {{ credits }}.
+
+{% if credits &amp;gt; 6 %}
+You bribe the guard and pick the *easy* droid.
+
+[Fight]({{ &amp;#39;fight&amp;#39;|explore }})
+{% else %}
+You fight the *hard* droid.
+
+[Fight](#not-here)
+{% endif %}
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;fight&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;jack&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;You jack in. The ICE is thick but the data is sweet.
+
+&amp;gt; Victory! You are famous now.
+
+[Celebrate]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;entrypoint&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+  &lt;article class=&quot;card&quot; data-card&gt;
+    &lt;header class=&quot;card-top&quot;&gt;
+      &lt;span class=&quot;tag&quot; data-tag hidden&gt;entrypoint&lt;/span&gt;
+      &lt;input class=&quot;sec-name&quot; value=&quot;fight&quot; spellcheck=&quot;false&quot;
+             autocomplete=&quot;off&quot; aria-label=&quot;section name&quot;&gt;
+      &lt;span class=&quot;meta&quot; data-meta&gt;&lt;/span&gt;
+      &lt;span class=&quot;spacer&quot;&gt;&lt;/span&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;up&quot; title=&quot;move up&quot;&gt;&amp;#8679;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;down&quot; title=&quot;move down&quot;&gt;&amp;#8681;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-action=&quot;dupe&quot; title=&quot;duplicate&quot;&gt;copy&lt;/button&gt;
+      &lt;button class=&quot;danger&quot; data-action=&quot;del&quot; title=&quot;delete section&quot;&gt;delete&lt;/button&gt;
+    &lt;/header&gt;
+    &lt;div class=&quot;toolbar&quot;&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;h2&quot;&gt;H2&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;bold&quot;&gt;&lt;b&gt;B&lt;/b&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;italic&quot;&gt;&lt;i&gt;I&lt;/i&gt;&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;code&quot;&gt;code&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;quote&quot;&gt;quote&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;list&quot;&gt;list&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-md=&quot;var&quot; title=&quot;insert a jinja expression&quot;&gt;{{ var }}&lt;/button&gt;
+      &lt;button class=&quot;accent&quot; data-open=&quot;link&quot;&gt;explore/choice link&lt;/button&gt;
+      &lt;button class=&quot;ghost&quot; data-open=&quot;preview&quot;&gt;preview&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-body&quot; spellcheck=&quot;false&quot;&gt;The easy droid goes down in one hit. The crowd loves you.
+
+[Back to the streets]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+&lt;/textarea&gt;
+    &lt;details class=&quot;linktool&quot; hidden&gt;
+      &lt;summary&gt;link tool &amp;mdash; build an explore or choice link&lt;/summary&gt;
+      &lt;div class=&quot;lt-fields&quot;&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;kind&lt;/label&gt;
+          &lt;select class=&quot;lt-kind&quot;&gt;
+            &lt;option value=&quot;explore&quot;&gt;explore (no state change)&lt;/option&gt;
+            &lt;option value=&quot;choice&quot;&gt;choice (sets variables)&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;text shown&lt;/label&gt;
+          &lt;input class=&quot;lt-text&quot; placeholder=&quot;go left&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;label&gt;target&lt;/label&gt;
+          &lt;input class=&quot;lt-target&quot; list=&quot;section-names&quot; placeholder=&quot;section name&quot;&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-vars&quot;&gt;&lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;ghost lt-addvar&quot; type=&quot;button&quot;&gt;+ variable&lt;/button&gt;
+          &lt;span class=&quot;args&quot;&gt;numbers and True/False stay bare, other values are quoted&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;code class=&quot;snippet&quot;&gt;&lt;/code&gt;
+        &lt;/div&gt;
+        &lt;div class=&quot;lt-row&quot;&gt;
+          &lt;button class=&quot;accent lt-insert&quot; type=&quot;button&quot;&gt;insert at cursor&lt;/button&gt;
+          &lt;button class=&quot;ghost lt-copy&quot; type=&quot;button&quot;&gt;copy&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/details&gt;
+    &lt;div class=&quot;inspector&quot;&gt;
+      &lt;h4&gt;links in this section&lt;/h4&gt;
+      &lt;ul data-inspector&gt;&lt;li&gt;&lt;span class=&quot;kind explore&quot;&gt;explore&lt;/span&gt; &lt;span class=&quot;ltarget&quot;&gt;entrypoint&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;preview&quot; hidden&gt;
+      &lt;div class=&quot;preview-out&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;textarea class=&quot;sec-extra&quot; hidden spellcheck=&quot;false&quot;&gt;&lt;/textarea&gt;
+  &lt;/article&gt;
+  
+&lt;/div&gt;
+
+&lt;div class=&quot;card-actions&quot;&gt;
+  &lt;button id=&quot;add-btn&quot;&gt;+ add section&lt;/button&gt;
+&lt;/div&gt;
+&lt;p class=&quot;extras-note&quot;&gt;
+  Per-section keys other than &lt;code&gt;body&lt;/code&gt; are preserved untouched when the
+  studio saves.
+&lt;/p&gt;
+
+&lt;datalist id=&quot;section-names&quot;&gt;&lt;/datalist&gt;
+
+
+&lt;script&gt;
+/* Studio editor behaviour: cards, link tools, preview, autosave. */
+var CREATED = false;
+var STORY_REL = &quot;demo.yaml&quot;;
+var OPEN2 = &#x27;{&#x27; + &#x27;{&#x27;;
+var CLOSE2 = &#x27;}&#x27; + &#x27;}&#x27;;
+var LINK_SOURCE = &quot;&#x27;((?:[^&#x27;\\\\]|\\\\.)+)&#x27;\\s*\\|\\s*(explore|choice)\\b(?:\\s*\\(\\s*([^)]*)\\))?&quot;;
+
+function $(sel, ctx) { return (ctx || document).querySelector(sel); }
+function $$(sel, ctx) {
+  return Array.prototype.slice.call((ctx || document).querySelectorAll(sel));
+}
+function esc(text) {
+  var holder = document.createElement(&#x27;div&#x27;);
+  holder.textContent = String(text == null ? &#x27;&#x27; : text);
+  return holder.innerHTML;
+}
+var cardsBox = $(&#x27;#cards&#x27;);
+var nameList = $(&#x27;#section-names&#x27;);
+var statusBox = $(&#x27;#status&#x27;);
+var statsBox = $(&#x27;#stats&#x27;);
+var problemsBox = $(&#x27;#problems&#x27;);
+var problemList = $(&#x27;#problem-list&#x27;);
+
+function cardNodes() { return $$(&#x27;.card&#x27;, cardsBox); }
+function sectionNames() {
+  return cardNodes().map(function (card) {
+    return $(&#x27;.sec-name&#x27;, card).value.trim();
+  }); }
+function bodyOf(card) { return $(&#x27;.sec-body&#x27;, card).value; }
+
+function parseLinks(text) {
+  var re = new RegExp(LINK_SOURCE, &#x27;g&#x27;);
+  var out = [];
+  var m;
+  while ((m = re.exec(String(text || &#x27;&#x27;))) !== null) {
+    out.push({
+      target: m[1].replace(/\\&#x27;/g, &quot;&#x27;&quot;),
+      kind: m[2],
+      args: (m[3] || &#x27;&#x27;).trim()
+    });
+  }
+  return out;
+}
+
+function refreshOutline() {
+  var names = sectionNames();
+  var outline = $(&#x27;#outline&#x27;);
+  outline.innerHTML = names.map(function (name) {
+    var cls = &#x27;chip&#x27; + (name === &#x27;entrypoint&#x27; ? &#x27; entrypoint&#x27; : &#x27;&#x27;);
+    return &#x27;&lt;button class=&quot;&#x27; + cls + &#x27;&quot; data-jump=&quot;&#x27; + esc(name) + &#x27;&quot;&gt;&#x27;
+      + esc(name || &#x27;(unnamed)&#x27;) + &#x27;&lt;/button&gt;&#x27;;
+  }).join(&#x27;&#x27;);
+}
+
+function refreshDatalist() {
+  nameList.innerHTML = sectionNames().map(function (name) {
+    return &#x27;&lt;option value=&quot;&#x27; + esc(name) + &#x27;&quot;&gt;&#x27;;
+  }).join(&#x27;&#x27;);
+}
+
+function allLinks() {
+  var links = [];
+  cardNodes().forEach(function (card) {
+    parseLinks(bodyOf(card)).forEach(function (link) {
+      link.from = $(&#x27;.sec-name&#x27;, card).value.trim();
+      links.push(link);
+    });
+  });
+  return links;
+}
+
+function refreshStats() {
+  var names = sectionNames();
+  var links = allLinks();
+  var broken = links.filter(function (l) { return names.indexOf(l.target) === -1; });
+  statsBox.innerHTML = names.length + &#x27; sections, &#x27; + links.length + &#x27; links&#x27; +
+    (broken.length
+      ? &#x27;, &lt;b class=&quot;pink&quot;&gt;&#x27; + broken.length + &#x27; broken&lt;/b&gt;&#x27;
+      : &#x27;&#x27;);
+}
+
+function refreshInspector(card) {
+  var names = sectionNames();
+  var links = parseLinks(bodyOf(card));
+  var ul = $(&#x27;[data-inspector]&#x27;, card);
+  ul.innerHTML = links.map(function (l) {
+    var missing = names.indexOf(l.target) === -1;
+    return &#x27;&lt;li class=&quot;&#x27; + (missing ? &#x27;missing&#x27; : &#x27;&#x27;) + &#x27;&quot;&gt;&#x27;
+      + &#x27;&lt;span class=&quot;kind &#x27; + l.kind + &#x27;&quot;&gt;&#x27; + l.kind + &#x27;&lt;/span&gt;&#x27;
+      + &#x27;&lt;span class=&quot;ltarget&quot; data-goto=&quot;&#x27; + esc(l.target) + &#x27;&quot;&gt;&#x27;
+      + esc(l.target) + &#x27;&lt;/span&gt;&#x27;
+      + &#x27;&lt;span class=&quot;args&quot;&gt;&#x27; + esc(l.args) + &#x27;&lt;/span&gt;&#x27;
+      + (missing
+          ? &#x27;&lt;button class=&quot;danger ghost lt-new&quot; data-new=&quot;&#x27; + esc(l.target) + &#x27;&quot; type=&quot;button&quot;&gt;create section&lt;/button&gt;&#x27;
+          : &#x27;&#x27;) + &#x27;&lt;/li&gt;&#x27;;
+  }).join(&#x27;&#x27;) || &#x27;&lt;li&gt;&lt;em&gt;none yet&lt;/em&gt;&lt;/li&gt;&#x27;;
+  var cardMeta = $(&#x27;[data-meta]&#x27;, card);
+  var missingCount = links.filter(function (l) {
+    return names.indexOf(l.target) === -1;
+  }).length;
+  cardMeta.innerHTML = links.length + &#x27; link&#x27; + (links.length === 1 ? &#x27;&#x27; : &#x27;s&#x27;) +
+    (missingCount ? &#x27; · &lt;span style=&quot;color:var(--danger)&quot;&gt;&#x27; + missingCount + &#x27; missing&lt;/span&gt;&#x27; : &#x27;&#x27;);
+  $(&#x27;[data-tag]&#x27;, card).hidden = $(&#x27;.sec-name&#x27;, card).value.trim() !== &#x27;entrypoint&#x27;;
+}
+
+function refreshMetaAll() {
+  var cards = cardNodes();
+  cards.forEach(refreshInspector);
+  refreshOutline();
+  refreshDatalist();
+  refreshStats();
+}
+
+/* -- markdown toolbar ------------------------------------------------ */
+function replaceRange(ta, start, end, text) {
+  ta.value = ta.value.slice(0, start) + text + ta.value.slice(end);
+  var pos = start + text.length;
+  ta.selectionStart = ta.selectionEnd = pos;
+  ta.focus();
+}
+function wrapSelection(ta, marker) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  replaceRange(ta, s, e, marker + sel + marker);
+}
+function prefixLines(ta, prefix) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var startLine = ta.value.lastIndexOf(&#x27;\n&#x27;, s - 1) + 1;
+  var chunk = ta.value.slice(startLine, e);
+  var updated = chunk.split(&#x27;\n&#x27;).map(function (line) {
+    return line ? prefix + line : line;
+  }).join(&#x27;\n&#x27;);
+  replaceRange(ta, startLine, e, updated);
+}
+function inlineCodeOrFence(ta) {
+  var s = ta.selectionStart, e = ta.selectionEnd;
+  var sel = ta.value.slice(s, e);
+  if (sel.indexOf(&#x27;\n&#x27;) !== -1) {
+    replaceRange(ta, s, e, &#x27;```\n&#x27; + sel + &#x27;\n```&#x27;);
+  } else {
+    wrapSelection(ta, &#x27;`&#x27;);
+  }
+}
+function applyMarkdown(card, action) {
+  var ta = $(&#x27;.sec-body&#x27;, card);
+  if (action === &#x27;bold&#x27;) { wrapSelection(ta, &#x27;**&#x27;); }
+  else if (action === &#x27;italic&#x27;) { wrapSelection(ta, &#x27;*&#x27;); }
+  else if (action === &#x27;code&#x27;) { inlineCodeOrFence(ta); }
+  else if (action === &#x27;quote&#x27;) { prefixLines(ta, &#x27;&gt; &#x27;); }
+  else if (action === &#x27;list&#x27;) { prefixLines(ta, &#x27;- &#x27;); }
+  else if (action === &#x27;h2&#x27;) { prefixLines(ta, &#x27;## &#x27;); }
+  else if (action === &#x27;var&#x27;) {
+    var s = ta.selectionStart, e = ta.selectionEnd;
+    var sel = ta.value.slice(s, e);
+    replaceRange(ta, s, e,
+      OPEN2 + &#x27; &#x27; + (sel || &#x27;variable&#x27;) + &#x27; &#x27; + CLOSE2);
+  }
+  scheduleValidate();
+}
+
+/* -- link tool ------------------------------------------------------- */
+function formatValue(value) {
+  var v = String(value).trim();
+  if (/^-?\d+$/.test(v)) { return v; }
+  if (/^-?\d*\.\d+$/.test(v)) { return v; }
+  if (v === &#x27;true&#x27;) { return &#x27;True&#x27;; }
+  if (v === &#x27;false&#x27;) { return &#x27;False&#x27;; }
+  return &quot;&#x27;&quot; + v.replace(/\\/g, &#x27;\\\\&#x27;).replace(/&#x27;/g, &quot;\\&#x27;&quot;) + &quot;&#x27;&quot;;
+}
+function varRows(card) {
+  return $$(&#x27;.lt-vars .lt-row&#x27;, card).map(function (row) {
+    return {
+      name: $(&#x27;.vname&#x27;, row).value.trim(),
+      value: $(&#x27;.vvalue&#x27;, row).value
+    };
+  }).filter(function (v) { return v.name; });
+}
+function buildSnippet(card) {
+  var kind = $(&#x27;.lt-kind&#x27;, card).value;
+  var target = $(&#x27;.lt-target&#x27;, card).value.trim();
+  var display = $(&#x27;.lt-text&#x27;, card).value.trim();
+  var args = &#x27;&#x27;;
+  if (kind === &#x27;choice&#x27;) {
+    var parts = varRows(card).map(function (v) {
+      return v.name + &#x27;=&#x27; + formatValue(v.value);
+    });
+    if (parts.length) { args = &#x27;(&#x27; + parts.join(&#x27;, &#x27;) + &#x27;)&#x27;; }
+  }
+  var jinja = OPEN2 + &quot; &#x27;&quot; + target + &quot;&#x27;|&quot; + kind + args + &#x27; &#x27; + CLOSE2;
+  var label = display || (&#x27;[&#x27; + target + &#x27;]&#x27;);
+  if (!display) { return &#x27;[&#x27; + jinja + &#x27;]&#x27;; }
+  return &#x27;[&#x27; + display + &#x27;](&#x27; + jinja + &#x27;)&#x27;;
+}
+function refreshSnippet(card) {
+  $(&#x27;.snippet&#x27;, card).textContent = buildSnippet(card);
+}
+function toggleVars(card) {
+  var isChoice = $(&#x27;.lt-kind&#x27;, card).value === &#x27;choice&#x27;;
+  $(&#x27;.lt-vars&#x27;, card).style.display = isChoice ? &#x27;&#x27; : &#x27;none&#x27;;
+}
+function addVarRow(card) {
+  var row = document.createElement(&#x27;div&#x27;);
+  row.className = &#x27;lt-row lt-var&#x27;;
+  row.innerHTML = &#x27;&lt;input class=&quot;vname&quot; placeholder=&quot;shirt_color&quot;&gt;&#x27;
+    + &#x27;&lt;input class=&quot;vvalue&quot; placeholder=&quot;red&quot;&gt;&#x27;
+    + &#x27;&lt;button class=&quot;danger ghost rm&quot; type=&quot;button&quot;&gt;&amp;times;&lt;/button&gt;&#x27;;
+  $(&#x27;.lt-vars&#x27;, card).appendChild(row);
+}
+function insertLink(card) {
+  var ta = $(&#x27;.sec-body&#x27;, card);
+  var snippet = buildSnippet(card);
+  replaceRange(ta, ta.selectionStart || 0, ta.selectionEnd || 0,
+    (needsSpaceBefore(ta) ? &#x27; &#x27; : &#x27;&#x27;) + snippet);
+  scheduleValidate();
+}
+function needsSpaceBefore(ta) {
+  var before = ta.value.slice(0, ta.selectionStart);
+  return before.length &gt; 0 &amp;&amp; !/\s$/.test(before);
+}
+
+/* -- preview --------------------------------------------------------- */
+function togglePreview(card) {
+  var box = $(&#x27;.preview&#x27;, card);
+  if (!box.hidden) { box.hidden = true; return; }
+  box.hidden = false;
+  var out = $(&#x27;.preview-out&#x27;, card);
+  out.textContent = &#x27;rendering…&#x27;;
+  var fd = new FormData();
+  fd.append(&#x27;body&#x27;, bodyOf(card));
+  fetch(&#x27;/preview/&#x27; + encodeURIComponent(STORY_REL || &#x27;new.yaml&#x27;),
+        {method: &#x27;POST&#x27;, body: fd})
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      if (data.error) {
+        out.innerHTML = &#x27;&lt;p class=&quot;preview-error&quot;&gt;&#x27; + esc(data.error) + &#x27;&lt;/p&gt;&#x27;;
+      } else {
+        out.innerHTML = data.html || &#x27;&lt;p&gt;&lt;em&gt;empty&lt;/em&gt;&lt;/p&gt;&#x27;;
+      }
+    });
+}
+
+/* -- payload / save / validate -------------------------------------- */
+function buildPayload() {
+  var sections = cardNodes().map(function (card) {
+    return {
+      name: $(&#x27;.sec-name&#x27;, card).value.trim(),
+      body: bodyOf(card),
+      extra: $(&#x27;.sec-extra&#x27;, card).value
+    };
+  });
+  var fd = new FormData();
+  fd.append(&#x27;payload&#x27;, JSON.stringify({sections: sections}));
+  return fd;
+}
+function showErrors(errors) {
+  problemList.innerHTML = errors.map(function (e) { return &#x27;&lt;li&gt;&#x27; + esc(e) + &#x27;&lt;/li&gt;&#x27;; }).join(&#x27;&#x27;);
+  problemsBox.hidden = !errors.length;
+  cardNodes().forEach(function (card) {
+    var name = $(&#x27;.sec-name&#x27;, card).value.trim();
+    var flagged = name &amp;&amp; errors.some(function (e) {
+      return e.indexOf(name + &#x27;:&#x27;) === 0 || e.indexOf(name + &#x27; links&#x27;) === 0;
+    });
+    card.classList.toggle(&#x27;flagged&#x27;, Boolean(flagged));
+  });
+}
+function setStatus(message, cls) {
+  statusBox.textContent = message;
+  statusBox.className = &#x27;status&#x27; + (cls ? &#x27; &#x27; + cls : &#x27;&#x27;);
+}
+function saveStory() {
+  if (CREATED) { return createStory(); }
+  setStatus(&#x27;saving…&#x27;);
+  fetch(&#x27;/write/&#x27; + encodeURIComponent(STORY_REL),
+        {method: &#x27;POST&#x27;, body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok &amp;&amp; res.d.ok) {
+        setStatus(&#x27;saved&#x27;, &#x27;ok&#x27;);
+        showErrors([]);
+      } else {
+        setStatus(&#x27;not saved&#x27;, &#x27;bad&#x27;);
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function createStory() {
+  var nameField = $(&#x27;#rel-new&#x27;);
+  if (!nameField || !nameField.value.trim()) {
+    setStatus(&#x27;enter a filename first&#x27;, &#x27;bad&#x27;);
+    return;
+  }
+  setStatus(&#x27;creating…&#x27;);
+  fetch(&#x27;/create/&#x27; + encodeURIComponent(nameField.value.trim()),
+        {method: &#x27;POST&#x27;, body: buildPayload()})
+    .then(function (r) { return r.json().then(function (d) { return {ok: r.ok, d: d}; }); })
+    .then(function (res) {
+      if (res.ok &amp;&amp; res.d.ok) {
+        location.href = &#x27;/&#x27; + encodeURIComponentPath(nameField.value.trim());
+      } else {
+        setStatus(&#x27;not created&#x27;, &#x27;bad&#x27;);
+        showErrors(res.d.errors || []);
+      }
+    });
+}
+function encodeURIComponentPath(pathname) {
+  return pathname.split(&#x27;/&#x27;).map(encodeURIComponent).join(&#x27;%2F&#x27;);
+}
+var validateTimer = null;
+function markDirty() {
+  if (CREATED) { return; }
+  setStatus(&#x27;unsaved\u2026&#x27;);
+}
+function scheduleValidate() {
+  markDirty();
+  if (CREATED) { return; }
+  clearTimeout(validateTimer);
+  validateTimer = setTimeout(function () {
+    fetch(&#x27;/validate/&#x27; + encodeURIComponent(STORY_REL),
+          {method: &#x27;POST&#x27;, body: buildPayload()})
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var errors = data.errors || [];
+        showErrors(errors);
+        if (errors.length) {
+          setStatus(errors.length + &#x27; problem&#x27; + (errors.length === 1 ? &#x27;&#x27; : &#x27;s&#x27;), &#x27;bad&#x27;);
+        } else {
+          setStatus(&#x27;looks good&#x27;, &#x27;ok&#x27;);
+        }
+      });
+  }, 900);
+}
+
+/* -- card lifecycle -------------------------------------------------- */
+function blankCard(template) {
+  var card = template.cloneNode(true);
+  $(&#x27;.sec-name&#x27;, card).value = &#x27;&#x27;;
+  $(&#x27;.sec-body&#x27;, card).value = &#x27;&#x27;;
+  $(&#x27;.sec-extra&#x27;, card).value = &#x27;&#x27;;
+  $$(&#x27;.linktool input, .linktool select&#x27;, card).forEach(function (input) {
+    if (input.tagName === &#x27;SELECT&#x27;) { input.value = &#x27;explore&#x27;; } else { input.value = &#x27;&#x27;; }
+  });
+  $(&#x27;.lt-vars&#x27;, card).innerHTML = &#x27;&#x27;;
+  $(&#x27;.preview&#x27;, card).hidden = true;
+  $(&#x27;.preview-out&#x27;, card).innerHTML = &#x27;&#x27;;
+  return card;
+}
+function addCard(name, body) {
+  if (!cardNodes().length) { return null; }
+  var card = blankCard(cardNodes()[0]);
+  $(&#x27;.sec-name&#x27;, card).value = name || &#x27;&#x27;;
+  $(&#x27;.sec-body&#x27;, card).value = body || &#x27;&#x27;;
+  cardsBox.appendChild(card);
+  wireCard(card);
+  refreshMetaAll();
+  return card;
+}
+function deleteCard(card) {
+  if (!window.confirm(&#x27;Delete section &quot;&#x27; + $(&#x27;.sec-name&#x27;, card).value.trim() + &#x27;&quot;?&#x27;)) {
+    return;
+  }
+  card.parentNode.removeChild(card);
+  refreshMetaAll();
+  scheduleValidate();
+}
+function moveCard(card, delta) {
+  var siblings = cardNodes();
+  var index = siblings.indexOf(card);
+  var target = siblings[index + delta];
+  if (!target) { return; }
+  var parent = card.parentNode;
+  if (delta &lt; 0) { parent.insertBefore(card, target); }
+  else { parent.insertBefore(target, card); }
+  refreshMetaAll();
+}
+function duplicateCard(card) {
+  var fresh = blankCard(card);
+  var base = $(&#x27;.sec-name&#x27;, card).value.trim();
+  var names = sectionNames();
+  var name = base + &#x27;-copy&#x27;;
+  var n = 2;
+  while (names.indexOf(name) !== -1) { name = base + &#x27;-copy-&#x27; + (n++); }
+  $(&#x27;.sec-name&#x27;, fresh).value = name;
+  $(&#x27;.sec-body&#x27;, fresh).value = bodyOf(card);
+  $(&#x27;.sec-extra&#x27;, fresh).value = $(&#x27;.sec-extra&#x27;, card).value;
+  card.parentNode.insertBefore(fresh, card.nextSibling);
+  wireCard(fresh);
+  refreshMetaAll();
+}
+
+function wireCard(card) {
+  $$(&#x27;.toolbar button&#x27;, card).forEach(function (btn) {
+    btn.addEventListener(&#x27;click&#x27;, function () {
+      if (btn.dataset.md) { applyMarkdown(card, btn.dataset.md); }
+      else if (btn.dataset.open === &#x27;link&#x27;) {
+        var tool = $(&#x27;.linktool&#x27;, card);
+        tool.hidden = false;
+        tool.open = true;
+        refreshSnippet(card);
+      } else if (btn.dataset.open === &#x27;preview&#x27;) { togglePreview(card); }
+    });
+  });
+  $$(&#x27;.card-top button&#x27;, card).forEach(function (btn) {
+    btn.addEventListener(&#x27;click&#x27;, function () {
+      var action = btn.dataset.action;
+      if (action === &#x27;up&#x27;) { moveCard(card, -1); scheduleValidate(); }
+      else if (action === &#x27;down&#x27;) { moveCard(card, 1); scheduleValidate(); }
+      else if (action === &#x27;dupe&#x27;) { duplicateCard(card); }
+      else if (action === &#x27;del&#x27;) { deleteCard(card); }
+    });
+  });
+  $(&#x27;.sec-name&#x27;, card).addEventListener(&#x27;input&#x27;, function () {
+    refreshMetaAll(); markDirty(); scheduleValidate();
+  });
+  $(&#x27;.sec-body&#x27;, card).addEventListener(&#x27;input&#x27;, function () {
+    refreshInspector(card); refreshStats(); markDirty(); scheduleValidate();
+  });
+  var tool = $(&#x27;.linktool&#x27;, card);
+  if (tool) {
+    $$(&#x27;.lt-kind, .lt-text, .lt-target&#x27;, card).forEach(function (field) {
+      field.addEventListener(&#x27;input&#x27;, function () { refreshSnippet(card); });
+      field.addEventListener(&#x27;change&#x27;, function () {
+        toggleVars(card); refreshSnippet(card);
+      });
+    });
+    $(&#x27;.lt-addvar&#x27;, card).addEventListener(&#x27;click&#x27;, function () {
+      addVarRow(card);
+    });
+    $(&#x27;.lt-insert&#x27;, card).addEventListener(&#x27;click&#x27;, function () { insertLink(card); });
+    $(&#x27;.lt-copy&#x27;, card).addEventListener(&#x27;click&#x27;, function () {
+      var code = $(&#x27;.snippet&#x27;, card);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(code.textContent);
+      } else {
+        code.focus &amp;&amp; code.select();
+      }
+    });
+    tool.addEventListener(&#x27;click&#x27;, function (event) {
+      var rm = event.target.closest ? event.target.closest(&#x27;.rm&#x27;) : null;
+      if (rm) { rm.closest(&#x27;.lt-var&#x27;).remove(); refreshSnippet(card); }
+    });
+  }
+}
+
+/* -- global wiring --------------------------------------------------- */
+cardNodes().forEach(wireCard);
+cardNodes().forEach(refreshInspector);
+refreshMetaAll();
+
+var addBtn = $(&#x27;#add-btn&#x27;);
+if (addBtn) {
+  addBtn.addEventListener(&#x27;click&#x27;, function () {
+    var card = addCard(&#x27;&#x27;, &#x27;&#x27;);
+    if (!card) {
+      setStatus(&#x27;cannot add sections here&#x27;, &#x27;bad&#x27;);
+      return;
+    }
+    $(&#x27;.sec-name&#x27;, card).focus();
+  });
+}
+var saveBtn = $(&#x27;#save-btn&#x27;);
+if (saveBtn) { saveBtn.addEventListener(&#x27;click&#x27;, saveStory); }
+
+document.addEventListener(&#x27;keydown&#x27;, function (event) {
+  if ((event.metaKey || event.ctrlKey) &amp;&amp; String(event.key).toLowerCase() === &#x27;s&#x27;) {
+    event.preventDefault();
+    saveStory();
+  }
+});
+
+cardsBox.addEventListener(&#x27;click&#x27;, function (event) {
+  var make = event.target.closest ? event.target.closest(&#x27;.lt-new&#x27;) : null;
+  if (make) {
+    var name = make.getAttribute(&#x27;data-new&#x27;);
+    var card = addCard(name, &#x27;&#x27;);
+    if (card) { $(&#x27;.sec-body&#x27;, card).focus(); }
+    scheduleValidate();
+  }
+});
+$(&#x27;#outline&#x27;).addEventListener(&#x27;click&#x27;, function (event) {
+  var chip = event.target.closest ? event.target.closest(&#x27;[data-jump]&#x27;) : null;
+  if (chip) {
+    var name = chip.getAttribute(&#x27;data-jump&#x27;);
+    cardNodes().forEach(function (card) {
+      if ($(&#x27;.sec-name&#x27;, card).value.trim() === name) {
+        card.scrollIntoView({behavior: &#x27;smooth&#x27;, block: &#x27;start&#x27;});
+      }
+    });
+  }
+});
+&lt;/script&gt;
+
+
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 2.600;" title="reader-beware editor studio link"></iframe>
     <figcaption>The explore/choice link tool building a state-carrying link; the finished markdown lands at your cursor.</figcaption>
   </figure>
 
   <figure class="shot">
-    <img src="images/editor-raw.png" alt="Raw yaml editor">
+    <iframe class="embed" srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;demo.yaml &amp;middot; raw&lt;/title&gt;
+&lt;style&gt;
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, &quot;Iowan Old Style&quot;, serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: &quot;DejaVu Sans Mono&quot;, Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+&lt;/style&gt;
+
+&lt;style&gt;
+  textarea.code {
+    width: 100%; height: 70vh; resize: vertical;
+    font-size: .85rem; line-height: 1.45;
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: .6rem .8rem; tab-size: 4;
+  }
+  textarea.code:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,110,199,.25); }
+  .raw-note { color: var(--ink-faint); font-size: .85rem; }
+&lt;/style&gt;
+
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header class=&quot;top&quot;&gt;
+  &lt;a class=&quot;brand&quot; href=&quot;/&quot;&gt;Reader &lt;b&gt;Beware&lt;/b&gt; &amp;mdash; story editor&lt;/a&gt;
+  &lt;span class=&quot;root&quot;&gt;/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src&lt;/span&gt;
+&lt;/header&gt;
+&lt;main&gt;
+
+&lt;h1&gt;
+  &lt;code&gt;demo.yaml&lt;/code&gt;
+&lt;/h1&gt;
+&lt;p class=&quot;raw-note&quot;&gt;
+  Raw yaml editing &amp;mdash;
+  
+    &lt;a href=&quot;/demo.yaml&quot;&gt;back to the section studio&lt;/a&gt;
+  
+&lt;/p&gt;
+
+
+&lt;div class=&quot;problems panel&quot;&gt;
+  &lt;strong&gt;Problems found:&lt;/strong&gt;
+  &lt;ul&gt;&lt;li&gt;hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &amp;#39;elif&amp;#39; or &amp;#39;else&amp;#39; or &amp;#39;endif&amp;#39;. The innermost block that needs to be closed is &amp;#39;if&amp;#39;.&lt;/li&gt;&lt;/ul&gt;
+&lt;/div&gt;
+
+
+
+&lt;form method=&quot;post&quot; action=&quot;/save/demo.yaml&quot;&gt;
+  &lt;textarea class=&quot;code&quot; name=&quot;body&quot; id=&quot;editor&quot; spellcheck=&quot;false&quot;&gt;---
+entrypoint:
+  body: |
+    # The Night Market
+
+    Rain slicks the neon-lit streets of New Avalon. You have **two** choices
+    and one very overpowered jinja template engine.
+
+    [Visit the hacker]({{ &amp;#39;hacker&amp;#39;|choice(credits=10) }})
+
+    [Visit the droid arena]({{ &amp;#39;arena&amp;#39;|choice(credits=5) }})
+
+hacker:
+  body: |
+    ## The Hacker&amp;#39;s Den
+
+    She slides a keyboard across the table. `{% if credits &amp;gt; 8 %}` she says,
+    *&amp;#34;you can afford the good decrypt.&amp;#34;*
+
+    ```python
+    def hack_the_planet(credits):
+        return credits &amp;gt; 8 and &amp;#34;rebellion&amp;#34; or &amp;#34;poverty&amp;#34;
+    ```
+
+    [Jack in]({{ &amp;#39;jack&amp;#39;|explore }})
+
+arena:
+  body: |
+    ## The Droid Arena
+
+    The crowd roars. Your credits: {{ credits }}.
+
+    {% if credits &amp;gt; 6 %}
+    You bribe the guard and pick the *easy* droid.
+
+    [Fight]({{ &amp;#39;fight&amp;#39;|explore }})
+    {% else %}
+    You fight the *hard* droid.
+
+    [Fight](#not-here)
+    {% endif %}
+
+jack:
+  body: |
+    You jack in. The ICE is thick but the data is sweet.
+
+    &amp;gt; Victory! You are famous now.
+
+    [Celebrate]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+
+fight:
+  body: |
+    The easy droid goes down in one hit. The crowd loves you.
+
+    [Back to the streets]({{ &amp;#39;entrypoint&amp;#39;|explore }})
+&lt;/textarea&gt;
+  &lt;p&gt;&lt;button type=&quot;submit&quot;&gt;Save&lt;/button&gt;&lt;/p&gt;
+&lt;/form&gt;
+
+
+&lt;script&gt;
+// point the create form at whichever filename the user typed
+var createForm = document.getElementById(&#x27;create-form&#x27;);
+if (createForm) {
+  var relInput = createForm.querySelector(&#x27;[name=rel_new]&#x27;);
+  createForm.addEventListener(&#x27;submit&#x27;, function () {
+    var name = relInput.value || &#x27;story.yaml&#x27;;
+    createForm.action = &#x27;/create/&#x27; + encodeURIComponent(name);
+  });
+}
+// autosave validation for existing files
+var editor = document.getElementById(&#x27;editor&#x27;);
+var m = location.pathname.match(/^\/raw\/(.*)$/);
+var rel = m ? decodeURIComponent(m[1]) : null;
+if (rel &amp;&amp; editor) {
+  var timer = null;
+  editor.addEventListener(&#x27;input&#x27;, function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { validateNow(rel, editor.value); }, 900);
+  });
+}
+function validateNow(relName, body) {
+  var fd = new FormData();
+  fd.append(&#x27;body&#x27;, body);
+  fetch(&#x27;/validate/&#x27; + encodeURIComponent(relName), {method: &#x27;POST&#x27;, body: fd})
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var box = document.querySelector(&#x27;.problems&#x27;);
+      if (!box &amp;&amp; data.errors.length) {
+        box = document.createElement(&#x27;div&#x27;);
+        box.className = &#x27;problems panel&#x27;;
+        editor.parentNode.insertBefore(box, editor);
+      }
+      if (box) {
+        box.innerHTML = &#x27;&lt;strong&gt;Problems found:&lt;/strong&gt;&lt;ul&gt;&#x27; +
+          data.errors.map(function (e) { return &#x27;&lt;li&gt;&#x27; + e + &#x27;&lt;/li&gt;&#x27;; }).join(&#x27;&#x27;) +
+          &#x27;&lt;/ul&gt;&#x27;;
+        box.style.display = data.errors.length ? &#x27;&#x27; : &#x27;none&#x27;;
+      }
+    });
+}
+&lt;/script&gt;
+
+&lt;/main&gt;
+&lt;/body&gt;
+&lt;/html&gt;" loading="lazy" style="aspect-ratio: 1.300;" title="reader-beware editor raw"></iframe>
     <figcaption>Power-editing: the raw yaml editor with autosave validation stays one click away.</figcaption>
   </figure>
 </section>
@@ -211,13 +3412,13 @@ pip install -e git+https://github.com/glassresistor/reader-beware.git#egg=reader
 git clone https://github.com/glassresistor/reader-beware.git
 cd reader-beware &amp;&amp; pip install -e .[test] &amp;&amp; pytest</pre>
   <p class="lede">This very page was built by GitHub Actions from the same pipeline:
-  tests, black formatting checks, package installs, book builds and every screenshot on it
-  &mdash; see the <code class="inline">deploy.yml</code> workflow. Reader beware indeed.</p>
+  tests, black formatting checks, package installs, book builds and every rendered
+  example on it &mdash; see the <code class="inline">deploy.yml</code> workflow. Reader beware indeed.</p>
 </section>
 
 <footer>
   <p class="big">Reader Beware</p>
-  <p>by Margaret Killjoy &middot; <a href="https://github.com/glassresistor/reader-beware">glassresistor/reader-beware</a> &middot; screenshots captured by CI from real builds, no mockups.</p>
+  <p>by Margaret Killjoy &middot; <a href="https://github.com/glassresistor/reader-beware">glassresistor/reader-beware</a> &middot; every example on this page is the real rendered output of a real build, embedded straight into the html &mdash; no mockups, no screenshots.</p>
 </footer>
 
 </body>

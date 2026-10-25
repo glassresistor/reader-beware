@@ -80,13 +80,26 @@ section.wrap > h2 .num { color: var(--pink); }
 .feature p { color: var(--ink-dim); font-size: .95rem; }
 
 figure.shot { margin: 1.6rem 0; text-align: center; }
-figure.shot img {
+figure.shot img,
+figure.shot iframe.embed {
   width: 100%; height: auto; border-radius: 8px;
   border: 1px solid var(--line); box-shadow: 0 12px 40px rgba(0,0,0,.6);
   background: #0b0a10;
 }
 figure.shot.device img { width: auto; max-width: 320px; border: none; box-shadow: none; }
+/* the framed e-reader embeds: small and centred like the cover image */
+figure.shot.device iframe.embed {
+  width: min(420px, 90vw); aspect-ratio: 420 / 760;
+  border: none; box-shadow: none; background: transparent;
+}
 figure.shot figcaption { color: var(--ink-faint); font-size: .85rem; margin-top: .6rem; }
+/* rendered examples embed the real build output via srcdoc */
+iframe.embed {
+  display: inline-block; vertical-align: bottom;
+  width: min(920px, 100%); max-width: 100%;
+  border: 1px solid var(--line); border-radius: 8px;
+  background: #0b0a10;
+}
 .figrow { display: flex; gap: 1.4rem; align-items: center; flex-wrap: wrap; justify-content: center; }
 .figrow figure.shot { flex: 1 1 300px; }
 

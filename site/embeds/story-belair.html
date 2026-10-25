@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+  "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8"/>
+  <title>prince-of-belair</title>
+
+  <style>
+/* Reader Beware book page styling (html builds).
+   Dark "ebook reader" theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+;
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  --ink-faint: #8d86a0;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Iowan Old Style", Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^="#"]) { }
+
+.story code, .story pre {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }
+
+</style>
+
+</head>
+<body class="story-page">
+
+<div class="breadcrumbs"><b>Reader Beware</b> &#183; prince-of-belair</div>
+
+<div class="story">
+    <span class="header"><a id="sid-aa6fd01e6990a9f9"></a></span>
+    <div id="sid-aa6fd01e6990a9f9" xml:lang="en-US">
+        <p>i forgot what happens at this point</p>
+
+    </div>
+</div>
+</body>
+</html>

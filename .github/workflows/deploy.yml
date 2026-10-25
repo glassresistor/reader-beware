@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build-site:
-    name: Build site, books and screenshots
+    name: Build site, books and rendered examples
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,73 +27,76 @@ jobs:
         with:
           python-version: "3.12"
 
-      # pinned so the cached browser below always matches the installed
-      # playwright version (bump both together when updating)
-      - name: Install reader-beware and screenshot tooling
+      # no browser tooling needed: the site's examples are rendered by
+      # reader beware itself (html + css only, no playwright/screenshots)
+      - name: Install reader-beware
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e .
-          # playwright version and the browser cache key below must agree:
-          # bump `key` when this pin changes so a stale chromium is never
-          # restored for a newer playwright build
-          python -m pip install "playwright==1.50.0"
 
-      - name: Cache the playwright browser download
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          # static key on purpose (paired with the pinned playwright above);
-          # bump the trailing number whenever the pin changes so a stale
-          # browser is never restored for a newer playwright build
-          key: playwright-chromium-1.50-p0
-          restore-keys: playwright-chromium-
-
-      - name: Install chromium (playwright)
-        run: python -m playwright install --with-deps chromium
-
-      - name: Build example books into site/books/ (epub + html)
-        run: python site/scripts/capture_screenshots.py --books-only
-
-      - name: Capture screenshots for the advertisement site
+      - name: Render embeds and build example books into site/
         run: python site/scripts/capture_screenshots.py
 
-      - name: Check every screenshot landed on disk
+      - name: Check every rendered embed landed on disk
         run: |
           python - <<'PY'
           import os, sys
-          images = "site/images"
-          # per-image minimum byte sizes: a blank or broken capture is a
-          # few hundred bytes at most, so these floors are generous but
-          # well above the blank-page floor.  the device-framed shots use
-          # a small viewport (500x860) over a mostly-dark background and
-          # compress tiny, hence their lower floor.
+          embeds = "site/embeds"
+          # minimum byte sizes: a blank or broken render is a few hundred
+          # bytes at most; the studio pages carry the whole editor css/js
+          # so their floors are higher.
           minimums = {
-              "cover.png": 10_000,
-              "story-entry.png": 20_000,
-              "story-state.png": 20_000,
-              "story-maze.png": 20_000,
-              "story-belair.png": 20_000,
-              "device-red-shirt.png": 15_000,
-              "device-green-shirt.png": 15_000,
-              "editor-index.png": 20_000,
-              "editor-studio-preview.png": 40_000,
-              "editor-studio-link.png": 40_000,
-              "editor-raw.png": 40_000,
+              "template.css": 1_000,
+              "story-entry.html": 500,
+              "story-state.html": 500,
+              "story-maze.html": 500,
+              "story-belair.html": 500,
+              "device-red-shirt.html": 1_000,
+              "device-green-shirt.html": 1_000,
+              "editor-index.html": 3_000,
+              "editor-studio-preview.html": 20_000,
+              "editor-studio-link.html": 20_000,
+              "editor-raw.html": 5_000,
           }
-          missing = [n for n in minimums if not os.path.exists(os.path.join(images, n))]
-          sizes = {n: os.path.getsize(os.path.join(images, n)) for n in minimums}
+          missing = [n for n in minimums if not os.path.exists(os.path.join(embeds, n))]
+          sizes = {n: os.path.getsize(os.path.join(embeds, n)) for n in minimums}
           tiny = [
               (n, sizes[n])
               for n in minimums
               if n in sizes and sizes[n] < minimums[n]
           ]
-          print("captured:", sorted(os.listdir(images)))
+          print("embedded:", sorted(os.listdir(embeds)))
           print("sizes:", {n: sizes.get(n) for n in sorted(minimums)})
           if missing or tiny:
               sys.exit(
-                  "missing or suspicious screenshots: missing=%s tiny=%s"
+                  "missing or suspicious embeds: missing=%s tiny=%s"
                   % (missing, tiny)
               )
+          PY
+
+      - name: Check the index embeds every example
+        run: |
+          python - <<'PY'
+          import sys
+          with open("site/index.html", encoding="utf-8") as f:
+              page = f.read()
+          needed = [
+              "device red shirt", "device green shirt",
+              "story entry", "story state", "story maze", "story belair",
+              "editor index", "editor studio preview",
+              "editor studio link", "editor raw",
+          ]
+          missing = []
+          for name in needed:
+              marker = 'title="reader-beware %s"' % name
+              if marker not in page:
+                  missing.append(name)
+          # no stale screenshot references should survive either
+          stale = [w for w in ("images/story-", "images/editor-", "images/device-")
+                   if w in page]
+          if missing or stale:
+              sys.exit("index missing embeds=%s stale refs=%s" % (missing, stale))
+          print("index embeds all %d examples" % len(needed))
           PY
 
       - name: Upload pages artifact

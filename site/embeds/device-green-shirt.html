@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red or Green?</title>
+<style>
+  :root { color-scheme: light; }
+  html, body { margin: 0; }
+  body {
+    display: flex; align-items: center; justify-content: center; min-height: 100vh;
+    background:
+      radial-gradient(700px 300px at 80% 15%, #4a2f6e66 0%, transparent 60%),
+      radial-gradient(500px 300px at 15% 85%, #ff6ec733 0%, transparent 55%),
+      #111016;
+  }
+  .device {
+    width: 420px; height: 760px;
+    background: #1c1a24; border-radius: 26px;
+    padding: 22px; box-shadow: 0 30px 80px rgba(0,0,0,.8), 0 0 0 1px #3d3950;
+  }
+  /* the built epub page inlined into the screen: e-ink paper colours
+     instead of the dark web theme, so it reads like a real device */
+  .screen {
+    width: 100%; height: 640px; background: #f7f5ef; border-radius: 6px;
+    overflow: hidden; position: relative;
+    font-family: "Iowan Old Style", Georgia, serif; color: #201c28;
+  }
+  .screen .story { max-width: 34ch; margin: 1.6rem auto; padding: 0 1rem; }
+  .screen .story h1, .screen .story h2, .screen .story h3 { color: #4a2f6e; }
+  .screen .story a { color: #7b4fd0; border-bottom-color: rgba(123, 79, 208, .4); }
+  .screen .breadcrumbs {
+    font-size: .75rem; color: #8d86a0; padding: .4rem .8rem;
+    border-bottom: 1px solid #ddd6c9;
+  }
+  .chrome {
+    margin-top: 14px; text-align: center; color: #8d86a0;
+    font-family: "IBM Plex Mono", Menlo, monospace; font-size: 13px;
+  }
+  .chrome b { color: #ffb0df; }
+</style>
+</head>
+<body>
+<div class="device">
+  <div class="screen"><div class="breadcrumbs"><b>Reader Beware</b> · go-outside (shirt_color=green)</div>
+
+
+<div class="story">
+    <span class="header"><a></a></span>
+    <div xml:lang="en-US">
+        <p>Outside you see Jane and she says "I like
+your green shirt very much."</p>
+
+<p>She buys you a coffee, and the day starts bright.</p>
+
+<p><a href='end-{"shirt_color":%20"green"}.html'>The end (warm one)</a></p>
+
+    </div>
+</div>
+</div>
+  <div class="chrome"><b>Red or Green?</b> &#183; chapter 6 of 9 &#183; world: shirt_color=green</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>demo.yaml &middot; raw</title>
+<style>
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, "Iowan Old Style", serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: "DejaVu Sans Mono", Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+</style>
+
+<style>
+  textarea.code {
+    width: 100%; height: 70vh; resize: vertical;
+    font-size: .85rem; line-height: 1.45;
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 6px;
+    padding: .6rem .8rem; tab-size: 4;
+  }
+  textarea.code:focus { border-color: var(--pink); box-shadow: 0 0 0 3px rgba(255,110,199,.25); }
+  .raw-note { color: var(--ink-faint); font-size: .85rem; }
+</style>
+
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/">Reader <b>Beware</b> &mdash; story editor</a>
+  <span class="root">/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src</span>
+</header>
+<main>
+
+<h1>
+  <code>demo.yaml</code>
+</h1>
+<p class="raw-note">
+  Raw yaml editing &mdash;
+  
+    <a href="/demo.yaml">back to the section studio</a>
+  
+</p>
+
+
+<div class="problems panel">
+  <strong>Problems found:</strong>
+  <ul><li>hacker: jinja error: Unexpected end of template. Jinja was looking for the following tags: &#39;elif&#39; or &#39;else&#39; or &#39;endif&#39;. The innermost block that needs to be closed is &#39;if&#39;.</li></ul>
+</div>
+
+
+
+<form method="post" action="/save/demo.yaml">
+  <textarea class="code" name="body" id="editor" spellcheck="false">---
+entrypoint:
+  body: |
+    # The Night Market
+
+    Rain slicks the neon-lit streets of New Avalon. You have **two** choices
+    and one very overpowered jinja template engine.
+
+    [Visit the hacker]({{ &#39;hacker&#39;|choice(credits=10) }})
+
+    [Visit the droid arena]({{ &#39;arena&#39;|choice(credits=5) }})
+
+hacker:
+  body: |
+    ## The Hacker&#39;s Den
+
+    She slides a keyboard across the table. `{% if credits &gt; 8 %}` she says,
+    *&#34;you can afford the good decrypt.&#34;*
+
+    ```python
+    def hack_the_planet(credits):
+        return credits &gt; 8 and &#34;rebellion&#34; or &#34;poverty&#34;
+    ```
+
+    [Jack in]({{ &#39;jack&#39;|explore }})
+
+arena:
+  body: |
+    ## The Droid Arena
+
+    The crowd roars. Your credits: {{ credits }}.
+
+    {% if credits &gt; 6 %}
+    You bribe the guard and pick the *easy* droid.
+
+    [Fight]({{ &#39;fight&#39;|explore }})
+    {% else %}
+    You fight the *hard* droid.
+
+    [Fight](#not-here)
+    {% endif %}
+
+jack:
+  body: |
+    You jack in. The ICE is thick but the data is sweet.
+
+    &gt; Victory! You are famous now.
+
+    [Celebrate]({{ &#39;entrypoint&#39;|explore }})
+
+fight:
+  body: |
+    The easy droid goes down in one hit. The crowd loves you.
+
+    [Back to the streets]({{ &#39;entrypoint&#39;|explore }})
+</textarea>
+  <p><button type="submit">Save</button></p>
+</form>
+
+
+<script>
+// point the create form at whichever filename the user typed
+var createForm = document.getElementById('create-form');
+if (createForm) {
+  var relInput = createForm.querySelector('[name=rel_new]');
+  createForm.addEventListener('submit', function () {
+    var name = relInput.value || 'story.yaml';
+    createForm.action = '/create/' + encodeURIComponent(name);
+  });
+}
+// autosave validation for existing files
+var editor = document.getElementById('editor');
+var m = location.pathname.match(/^\/raw\/(.*)$/);
+var rel = m ? decodeURIComponent(m[1]) : null;
+if (rel && editor) {
+  var timer = null;
+  editor.addEventListener('input', function () {
+    clearTimeout(timer);
+    timer = setTimeout(function () { validateNow(rel, editor.value); }, 900);
+  });
+}
+function validateNow(relName, body) {
+  var fd = new FormData();
+  fd.append('body', body);
+  fetch('/validate/' + encodeURIComponent(relName), {method: 'POST', body: fd})
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var box = document.querySelector('.problems');
+      if (!box && data.errors.length) {
+        box = document.createElement('div');
+        box.className = 'problems panel';
+        editor.parentNode.insertBefore(box, editor);
+      }
+      if (box) {
+        box.innerHTML = '<strong>Problems found:</strong><ul>' +
+          data.errors.map(function (e) { return '<li>' + e + '</li>'; }).join('') +
+          '</ul>';
+        box.style.display = data.errors.length ? '' : 'none';
+      }
+    });
+}
+</script>
+
+</main>
+</body>
+</html>

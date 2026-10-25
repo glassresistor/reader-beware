@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reader Beware Editor</title>
+<style>
+  :root {
+    --ink: #f2ecf5;          /* milky white text */
+    --ink-dim: #c3b9cc;
+    --ink-faint: #8d86a0;
+    --black: #0b0a10;        /* main background */
+    --grey: #17161f;         /* panels */
+    --grey-2: #211e29;
+    --grey-3: #2a2534;
+    --line: #3a3348;
+    --pink: #ff6ec7;
+    --pink-soft: #ffb0df;
+    --purple: #a06ae8;
+    --purple-deep: #7b4fd0;
+    --lilac: #c9a8ff;
+    --danger: #ff5c7a;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    font-family: Georgia, "Iowan Old Style", serif;
+    background:
+      radial-gradient(1200px 500px at 85% -10%, #2a1e3d 0%, transparent 60%),
+      radial-gradient(900px 400px at 0% 110%, #1d1730 0%, transparent 55%),
+      var(--black);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+  a { color: var(--pink-soft); text-decoration: none; }
+  a:hover { color: var(--pink); text-decoration: underline; }
+  code, textarea, input, button, select { font-family: "DejaVu Sans Mono", Menlo, monospace; }
+  header.top {
+    display: flex; align-items: center; gap: .8rem;
+    padding: .8rem 1.3rem;
+    background: linear-gradient(90deg, #12101a 0%, #1b1526 50%, #241830 100%);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 0 rgba(255, 110, 199, .25);
+  }
+  header.top a.brand { font-weight: bold; color: var(--ink); }
+  header.top a.brand b { color: var(--pink); }
+  header.top .root { color: var(--ink-faint); font-size: .85em; }
+  main { max-width: 1100px; margin: 1.4rem auto; padding: 0 1rem; }
+  h1, h2, h3 { color: var(--lilac); font-weight: normal; }
+  button, input[type=submit] {
+    background: linear-gradient(180deg, var(--purple) 0%, var(--purple-deep) 100%);
+    color: #fff; border: 1px solid rgba(255, 110, 199, .35);
+    padding: .35rem .8rem; cursor: pointer; border-radius: 4px;
+    font-size: .85rem;
+  }
+  button:hover, input[type=submit]:hover { background: var(--pink); color: #1a0b16; }
+  button.ghost, .ghost {
+    background: transparent; color: var(--ink-dim);
+    border: 1px solid var(--line);
+  }
+  button.ghost:hover { color: var(--pink-soft); border-color: var(--pink); }
+  button.danger { background: transparent; border-color: rgba(255, 92, 122, .4); color: var(--danger); }
+  button.danger:hover { background: var(--danger); color: #fff; }
+  input[type=text], input[type=url], textarea, select {
+    background: var(--grey-2); color: var(--ink);
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .35rem .5rem;
+  }
+  input:focus, textarea:focus, select:focus, button:focus {
+    outline: none; border-color: var(--pink);
+    box-shadow: 0 0 0 2px rgba(160, 106, 232, .35);
+  }
+  label { color: var(--ink-dim); font-size: .85rem; }
+  .panel {
+    background: var(--grey); border: 1px solid var(--line);
+    border-radius: 6px; padding: .9rem 1rem; margin-bottom: 1.1rem;
+  }
+  .problems { border-color: rgba(255, 92, 122, .45); background: #24141e; color: #ffdfe6; }
+  .problems ul { margin: .3rem 0 0; }
+  .ok-note { color: var(--lilac); }
+  .stories { list-style: none; padding: 0; margin: 0; }
+  .stories li {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--line); padding: .5rem .2rem;
+  }
+  .stories li:hover { background: var(--grey-2); }
+</style>
+
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="/">Reader <b>Beware</b> &mdash; story editor</a>
+  <span class="root">/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src</span>
+</header>
+<main>
+
+<h1>Stories in <code>/home/kaila/Documents/Unsloth Studio/Projects/Reader-Beware-492da56c/sandbox/reader_beware/site/examples-src</code></h1>
+
+<div class="panel">
+
+<ul class="stories">
+  
+  <li>
+    <a href="/belair.yaml"><strong>belair.yaml</strong></a>
+    <form method="post" action="/delete/belair.yaml"
+          onsubmit="return confirm('Delete belair.yaml?');">
+      <button class="danger" type="submit">delete</button>
+    </form>
+  </li>
+  
+  <li>
+    <a href="/demo.yaml"><strong>demo.yaml</strong></a>
+    <form method="post" action="/delete/demo.yaml"
+          onsubmit="return confirm('Delete demo.yaml?');">
+      <button class="danger" type="submit">delete</button>
+    </form>
+  </li>
+  
+  <li>
+    <a href="/maze.yaml"><strong>maze.yaml</strong></a>
+    <form method="post" action="/delete/maze.yaml"
+          onsubmit="return confirm('Delete maze.yaml?');">
+      <button class="danger" type="submit">delete</button>
+    </form>
+  </li>
+  
+  <li>
+    <a href="/shirts.yaml"><strong>shirts.yaml</strong></a>
+    <form method="post" action="/delete/shirts.yaml"
+          onsubmit="return confirm('Delete shirts.yaml?');">
+      <button class="danger" type="submit">delete</button>
+    </form>
+  </li>
+  
+</ul>
+
+
+<p><a href="/new"><strong>+ New story&hellip;</strong></a></p>
+</div>
+
+</main>
+</body>
+</html>

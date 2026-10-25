@@ -361,24 +361,29 @@ Two GitHub Actions workflows cover the repo:
   point works (`beware --help`), checks formatting with
   `black --check .` and runs the pytest suite.
 * **`Deploy advertisement site`** (`.github/workflows/deploy.yml`) builds
-  the single-page promotional site in `site/`: it installs playwright,
-  builds the example books into `site/books/` (real epubs plus their html
-  pages), captures screenshots of built story pages and of the editor
-  itself (story index, section studio with live preview and link tool,
-  raw yaml editor) via `site/scripts/capture_screenshots.py`, fails the
-  run if any screenshot is missing or suspiciously small, and publishes
-  `site/` to github.io with the official pages actions.
+  the single-page promotional site in `site/`: it installs only the
+  package itself (no browser tooling, no playwright), builds the example
+  books into `site/books/` (real epubs plus their html pages), renders
+  the site's examples straight from those builds &mdash; story pages,
+  e-reader framed pages and editor captures produced server-side through
+  flask's test client &mdash; into `site/embeds/`, injects them into
+  `site/index.html` as `<iframe srcdoc>` demos via
+  `site/scripts/capture_screenshots.py`, fails the run if any embed is
+  missing or suspiciously small, and publishes `site/` to github.io with
+  the official pages actions.
 
 ## Advertisement site (`site/`)
 
 `site/` is a static single page advertising reader beware: why it is
 awesome, a syntax walk-through, build instructions, example books built
-from the repo's own narratives in `site/examples-src/`, and screenshots.
-The screenshot capture script doubles as the book builder:
+from the repo's own narratives in `site/examples-src/`, and live rendered
+demos of real output embedded as `<iframe srcdoc>` elements (html and css
+only &mdash; no screenshots, no headless browser).  The render script
+doubles as the book builder:
 
 ```bash
 python site/scripts/capture_screenshots.py --books-only   # build site/books/
-python site/scripts/capture_screenshots.py               # + screenshots (needs playwright)
+python site/scripts/capture_screenshots.py               # + render embeds, inject index
 ```
 
 ## Running tests
