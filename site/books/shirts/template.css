@@ -1,0 +1,91 @@
+/* Reader Beware book page styling (html builds).
+   Dark "ebook reader" theme: milky white text over black/grey,
+   pink/purple accents matching the editor. */
+@import url('https://fonts.googleapis.com/css2?family=Iowan+Old+Style:ital,wght@0,400..700;1,400..700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+:root {
+  --ink: #f2ecf5;
+  --ink-dim: #c3b9cc;
+  /* Every text/background pair must clear WCAG 2.2 AA (4.5:1 for normal
+     text, 3:1 for large text).  --ink-faint is the dimmest ink in the
+     palette and sits at #9c95ad so breadcrumbs and metadata stay legible;
+     site/scripts/contrast_audit.py re-checks every pair in CI. */
+  --ink-faint: #9c95ad;
+  --black: #0b0a10;
+  --grey: #17161f;
+  --line: #3a3348;
+  --pink: #ff6ec7;
+  --pink-soft: #ffb0df;
+  --purple: #a06ae8;
+  --lilac: #c9a8ff;
+}
+
+html { background: var(--black); }
+
+body.story-page {
+  margin: 0;
+  color: var(--ink);
+  font-family: "Iowan Old Style", Georgia, serif;
+  background:
+    radial-gradient(1100px 480px at 85% -10%, #2a1e3d 0%, transparent 60%),
+    radial-gradient(900px 400px at 10% 110%, #1d1730 0%, transparent 55%),
+    var(--black);
+  min-height: 100vh;
+}
+
+.story {
+  max-width: 62ch;
+  margin: 3rem auto;
+  padding: 0 1.4rem;
+  font-size: 19px;
+  line-height: 1.65;
+}
+
+.story h1, .story h2, .story h3 { color: var(--lilac); font-weight: 600; }
+.story h1 { font-size: 1.9em; border-bottom: 1px solid var(--line); padding-bottom: .4rem; }
+.story h2 { font-size: 1.35em; color: var(--pink-soft); }
+
+.story a {
+  color: var(--pink-soft);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(255, 110, 199, .45);
+}
+.story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
+
+/* choice links read like buttons */
+.story p a:not([href^="#"]) { }
+
+.story code, .story pre {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  background: var(--grey);
+  color: var(--pink-soft);
+  border-radius: 4px;
+  padding: .1rem .35rem;
+  font-size: .9em;
+}
+
+.story hr { border: none; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+/* breadcrumb strip at the top of each page */
+.breadcrumbs {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  font-size: .78rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 1.2rem auto 0 auto;
+  padding: .45rem 1.4rem;
+  border-bottom: 1px solid var(--line);
+}
+.breadcrumbs b { color: var(--pink-soft); }
+
+/* footer strip */
+.bookmeta {
+  font-family: "IBM Plex Mono", Menlo, monospace;
+  font-size: .75rem;
+  color: var(--ink-faint);
+  max-width: 62ch;
+  margin: 3.5rem auto 1rem auto;
+  padding-top: .6rem;
+  border-top: 1px solid var(--line);
+}
+.bookmeta a { color: var(--lilac); }

@@ -13,4 +13,7 @@ venv_test/
 .unsloth_sandbox_remap.json
 _baseline/
 *_fails.txt
-site/books/
+# site/books/ is NOT ignored: the built html pages and epubs are published
+# with the site (upload-pages-artifact copies whatever git tracks under
+# site/, and an untracked folder never reaches github.io -- which is how
+# every link into the example books 404ed).
