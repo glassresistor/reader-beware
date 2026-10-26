@@ -168,6 +168,43 @@ footer .big { font-size: 1.2rem; color: var(--pink-soft); }
    agent from dropping its own light form-control defaults over them */
 iframe.embed { color-scheme: dark; }
 
+/* Zoom-on-click lightbox (see zoom.js).  The authored sizing above is
+   only the no-javascript fallback: once zoom.js runs it lays every
+   embed out as a thumbnail of one uniform height (width following the
+   capture's true aspect ratio), because the inline ratios alone made
+   the tall portrait captures tower over the page and the wide studio
+   captures flatten into strips.  Clicking a thumbnail -- on a
+   transparent button covering the figure, so exactly one click is
+   swallowed before the live demos become interactive -- expands that
+   same iframe almost full screen above a dark backdrop; clicking the
+   backdrop anywhere outside the frame, or escape, closes it again.
+   The !important declarations outvote the inline width/height the
+   script writes on thumbnails and the authored aspect-ratio alike. */
+figure.shot { position: relative; }
+button.zoom-button {
+  position: absolute; inset: 0; margin: 0; padding: 0;
+  background: transparent; border: 0; cursor: zoom-in; z-index: 1;
+}
+button.zoom-button:focus-visible {
+  outline: 2px solid var(--pink); outline-offset: -3px;
+}
+#zoom-backdrop {
+  position: fixed; inset: 0; display: none;
+  background: rgba(8, 7, 12, .8); cursor: zoom-out; z-index: 1000;
+}
+body.zoom-open { overflow: hidden; }
+iframe.embed.zoomed {
+  aspect-ratio: auto !important;
+  position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(1400px, 95vw) !important; height: 92vh !important;
+  z-index: 1001; box-shadow: 0 30px 90px rgba(0, 0, 0, .85);
+}
+/* the mock e-readers zoom as phones: a device-shaped box just large
+   enough for the framed screen, not a wide browser frame */
+iframe.embed.zoomed[data-device] {
+  width: min(480px, 95vw) !important; height: min(94vh, 860px) !important;
+}
+
 @media (max-width: 760px) {
   .grid2, .grid3 { grid-template-columns: 1fr; }
 }
