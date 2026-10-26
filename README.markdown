@@ -1,4 +1,4 @@
-~~~
+---
 # Reader Beware
 
 Reader Beware is a set of cli tools for creating gamebooks.  Gamebooks are typically works of fiction written in the 2nd person which offers the reader choices throughout the book which affects how the story moves forward.  Often times these are referred to Choose Your Own Adventure novels.
