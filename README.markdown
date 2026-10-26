@@ -1,7 +1,7 @@
 ---
 # Reader Beware
 
-**See Reader Beware in action: https://glassresistor.github.io/reader-beware/**
+See Reader Beware in action: https://glassresistor.github.io/reader-beware/
 
 Reader Beware is a set of cli tools and live editing server for creating gamebooks.  Gamebooks are typically works of fiction written in the 2nd person which offers the reader choices throughout the book which affects how the story moves forward.  Often times these are referred to Choose Your Own Adventure novels.
 
