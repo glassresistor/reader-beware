@@ -1,4 +1,3 @@
----
 # Reader Beware
 
 See Reader Beware in action: https://glassresistor.github.io/reader-beware/
