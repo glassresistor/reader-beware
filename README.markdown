@@ -1,7 +1,9 @@
 ---
 # Reader Beware
 
-Reader Beware is a set of cli tools for creating gamebooks.  Gamebooks are typically works of fiction written in the 2nd person which offers the reader choices throughout the book which affects how the story moves forward.  Often times these are referred to Choose Your Own Adventure novels.
+**See Reader Beware in action: https://glassresistor.github.io/reader-beware/**
+
+Reader Beware is a set of cli tools and live editing server for creating gamebooks.  Gamebooks are typically works of fiction written in the 2nd person which offers the reader choices throughout the book which affects how the story moves forward.  Often times these are referred to Choose Your Own Adventure novels.
 
 Historically CYOA novels have involved each branching path being hand written and printed to physical book.  Modern tools like Twine and ChoiceScript offer the ability to maintain complex state throughout the story and use it to change how portions of the story unfold further down the line but only work on phones and computers using special software/browsers.  ChoiceScript ultimately makes application that works similar to a book but Twine has the ability to make complex multimedia experiences.
 
