@@ -15,25 +15,98 @@
   .bar .right { margin-left: auto; display: flex; gap: .6rem; align-items: center; }
   .stats { color: var(--ink-faint); font-size: .85rem; }
   .stats b.pink { color: var(--pink); }
-  .outline { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.2rem; }
-  .chip {
-    background: var(--grey-2); border: 1px solid var(--line); color: var(--ink-dim);
-    padding: .2rem .55rem; border-radius: 999px; font-size: .78rem; cursor: pointer;
+  /* the section navigator: a sticky list down the side, click to show/hide */
+  .studio { display: grid; gap: 1.1rem; align-items: start; margin-bottom: 1.2rem;
+    grid-template-columns: minmax(190px, 250px) minmax(0, 1fr); }
+  @media (max-width: 780px) {
+    .studio { grid-template-columns: minmax(0, 1fr); }
+    .sec-nav { position: static; max-height: none; }
   }
-  .chip:hover { border-color: var(--purple); color: var(--ink); }
-  .chip.entrypoint { border-color: var(--pink); color: var(--pink-soft); }
-  .chip.broken { border-color: var(--danger); color: var(--danger); }
+  .sec-nav {
+    background: var(--grey); border: 1px solid var(--line); border-radius: 8px;
+    padding: .55rem .65rem; position: sticky; top: .6rem;
+    max-height: calc(100vh - 1.2rem); overflow: auto;
+  }
+  /* without script the toggles do nothing, so every card stays open instead */
+  .sec-nav { display: none; }
+  body.js .sec-nav { display: block; }
+  .nav-head { display: flex; align-items: baseline; gap: .4rem; }
+  .nav-title {
+    margin: .1rem 0; color: var(--ink-faint); font-size: .75rem;
+    text-transform: uppercase; letter-spacing: .07em; font-weight: normal;
+  }
+  .nav-count { margin-left: auto; color: var(--ink-faint); font-size: .78rem; }
+  .nav-filter { display: block; margin: .45rem 0 .35rem; }
+  .nav-filter input { width: 100%; }
+  .nav-actions { display: flex; gap: .3rem; flex-wrap: wrap; margin-bottom: .45rem; }
+  .nav-actions button { font-size: .76rem; padding: .18rem .45rem; }
+  .nav-actions button[aria-pressed="true"] {
+    background: var(--grey-2); color: var(--pink-soft); border-color: var(--pink);
+  }
+  ul.nav-list { list-style: none; margin: .2rem 0 0; padding: 0; }
+  .nav-row + .nav-row { border-top: 1px solid #221e2c; }
+  button.nav-item {
+    display: flex; gap: .35rem; align-items: baseline; width: 100%;
+    background: transparent; border: 1px solid transparent; color: var(--ink-dim);
+    padding: .28rem .3rem; text-align: left; border-radius: 4px;
+  }
+  button.nav-item:hover { background: var(--grey-2); color: var(--pink-soft); }
+  button.nav-item.open { background: var(--grey-2); color: var(--ink); }
+  button.nav-item.bad, button.nav-item.bad.open {
+    border-color: rgba(255, 92, 122, .45); color: var(--danger);
+  }
+  button.nav-item.bad:hover { background: #24141e; }
+  .nav-caret { color: var(--ink-faint); flex: 0 0 auto; transition: transform .12s; }
+  .nav-item.open .nav-caret { transform: rotate(90deg); }
+  .nav-main { flex: 1 1 auto; min-width: 0; }
+  .nav-name { display: block; overflow-wrap: anywhere; }
+  .nav-snip {
+    display: block; color: var(--ink-faint); font-size: .76rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .nav-name.nav-star { color: var(--pink-soft); }
+  .nav-count.bad { color: var(--danger); font-weight: bold; }
+  .nav-count { flex: 0 0 auto; color: var(--ink-faint); font-size: .78rem; }
+  .nav-broken { margin-top: .5rem; border-top: 1px solid var(--line); padding-top: .4rem; }
+  .nav-broken h3 {
+    margin: 0 0 .25rem; font-size: .75rem; text-transform: uppercase;
+    letter-spacing: .06em; color: var(--danger); font-weight: normal;
+  }
+  .nav-broken li { display: flex; gap: .35rem; align-items: baseline; padding: .2rem 0; }
+  .nav-broken button { font-size: .78rem; padding: .16rem .4rem; }
+  .broken-name { color: var(--danger); overflow-wrap: anywhere; }
+  .broken-from { color: var(--ink-faint); font-size: .78rem; cursor: pointer; }
+  .broken-from:hover { color: var(--pink-soft); }
+  /* cards ---------------------------------------------------------------- */
   .card {
     background: var(--grey); border: 1px solid var(--line);
     border-radius: 8px; margin-bottom: 1.4rem;
     box-shadow: 0 2px 14px rgba(0, 0, 0, .35);
   }
   .card.flagged { border-color: rgba(255, 92, 122, .5); }
+  body.js .card[data-open="0"] > .toolbar,
+  body.js .card[data-open="0"] > textarea.sec-body,
+  body.js .card[data-open="0"] > details.linktool,
+  body.js .card[data-open="0"] > .inspector,
+  body.js .card[data-open="0"] > .preview,
+  body.js .card[data-open="0"] > .card-problems { display: none; }
+  .card.flash { animation: flash 1.4s ease-out 1; }
+  @keyframes flash {
+    from { box-shadow: 0 0 0 2px var(--pink); }
+    to { box-shadow: 0 2px 14px rgba(0, 0, 0, .35); }
+  }
   .card-top {
     display: flex; align-items: center; gap: .5rem;
     padding: .6rem .8rem; background: var(--grey-3);
     border-bottom: 1px solid var(--line); border-radius: 8px 8px 0 0;
   }
+  .card-top .toggle {
+    flex: 0 0 auto; padding: .15rem .4rem; background: transparent;
+    color: var(--ink-faint);
+  }
+  .card-top .toggle:hover { color: var(--pink-soft); }
+  .card-top .caret { display: inline-block; transition: transform .12s; }
+  .card[data-open="1"] .card-top .caret { transform: rotate(90deg); }
   .card-top .sec-name { min-width: 12em; flex: 0 1 auto; }
   .card-top .tag {
     font-size: .7rem; text-transform: uppercase; letter-spacing: .06em;
@@ -106,6 +179,23 @@
   .preview-error { color: var(--danger); }
   .card-actions { display: flex; gap: .6rem; margin: 1.2rem 0; }
   .extras-note { color: var(--ink-faint); font-size: .78rem; padding: 0 .8rem .5rem; }
+  /* problems live on the card they belong to, not at the top of the page */
+  .card-problems {
+    background: #24141e; color: #ffdfe6;
+    border-bottom: 1px solid var(--line); padding: .45rem .8rem;
+  }
+  .card-problems ul { list-style: none; margin: 0; padding: 0; }
+  .card-problems li {
+    display: flex; gap: .5rem; align-items: baseline; flex-wrap: wrap;
+    padding: .2rem 0; font-size: .85rem;
+  }
+  .card-problems li .msg { overflow-wrap: anywhere; }
+  .card-problems button {
+    background: transparent; border-color: rgba(255, 92, 122, .4);
+    color: var(--danger); font-size: .8rem; padding: .16rem .45rem;
+  }
+  .card-problems button:hover { background: var(--danger); color: #fff; }
+  .problems-summary { display: flex; gap: .5rem; align-items: baseline; flex-wrap: wrap; }
 </style>
 {% endblock %}
 {% block content %}
@@ -142,18 +232,48 @@
 
 <div class="problems panel" id="problems" role="alert" aria-atomic="true"
      {% if not errors %}hidden{% endif %}>
-  <strong>Problems found:</strong>
+  <span class="problems-summary">
+    <strong id="problems-title">Problems found:</strong>
+    <button class="ghost" id="open-flagged" type="button" hidden>show them</button>
+  </span>
   <ul id="problem-list">
     {% for error in errors %}<li>{{ error|e }}</li>{% endfor %}
   </ul>
 </div>
 
-<div class="outline" id="outline"></div>
+<div class="studio">
+<aside class="sec-nav" aria-label="sections">
+  <div class="nav-head">
+    <h2 class="nav-title">sections</h2>
+    <span class="nav-count" id="nav-count"></span>
+  </div>
+  <label class="nav-filter">filter sections
+    <input type="search" id="sec-filter" placeholder="find…" autocomplete="off">
+  </label>
+  <div class="nav-actions">
+    <button class="ghost" data-navaction="open" type="button">open all</button>
+    <button class="ghost" data-navaction="close" type="button">close all</button>
+    <button class="ghost" id="nav-broken-btn" type="button"
+            aria-pressed="false">only problems</button>
+  </div>
+  <ul class="nav-list" id="nav-list"></ul>
+  <div class="nav-broken" id="nav-broken" hidden>
+    <h3>links with nowhere to go</h3>
+    <ul id="broken-list"></ul>
+  </div>
+</aside>
 
+<div id="work">
 <div id="cards">
   {% for section in sections %}
-  <article class="card" data-card>
+  <article class="card" data-card
+         data-open="{% if section.name in open_names %}1{% else %}0{% endif %}">
     <header class="card-top">
+      <button class="toggle" data-action="toggle" type="button"
+              aria-label="show or hide this section"
+              aria-expanded="{% if section.name in open_names %}true{% else %}false{% endif %}">
+        <span class="caret" aria-hidden="true">&#9656;</span>
+      </button>
       <span class="tag" data-tag hidden>entrypoint</span>
       <input class="sec-name" value="{{ section.name }}" spellcheck="false"
              autocomplete="off" aria-label="section name">
@@ -166,6 +286,17 @@
       <button class="ghost" data-action="dupe" title="duplicate">copy</button>
       <button class="danger" data-action="del" title="delete section">delete</button>
     </header>
+    <div class="card-problems" data-problems{% if not section.problems %} hidden{% endif %}>
+      <ul>
+        {% for problem in section.problems %}
+        <li><span class="msg">{{ problem.message|e }}</span>{% if problem.missing %}
+          <button class="lt-new" type="button" data-new="{{ problem.missing }}"
+             aria-label="create the missing section {{ problem.missing }}"
+             title="add a section called {{ problem.missing }}">+ create &ldquo;{{ problem.missing }}&rdquo;</button>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
     <div class="toolbar">
       <button class="ghost" data-md="h2">H2</button>
       <button class="ghost" data-md="bold" aria-label="bold"><b>B</b></button>
@@ -215,7 +346,7 @@
     </details>
     <div class="inspector">
       <h4>links in this section</h4>
-      <ul data-inspector>{% for link in section.links %}<li{% if link.target not in names %} class="missing"{% endif %}><span class="kind {{ link.kind }}">{{ link.kind }}</span> <span class="ltarget">{{ link.target }}</span>{% if link.args %} <span class="args">{{ link.args }}</span>{% endif %}</li>{% endfor %}</ul>
+      <ul data-inspector>{% for link in section.links %}<li{% if link.target not in names %} class="missing"{% endif %}><span class="kind {{ link.kind }}">{{ link.kind }}</span> <span class="ltarget" data-goto="{{ link.target }}">{{ link.target }}</span>{% if link.args %} <span class="args">{{ link.args }}</span>{% endif %}{% if link.target not in names %} <button class="danger ghost lt-new" type="button" data-new="{{ link.target }}" aria-label="create the missing section {{ link.target }}">+ create &ldquo;{{ link.target }}&rdquo;</button>{% endif %}</li>{% endfor %}</ul>
     </div>
     <div class="preview" hidden>
       <div class="preview-out"></div>
@@ -233,6 +364,8 @@
   Per-section keys other than <code>body</code> are preserved untouched when the
   studio saves.
 </p>
+</div>
+</div>
 
 <datalist id="section-names"></datalist>
 
@@ -254,12 +387,22 @@ function esc(text) {
   holder.textContent = String(text == null ? '' : text);
   return holder.innerHTML;
 }
+document.body.classList.add('js');
 var cardsBox = $('#cards');
 var nameList = $('#section-names');
 var statusBox = $('#status');
 var statsBox = $('#stats');
 var problemsBox = $('#problems');
 var problemList = $('#problem-list');
+var problemsTitle = $('#problems-title');
+var flaggedBtn = $('#open-flagged');
+var navList = $('#nav-list');
+var navCount = $('#nav-count');
+var filterBox = $('#sec-filter');
+var brokenBox = $('#nav-broken');
+var brokenList = $('#broken-list');
+var brokenBtn = $('#nav-broken-btn');
+var onlyProblems = false;   /* the "only problems" view of the navigator */
 
 function cardNodes() { return $$('.card', cardsBox); }
 function sectionNames() {
@@ -282,14 +425,120 @@ function parseLinks(text) {
   return out;
 }
 
-function refreshOutline() {
+/* -- card open/closed state ---------------------------------------- */
+function isOpen(card) { return card.dataset.open === '1'; }
+function setOpen(card, open) {
+  card.dataset.open = open ? '1' : '0';
+  var btn = $('.toggle', card);
+  if (btn) { btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  refreshNav();
+}
+function toggleCard(card) { setOpen(card, !isOpen(card)); }
+function flaggedCount() {
+  return cardNodes().filter(function (card) {
+    return $$('.card-problems li', card).length > 0;
+  }).length;
+}
+function showFlagged() {
+  cardNodes().forEach(function (card) {
+    if ($$('.card-problems li', card).length) { setOpen(card, true); }
+  });
+  refreshNav();
+  var first = $$('.card.flagged', cardsBox)[0];
+  if (first) { first.scrollIntoView({behavior: 'smooth', block: 'start'}); }
+}
+function cardSnippet(card) {
+  var text = bodyOf(card).replace(/\{\{[^}]*\}\}/g, ' ').trim();
+  var line = text.split('\n').filter(function (part) { return part.trim(); })[0] || '';
+  line = line.replace(/^[#>\-\s]+/, '');
+  return line.length > 90 ? line.slice(0, 90) + '…' : line;
+}
+/* Section names come from user yaml, so the navigator is built with real
+ * nodes rather than string concatenation: a name containing quotes cannot
+ * break out of an attribute. */
+function refreshNav() {
+  var cards = cardNodes();
   var names = sectionNames();
-  var outline = $('#outline');
-  outline.innerHTML = names.map(function (name) {
-    var cls = 'chip' + (name === 'entrypoint' ? ' entrypoint' : '');
-    return '<button class="' + cls + '" data-jump="' + esc(name) + '">'
-      + esc(name || '(unnamed)') + '</button>';
-  }).join('');
+  var filter = filterBox.value.trim().toLowerCase();
+  navList.innerHTML = '';
+  cards.forEach(function (card, index) {
+    var name = $('.sec-name', card).value.trim();
+    var links = parseLinks(bodyOf(card));
+    var missing = links.filter(function (l) {
+      return names.indexOf(l.target) === -1;
+    }).length;
+    var problems = $$('.card-problems li', card).length;
+    var trouble = missing + problems;
+    var hidden = (onlyProblems && !trouble) ||
+      (Boolean(filter) && name.toLowerCase().indexOf(filter) === -1);
+    var row = document.createElement('li');
+    row.className = 'nav-row';
+    if (hidden) { row.hidden = true; }
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'nav-item' + (isOpen(card) ? ' open' : '') +
+      (trouble ? ' bad' : '');
+    btn.dataset.navOpen = String(index);
+    btn.setAttribute('aria-expanded', isOpen(card) ? 'true' : 'false');
+    btn.setAttribute('aria-label',
+      name + ', ' + links.length + ' links, ' + problems + ' problems' +
+      (missing ? ', ' + missing + ' pointing nowhere' : '') +
+      (isOpen(card) ? ', shown' : ', hidden'));
+    var caret = document.createElement('span');
+    caret.className = 'nav-caret';
+    caret.innerHTML = '&#9656;';
+    caret.setAttribute('aria-hidden', 'true');
+    var main = document.createElement('span');
+    main.className = 'nav-main';
+    var label = document.createElement('span');
+    label.className = 'nav-name';
+    label.textContent = name === 'entrypoint' ? '\u2605 ' + name : name;
+    if (name === 'entrypoint') { label.classList.add('nav-star'); }
+    var snippet = document.createElement('span');
+    snippet.className = 'nav-snip';
+    snippet.textContent = cardSnippet(card);
+    main.appendChild(label);
+    main.appendChild(snippet);
+    var count = document.createElement('span');
+    count.className = 'nav-count' + (problems ? ' bad' : '');
+    count.textContent = String(links.length) + (problems ? ' !' : '');
+    btn.appendChild(caret);
+    btn.appendChild(main);
+    btn.appendChild(count);
+    row.appendChild(btn);
+    navList.appendChild(row);
+  });
+  navCount.textContent = cards.length + ' sections';
+}
+function refreshBroken() {
+  var names = sectionNames();
+  var seen = {};
+  allLinks().forEach(function (link) {
+    if (names.indexOf(link.target) !== -1) { return; }
+    if (!seen[link.target]) { seen[link.target] = []; }
+    seen[link.target].push(link.from);
+  });
+  brokenList.innerHTML = '';
+  Object.keys(seen).forEach(function (target) {
+    var row = document.createElement('li');
+    var title = document.createElement('span');
+    title.className = 'broken-name';
+    title.textContent = target;
+    var from = document.createElement('span');
+    from.className = 'broken-from';
+    from.textContent = 'from ' + seen[target].join(', ');
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'danger ghost lt-new';
+    btn.dataset.new = target;
+    btn.setAttribute('aria-label', 'create the missing section ' + target);
+    btn.textContent = '+ create';
+    row.appendChild(title);
+    row.appendChild(from);
+    row.appendChild(btn);
+    brokenList.appendChild(row);
+  });
+  brokenBox.hidden = !Object.keys(seen).length;
 }
 
 function refreshDatalist() {
@@ -327,26 +576,33 @@ function refreshInspector(card) {
     var missing = names.indexOf(l.target) === -1;
     return '<li class="' + (missing ? 'missing' : '') + '">'
       + '<span class="kind ' + l.kind + '">' + l.kind + '</span>'
-      + '<span class="ltarget" data-goto="' + esc(l.target) + '">'
+      + '<span class="ltarget" data-goto="' + esc(l.target) + '" title="show the section '
+      + esc(l.target) + '">'
       + esc(l.target) + '</span>'
       + '<span class="args">' + esc(l.args) + '</span>'
       + (missing
-          ? '<button class="danger ghost lt-new" data-new="' + esc(l.target) + '" type="button">create section</button>'
+          ? '<button class="danger ghost lt-new" data-new="' + esc(l.target)
+            + '" type="button">+ create &ldquo;' + esc(l.target) + '&rdquo;</button>'
           : '') + '</li>';
   }).join('') || '<li><em>none yet</em></li>';
   var cardMeta = $('[data-meta]', card);
   var missingCount = links.filter(function (l) {
     return names.indexOf(l.target) === -1;
   }).length;
+  var problems = $$('.card-problems li', card).length;
   cardMeta.innerHTML = links.length + ' link' + (links.length === 1 ? '' : 's') +
-    (missingCount ? ' · <span style="color:var(--danger)">' + missingCount + ' missing</span>' : '');
+    (missingCount ? ' · <span style="color:var(--danger)">' + missingCount + ' missing</span>' : '') +
+    (problems
+      ? ' · <span style="color:var(--danger)">' + problems + ' problem' + (problems === 1 ? '' : 's') + '</span>'
+      : '');
   $('[data-tag]', card).hidden = $('.sec-name', card).value.trim() !== 'entrypoint';
 }
 
 function refreshMetaAll() {
   var cards = cardNodes();
   cards.forEach(refreshInspector);
-  refreshOutline();
+  refreshNav();
+  refreshBroken();
   refreshDatalist();
   refreshStats();
 }
@@ -493,20 +749,95 @@ function buildPayload() {
   fd.append('payload', JSON.stringify({sections: sections}));
   return fd;
 }
-function showErrors(errors) {
-  problemList.innerHTML = errors.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('');
-  problemsBox.hidden = !errors.length;
-  cardNodes().forEach(function (card) {
-    var name = $('.sec-name', card).value.trim();
-    var flagged = name && errors.some(function (e) {
-      return e.indexOf(name + ':') === 0 || e.indexOf(name + ' links') === 0;
-    });
-    card.classList.toggle('flagged', Boolean(flagged));
+/* -- problems -------------------------------------------------------- */
+function makeProblemLi(item) {
+  var li = document.createElement('li');
+  var msg = document.createElement('span');
+  msg.className = 'msg';
+  msg.textContent = item.message;
+  li.appendChild(msg);
+  if (item.missing) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'lt-new';
+    btn.setAttribute('data-new', item.missing);
+    btn.setAttribute('aria-label', 'create the missing section ' + item.missing);
+    btn.textContent = '+ create “' + item.missing + '”';
+    li.appendChild(btn);
+  }
+  return li;
+}
+/* Every problem is filed on the card it belongs to; only whole-story
+ * problems (invalid yaml, a missing entrypoint) reach the page header. */
+function showProblems(problems) {
+  var cards = cardNodes();
+  var leftovers = [];
+  cards.forEach(function (card) {
+    var box = $('[data-problems]', card);
+    box.innerHTML = '';
+    box.hidden = true;
   });
+  problems.forEach(function (item) {
+    var matched = false;
+    cards.forEach(function (card) {
+      var target = String(item.section);
+      if ($('.sec-name', card).value.trim() ===
+          target.trim()) {
+        $('[data-problems]', card).appendChild(makeProblemLi(item));
+        matched = true;
+      }
+    });
+    if (!matched) { leftovers.push(item); }
+  });
+  cards.forEach(function (card) {
+    var box = $('[data-problems]', card);
+    box.hidden = !box.children.length;
+    card.classList.toggle('flagged', Boolean(box.children.length));
+  });
+  problemList.innerHTML = leftovers.map(function (item) {
+    return '<li>' + esc(item.message) + '</li>';
+  }).join('');
+  var flagged = flaggedCount();
+  if (!leftovers.length && !flagged) {
+    problemsBox.hidden = true;
+    flaggedBtn.hidden = true;
+    return;
+  }
+  problemsBox.hidden = false;
+  problemsTitle.textContent = leftovers.length
+    ? 'Problems found:'
+    : flagged === 1
+      ? '1 section has a problem'
+      : flagged + ' sections have problems';
+  flaggedBtn.hidden = leftovers.length === 0 || !flagged;
+}
+function showErrors(errors) {
+  showProblems(errors.map(function (e) {
+    return {section: null, message: e, missing: null};
+  }));
 }
 function setStatus(message, cls) {
   statusBox.textContent = message;
   statusBox.className = 'status' + (cls ? ' ' + cls : '');
+}
+/* Servers answer with structured problems; older/plain responses only
+ * carry the message strings, which become whole-story problems. */
+function problemsOf(data) {
+  if (data.problems) { return data.problems; }
+  return (data.errors || []).map(function (message) {
+    return {section: null, message: message, missing: null};
+  });
+}
+/* a failed save opens the cards that caused it, so nothing hides away */
+function focusFirstProblem(data) {
+  var cards = cardNodes();
+  for (var i = 0; i < cards.length; i += 1) {
+    if ($$('.card-problems li', cards[i]).length) {
+      setOpen(cards[i], true);
+      flashCard(cards[i]);
+      return;
+    }
+  }
 }
 function saveStory() {
   if (CREATED) { return createStory(); }
@@ -517,10 +848,11 @@ function saveStory() {
     .then(function (res) {
       if (res.ok && res.d.ok) {
         setStatus('saved', 'ok');
-        showErrors([]);
+        showProblems([]);
       } else {
         setStatus('not saved', 'bad');
-        showErrors(res.d.errors || []);
+        showProblems(problemsOf(res.d));
+        focusFirstProblem(res.d);
       }
     });
 }
@@ -539,7 +871,7 @@ function createStory() {
         location.href = '/' + encodeURIComponentPath(nameField.value.trim());
       } else {
         setStatus('not created', 'bad');
-        showErrors(res.d.errors || []);
+        showProblems(problemsOf(res.d));
       }
     });
 }
@@ -560,10 +892,11 @@ function scheduleValidate() {
           {method: 'POST', body: buildPayload()})
       .then(function (r) { return r.json(); })
       .then(function (data) {
-        var errors = data.errors || [];
-        showErrors(errors);
-        if (errors.length) {
-          setStatus(errors.length + ' problem' + (errors.length === 1 ? '' : 's'), 'bad');
+        var problems = problemsOf(data);
+        showProblems(problems);
+        refreshNav();
+        if (problems.length) {
+          setStatus(problems.length + ' problem' + (problems.length === 1 ? '' : 's'), 'bad');
         } else {
           setStatus('looks good', 'ok');
         }
@@ -577,6 +910,9 @@ function blankCard(template) {
   $('.sec-name', card).value = '';
   $('.sec-body', card).value = '';
   $('.sec-extra', card).value = '';
+  $('[data-problems]', card).innerHTML = '';
+  $('[data-problems]', card).hidden = true;
+  setOpen(card, true);
   $$('.linktool input, .linktool select', card).forEach(function (input) {
     if (input.tagName === 'SELECT') { input.value = 'explore'; } else { input.value = ''; }
   });
@@ -643,7 +979,8 @@ function wireCard(card) {
   $$('.card-top button', card).forEach(function (btn) {
     btn.addEventListener('click', function () {
       var action = btn.dataset.action;
-      if (action === 'up') { moveCard(card, -1); scheduleValidate(); }
+      if (action === 'toggle') { toggleCard(card); }
+      else if (action === 'up') { moveCard(card, -1); scheduleValidate(); }
       else if (action === 'down') { moveCard(card, 1); scheduleValidate(); }
       else if (action === 'dupe') { duplicateCard(card); }
       else if (action === 'del') { deleteCard(card); }
@@ -682,6 +1019,46 @@ function wireCard(card) {
   }
 }
 
+/* -- finding, opening and creating sections ------------------------ */
+function findCardByName(name) {
+  var found = null;
+  cardNodes().forEach(function (card) {
+    if ($('.sec-name', card).value.trim() === name) { found = card; }
+  });
+  return found;
+}
+function scrollCard(card) {
+  card.scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+function flashCard(card) {
+  card.classList.add('flash');
+  setTimeout(function () { card.classList.remove('flash'); }, 1500);
+}
+function showCard(card) {
+  setOpen(card, true);
+  scrollCard(card);
+  flashCard(card);
+}
+/* The quick fix for a link to nowhere: one click makes the section the
+ * link points at, opens it and puts the caret in the body. */
+function createSection(name) {
+  var existing = findCardByName(name);
+  if (existing) { showCard(existing); $('.sec-body', existing).focus(); return existing; }
+  var card = addCard(name, '');
+  if (!card) {
+    setStatus('cannot add sections here', 'bad');
+    return null;
+  }
+  showCard(card);
+  $('.sec-body', card).focus();
+  scheduleValidate();
+  return card;
+}
+function jumpToSection(name) {
+  var card = findCardByName(name);
+  if (card) { showCard(card); }
+}
+
 /* -- global wiring --------------------------------------------------- */
 cardNodes().forEach(wireCard);
 cardNodes().forEach(refreshInspector);
@@ -711,23 +1088,46 @@ document.addEventListener('keydown', function (event) {
 cardsBox.addEventListener('click', function (event) {
   var make = event.target.closest ? event.target.closest('.lt-new') : null;
   if (make) {
-    var name = make.getAttribute('data-new');
-    var card = addCard(name, '');
-    if (card) { $('.sec-body', card).focus(); }
-    scheduleValidate();
+    createSection(make.getAttribute('data-new'));
+    return;
   }
+  var goto = event.target.closest ? event.target.closest('[data-goto]') : null;
+  if (goto) { jumpToSection(goto.getAttribute('data-goto')); }
 });
-$('#outline').addEventListener('click', function (event) {
-  var chip = event.target.closest ? event.target.closest('[data-jump]') : null;
-  if (chip) {
-    var name = chip.getAttribute('data-jump');
-    cardNodes().forEach(function (card) {
-      if ($('.sec-name', card).value.trim() === name) {
-        card.scrollIntoView({behavior: 'smooth', block: 'start'});
-      }
-    });
-  }
+/* the navigator: clicking a section toggles its card on and off */
+navList.addEventListener('click', function (event) {
+  var item = event.target.closest ? event.target.closest('[data-nav-open]') : null;
+  if (!item) { return; }
+  var card = cardNodes()[Number(item.getAttribute('data-nav-open'))];
+  if (!card) { return; }
+  if (isOpen(card)) { setOpen(card, false); return; }
+  setOpen(card, true);
+  scrollCard(card);
 });
+filterBox.addEventListener('input', refreshNav);
+$$('[data-navaction]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var action = btn.getAttribute('data-navaction');
+    cardNodes().forEach(function (card) { setOpen(card, action === 'open'); });
+    if (action === 'close' && onlyProblems) { toggleOnlyProblems(false); }
+  });
+});
+brokenBtn.addEventListener('click', function () {
+  toggleOnlyProblems(!onlyProblems);
+});
+function toggleOnlyProblems(on) {
+  onlyProblems = on;
+  brokenBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  refreshNav();
+}
+brokenList.addEventListener('click', function (event) {
+  var make = event.target.closest ? event.target.closest('.lt-new') : null;
+  if (!make) { return; }
+  createSection(make.getAttribute('data-new'));
+});
+if (flaggedBtn) {
+  flaggedBtn.addEventListener('click', showFlagged);
+}
 </script>
 {% endif %}
 {% endblock %}

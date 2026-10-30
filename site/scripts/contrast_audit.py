@@ -86,6 +86,17 @@ PAIRS = [
     ("accent button, end stop", "#20051a", "#c44ea0"),
     ("outline chip", "#c3b9cc", "#211e29"),
     ("danger button label", "#ff5c7a", "#17161f"),
+    # the studio navigator and its per-card problem boxes
+    ("nav heading", "#9c95ad", "#17161f"),
+    ("nav entry label", "#c3b9cc", "#17161f"),
+    ("nav entry shown", "#f2ecf5", "#211e29"),
+    ("nav entry hover", "#ffb0df", "#211e29"),
+    ("nav problem marker", "#ff5c7a", "#17161f"),
+    ("nav trouble row hover", "#ff5c7a", "#24141e"),
+    ("broken link name", "#ff5c7a", "#17161f"),
+    ("card problem text", "#ffdfe6", "#24141e"),
+    ("card create-section button", "#ff5c7a", "#24141e"),
+    ("header show-them button", "#c3b9cc", "#24141e"),
     ("skip link", "#ffb0df", "#211e29"),
 ]
 

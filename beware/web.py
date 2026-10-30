@@ -47,22 +47,32 @@ def list_stories(root):
     return sorted(stories)
 
 
-def validate_narrative(text):
-    """Validate narrative yaml text; return a list of error strings.
+def problem(section, message, missing=None):
+    """One validation problem, ready to show on the card it belongs to.
+
+    ``section`` is the section name whose card should carry the message (or
+    ``None`` for whole-story problems), ``missing`` is the undefined link
+    target a "create section" button should offer.
+    """
+    return {"section": section, "message": message, "missing": missing}
+
+
+def narrative_problems(text):
+    """Validate narrative yaml text; return a list of problem dicts.
 
     Mirrors builder rules: valid YAML mapping, an ``entrypoint`` section,
     every section linked via explore/choice exists, and each body parses as
     jinja2 (a full render needs world state so only parse errors are shown).
     """
-    errors = []
+    problems = []
     try:
         data = yaml.safe_load(text)
     except yaml.YAMLError as exc:
-        return ["invalid yaml: %s" % str(exc)]
+        return [problem(None, "invalid yaml: %s" % str(exc))]
     if not isinstance(data, dict):
-        return ["narrative must be a mapping of section names"]
+        return [problem(None, "narrative must be a mapping of section names")]
     if "entrypoint" not in data:
-        errors.append("missing entrypoint section")
+        problems.append(problem(None, "missing entrypoint section"))
     from jinja2 import Environment
 
     env = Environment()
@@ -75,32 +85,71 @@ def validate_narrative(text):
         try:
             env.parse(body)
         except Exception as exc:
-            errors.append("%s: jinja error: %s" % (name, exc))
+            problems.append(
+                problem(str(name), "%s: jinja error: %s" % (name, exc))
+            )
         for target, explore, choice in FILTER_RE.findall(body):
             kind = "explore" if explore else "choice"
             if not isinstance(data.get(target), dict) or "body" not in data[target]:
-                errors.append(
-                    "%s links to undefined section %r (%s)" % (name, target, kind)
+                problems.append(
+                    problem(
+                        str(name),
+                        "%s links to undefined section %r (%s)" % (name, target, kind),
+                        str(target),
+                    )
                 )
-    return errors
+    return problems
 
 
-def validate_payload(sections):
-    """Validate studio payload sections; return a list of error strings.
+def payload_problems(sections):
+    """Validate studio payload sections; return a list of problem dicts.
 
     Covers editor-only problems the raw text validator cannot see (empty or
     duplicated section names) before the payload is serialized.
     """
-    errors = []
+    problems = []
     seen = set()
     for section in sections:
         name = str(section.get("name", "")).strip()
         if not name:
-            errors.append("section name is empty")
+            problems.append(problem(None, "section name is empty"))
         elif name in seen:
-            errors.append("duplicate section name: %s" % name)
+            problems.append(problem(name, "duplicate section name: %s" % name))
         seen.add(name)
-    return errors
+    return problems
+
+
+def validate_narrative(text):
+    """Validate narrative yaml text; return a list of error strings."""
+    return [item["message"] for item in narrative_problems(text)]
+
+
+def validate_payload(sections):
+    """Validate studio payload sections; return a list of error strings."""
+    return [item["message"] for item in payload_problems(sections)]
+
+
+def split_problems(sections, problems):
+    """Attach problem dicts to parsed ``sections`` cards in place.
+
+    Problems that belong to no card (whole-story or empty-name problems) are
+    returned as a leftover list for the page header.  A card can carry the
+    same message twice when two sections share its name; showing both is
+    better than silently dropping one.
+    """
+    for section in sections:
+        section["problems"] = []
+    leftovers = []
+    for item in problems:
+        name = item.get("section")
+        matched = False
+        for section in sections:
+            if name is not None and str(section["name"]).strip() == name:
+                section["problems"].append(item)
+                matched = True
+        if not matched:
+            leftovers.append(item)
+    return leftovers
 
 
 def load_payload(form):
@@ -162,6 +211,10 @@ def decorate_sections(sections):
 
 #: maximum rendered preview length returned to the browser
 PREVIEW_LIMIT = 200_000
+
+#: how many cards a studio page may open on its own; the rest stay in the
+#: navigator until the writer clicks them
+MAX_OPEN_CARDS = 7
 
 _TAG_RE = re.compile(r"<(?=[/!A-Za-z])")
 
@@ -228,20 +281,43 @@ def create_app(root=None):
         stories = list_stories(root)
         return render_template("index.html.j2", root=root, stories=stories)
 
+    def studio_context(rel, sections, problems, created, parse_error=None, text=None):
+        """Render the section studio with problems filed onto their own cards."""
+        leftovers = split_problems(sections, problems)
+        # a wall of open cards is exactly what does not scale, so the page
+        # opens only the entrypoint plus a few flagged sections; the rest
+        # wait in the navigator on the side
+        open_names = [
+            section["name"]
+            for section in sections
+            if str(section["name"]).strip() == "entrypoint"
+        ]
+        trouble = [
+            section["name"]
+            for section in sections
+            if section["problems"] and section["name"] not in open_names
+        ]
+        if not open_names and not trouble and sections:
+            open_names = [sections[0]["name"]]
+        open_names = (open_names + trouble)[: MAX_OPEN_CARDS]
+        return render_template(
+            "sections.html.j2",
+            story=rel,
+            sections=sections,
+            names=[section["name"] for section in sections],
+            errors=leftovers,
+            problems=[item for item in problems],
+            open_names=open_names,
+            root=root,
+            created=created,
+            parse_error=parse_error,
+            text=text,
+        )
+
     @app.route("/new", methods=["GET"])
     def new_story_form():
         sections = decorate_sections([{"name": "entrypoint", "body": "", "extra": {}}])
-        names = [section["name"] for section in sections]
-        return render_template(
-            "sections.html.j2",
-            story=None,
-            sections=sections,
-            names=names,
-            errors=[],
-            root=root,
-            created=True,
-            parse_error=None,
-        )
+        return studio_context(None, sections, [], True)
 
     @app.route("/new/raw", methods=["GET"])
     def new_story_raw_form():
@@ -296,38 +372,38 @@ def create_app(root=None):
             abort(404)
         with open(target, "r", encoding="utf-8") as f:
             text = f.read()
-        errors = validate_narrative(text)
         parse_error = None
         try:
             sections = decorate_sections(parse_sections(text))
         except ValueError as exc:
             parse_error = str(exc)
             sections = []
-        names = [section["name"] for section in sections]
-        return render_template(
-            "sections.html.j2",
-            story=rel,
-            sections=sections,
-            names=names,
-            errors=errors,
-            root=root,
-            created=False,
-            parse_error=parse_error,
-            text=text,
+        return studio_context(
+            rel, sections, narrative_problems(text), False, parse_error, text
         )
 
     @app.route("/write/<path:rel>", methods=["POST"])
     def write(rel):
         """Studio save endpoint; takes a payload and answers with json."""
         target = story_path(rel)
-        sections, errors = load_payload(request.form)
-        if not errors:
-            errors = validate_payload(sections)
-        if not errors:
+        sections, problems = load_payload(request.form)
+        if not problems:
+            problems = payload_problems(sections)
+        text = ""
+        if not problems:
             text = serialize_sections(sections)
-            errors = validate_narrative(text)
-        if errors:
-            return jsonify({"ok": False, "errors": errors}), 400
+            problems = narrative_problems(text)
+        if problems:
+            return (
+                jsonify(
+                    {
+                        "ok": False,
+                        "errors": [item["message"] for item in problems],
+                        "problems": problems,
+                    }
+                ),
+                400,
+            )
         parent = os.path.dirname(target)
         if parent and not os.path.exists(parent):
             os.makedirs(parent, exist_ok=True)
@@ -351,18 +427,27 @@ def create_app(root=None):
         if payload:
             # studio flow: answer with json so the editor can redirect or
             # show the problems without a full page reload
-            sections, errors = load_payload(request.form)
-            if not errors:
-                errors = validate_payload(sections)
-            data = serialize_sections(sections) if not errors else ""
-            if not errors and not data.strip():
-                errors = ["story text is empty"]
+            sections, problems = load_payload(request.form)
+            if not problems:
+                problems = payload_problems(sections)
+            data = serialize_sections(sections) if not problems else ""
+            if not problems and not data.strip():
+                problems = [problem(None, "story text is empty")]
             if os.path.exists(target):
-                errors.append("file already exists: %s" % rel)
-            if not errors:
-                errors = validate_narrative(data)
-            if errors:
-                return jsonify({"ok": False, "errors": errors}), 400
+                problems.append(problem(None, "file already exists: %s" % rel))
+            if not problems:
+                problems = narrative_problems(data)
+            if problems:
+                return (
+                    jsonify(
+                        {
+                            "ok": False,
+                            "errors": [item["message"] for item in problems],
+                            "problems": problems,
+                        }
+                    ),
+                    400,
+                )
         else:
             data = request.form.get("body", "")
             errors = validate_narrative(data) if data.strip() else []
@@ -398,14 +483,25 @@ def create_app(root=None):
         """
         story_path(rel)  # security check only
         if request.form.get("payload"):
-            sections, errors = load_payload(request.form)
-            if not errors:
-                errors = validate_payload(sections)
-            if not errors:
-                errors = validate_narrative(serialize_sections(sections))
-            return jsonify({"errors": errors})
+            sections, problems = load_payload(request.form)
+            if not problems:
+                problems = payload_problems(sections)
+            if not problems:
+                problems = narrative_problems(serialize_sections(sections))
+            return jsonify(
+                {
+                    "errors": [item["message"] for item in problems],
+                    "problems": problems,
+                }
+            )
         data = request.form.get("body", "")
-        return jsonify({"errors": validate_narrative(data)})
+        problems = narrative_problems(data)
+        return jsonify(
+            {
+                "errors": [item["message"] for item in problems],
+                "problems": problems,
+            }
+        )
 
     @app.route("/delete/<path:rel>", methods=["POST"])
     def delete(rel):
