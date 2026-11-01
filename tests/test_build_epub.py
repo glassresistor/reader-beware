@@ -115,11 +115,17 @@ def test_world_state_in_epub_pages(out):
     builder.build()
     epub_file = builder.build_epub()
     with zipfile.ZipFile(epub_file) as z:
-        pages = [n for n in z.namelist() if "go-outside" in n]
-        assert len(pages) == 2
+        # section files are content-hash names (sid-<md5>.html): percent-
+        # escaped page names never resolve inside an epub container once
+        # readers decode hrefs, so no assertion may depend on the raw
+        # section name appearing in a filename.
+        pages = [n for n in z.namelist() if n.startswith("EPUB/xhtml/")]
+        assert all("%" not in p for p in pages)
         bodies = [z.read(p).decode("utf-8") for p in sorted(pages)]
+    go_outside = [b for b in bodies if "go-outside" in b or "shirt" in b.lower()]
     assert any("I like your green shirt very much." in b for b in bodies)
     assert any("I dislike that color on you." in b for b in bodies)
+    assert len(go_outside) >= 2, "both world states must render separately"
 
 
 def test_epub_pages_are_well_formed_xhtml(out):

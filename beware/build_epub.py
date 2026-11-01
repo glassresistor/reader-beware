@@ -5,6 +5,7 @@ import hashlib
 import mimetypes
 import os
 import posixpath
+import re
 import shutil
 
 from lxml import etree
@@ -34,6 +35,13 @@ _MIME_SUFFIX = {
 
 XHTML_MEDIA_TYPE = "application/xhtml+xml"
 
+#: remote css resource references, forbidden inside an epub package:
+#: ``@import url('https://...');`` and bare ``url(http...)`` values.
+REMOTE_CSS_RE = re.compile(
+    r"""@import\s+url\(\s*['"]?https?://[^\)]*\)\s*;|url\(\s*['"]?https?://[^\)'"\s]*\s*['"]?\)""",  # noqa: E501
+    re.IGNORECASE,
+)
+
 
 class EPubWorldBuilder(NarativeWorldBuilder):
 
@@ -47,6 +55,17 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         self._spine_entries = []
 
     # -- filenames -----------------------------------------------------
+    def section_file(self, base_name):
+        """Filename for a section: a hash of the raw section+json name.
+
+        Percent-escaped names (``%7B%22...%7D``) are ambiguous inside an
+        epub container: readers and validators percent-decode hrefs once
+        before resolving them against the package, so a stored encoded
+        name can never be found.  A hash contains only ``[a-z0-9-]``, so
+        encoding and decoding are both no-ops and every lookup matches.
+        """
+        return _xml_id(base_name) + ".html"
+
     def xhtml_name(self, section_path):
         """Filename for a section inside the epub package."""
         stem = os.path.splitext(os.path.basename(section_path))[0]
@@ -151,7 +170,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
 
         css_text_path = os.path.join(self.base_dir, "files", "template.css")
         with open(css_text_path, "r") as f:
-            css_content = f.read().encode("utf-8")
+            css_content = self.localize_css(f.read()).encode("utf-8")
         style_item = epub.EpubItem(
             uid="css",
             file_name="style/default.css",
@@ -203,6 +222,18 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         if ok is False:
             raise IOError("failed to write epub file %s" % epub_file)
         return epub_file
+
+    @staticmethod
+    def localize_css(css_text):
+        """Strip remote resource references from the packaged stylesheet.
+
+        EPUB forbids remote resources: a Google Fonts ``@import`` makes
+        every validator reject the package (RSC-006).  The font stacks
+        already list local fallbacks, so dropping the import loses only
+        webfonts, never text.  Matches both ``@import url('http...');``
+        statements and bare remote ``url(...)`` values.
+        """
+        return REMOTE_CSS_RE.sub("", css_text)
 
     def _cover_bytes_and_mime(self):
         cover = str(self.meta.cover)
