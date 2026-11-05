@@ -55,8 +55,8 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         self._spine_entries = []
 
     # -- filenames -----------------------------------------------------
-    def section_file(self, base_name):
-        """Filename for a section: a hash of the raw section+json name.
+    def hash_filename(self, raw):
+        """Filesystem stem for a section: a hash of the raw section+json name.
 
         Percent-escaped names (``%7B%22...%7D``) are ambiguous inside an
         epub container: readers and validators percent-decode hrefs once
@@ -64,7 +64,11 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         name can never be found.  A hash contains only ``[a-z0-9-]``, so
         encoding and decoding are both no-ops and every lookup matches.
         """
-        return _xml_id(base_name) + ".html"
+        return _xml_id(raw)
+
+    def section_file(self, base_name):
+        """Filename for a section: the hashed stem plus its extension."""
+        return self.hash_filename(base_name) + ".html"
 
     def xhtml_name(self, section_path):
         """Filename for a section inside the epub package."""

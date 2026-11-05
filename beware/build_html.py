@@ -176,6 +176,16 @@ class NarativeWorldBuilder(object):
         digest = hashlib.md5(raw.encode("utf-8")).hexdigest()[:16]
         return "sid-" + digest
 
+    def hash_filename(self, raw):
+        """Filesystem stem for a section whose raw name needs hashing.
+
+        The same ``sid-<md5>`` digest the anchor id uses, without the
+        ``.html`` suffix; the epub builder writes these as its section
+        filenames (see EPubWorldBuilder.hash_filename), and site scripts
+        need to find those pages again from a raw name.
+        """
+        return self.anchor_id(raw)
+
     def breadcrumb(self, narative_name, world):
         """Human-readable page label: section name plus current world state."""
         if not world:

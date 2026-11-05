@@ -85,9 +85,7 @@ def narrative_problems(text):
         try:
             env.parse(body)
         except Exception as exc:
-            problems.append(
-                problem(str(name), "%s: jinja error: %s" % (name, exc))
-            )
+            problems.append(problem(str(name), "%s: jinja error: %s" % (name, exc)))
         for target, explore, choice in FILTER_RE.findall(body):
             kind = "explore" if explore else "choice"
             if not isinstance(data.get(target), dict) or "body" not in data[target]:
@@ -299,7 +297,7 @@ def create_app(root=None):
         ]
         if not open_names and not trouble and sections:
             open_names = [sections[0]["name"]]
-        open_names = (open_names + trouble)[: MAX_OPEN_CARDS]
+        open_names = (open_names + trouble)[:MAX_OPEN_CARDS]
         return render_template(
             "sections.html.j2",
             story=rel,

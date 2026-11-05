@@ -31,6 +31,7 @@ Usage::
 """
 
 import argparse
+import hashlib
 import html as html_module
 import os
 import posixpath
@@ -139,23 +140,27 @@ def copy_template_css():
     print("embedded template.css")
 
 
-def publish_filename(filename):
+def publish_filename(book, filename):
     """Filesystem name a built section page is published under in site/books/.
 
-    The epub builder writes its unzipped debug pages with percent-encoded
-    names already (encode_filenames), and the story embed targets are
-    written raw (``entrypoint-{}.html``); publish both spellings as the
-    *decoded* name, because github pages decodes a request path exactly
-    once before looking it up on the artifact tree.  A file stored as
-    ``entrypoint-%7B%7D.html`` is therefore only reachable by a request
-    that decodes to that literal string (``%257B...``, twice-encoded),
-    while every real link in the site is written once-encoded and decodes
-    to ``entrypoint-{}.html`` -- which is exactly the name stored here,
-    so those links hit.  Storing encoded names instead was what made
-    every choice link on the deployed site 404."""
+    The epub builder writes its unzipped debug pages as ``sid-<md5>`` hashes
+    (see EPubWorldBuilder.hash_filename), while the story embed targets in
+    STORY_EMBEDS are written with the raw decoded spelling builders used
+    before hashing (``entrypoint-{}.html``).  Map a candidate filename onto
+    whichever spelling actually exists on disk: the hash is computed from
+    the stem by the same routine the epub builder uses, so the two names
+    are found to be the same page.  Legacy percent-encoded stems still get
+    decoded, because github pages decodes a request path exactly once
+    before looking it up on the artifact tree, so stored encoded names
+    were unreachable from normal once-encoded links.
+    """
     stem = os.path.splitext(filename)[0]
     if "%" in stem:
         stem = urllib.parse.unquote(stem)
+    hashed = "sid-" + hashlib.md5(stem.encode("utf-8")).hexdigest()[:16]
+    for candidate in (stem, hashed):
+        if os.path.exists(os.path.join(BOOKS, book, candidate + ".html")):
+            return candidate + ".html"
     return stem + ".html"
 
 
@@ -377,7 +382,7 @@ def story_pages():
     served under a path such as github.io/reader-beware/ and 404s."""
     css = template_css_source()
     for book, filename, embed in STORY_EMBEDS:
-        target = os.path.join(BOOKS, book, publish_filename(filename))
+        target = os.path.join(BOOKS, book, publish_filename(book, filename))
         if not os.path.exists(target):
             raise FileNotFoundError(
                 "%s missing; run the full script (build_book publishes it)" % target
@@ -425,7 +430,11 @@ def link_into_published_books(page_html, book):
             if base.endswith(suffix):
                 base = base[: -len(suffix)]
                 break
-        safe = urllib.parse.quote(base, safe="") + ".html"
+        # the published spelling is whatever file actually exists beside
+        # the book: the raw decoded stem before hashing, or the sid-<md5>
+        # hash the epub builder writes now (publish_filename maps onto
+        # both); quote() would produce a name nothing stores on disk.
+        safe = publish_filename(book, base + ".html")
         target = html_module.escape(BOOK_PATH_PREFIX + book + "/" + safe, quote=True)
         # group(0) ends at the closing quote of the href attribute and
         # group(1) is the value between the quotes, so everything up to
