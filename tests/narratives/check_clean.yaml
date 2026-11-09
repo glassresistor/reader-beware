@@ -1,0 +1,16 @@
+---
+entrypoint:
+  body: |
+    Start here.
+
+    [go]({{ 'middle'|explore }})
+
+middle:
+  body: |
+    In the middle.
+
+    [end]({{ 'finish'|explore }})
+
+finish:
+  body: |
+    The end.

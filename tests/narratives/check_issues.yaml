@@ -1,0 +1,32 @@
+---
+entrypoint:
+  body: |
+    You wake up in a room.
+
+    [go left]({{ 'left'|explore }})
+
+    [go right]({{ 'right'|explore }})
+
+    [open door]({{ 'nonexistent-door'|explore }})
+
+left:
+  body: |
+    You go left and find a hallway.
+
+    [continue]({{ 'hallway'|explore }})
+
+right:
+  body: |
+    You go right and find a dead end.
+
+hallway:
+  body: |
+    The hallway continues forever.
+
+    [go back]({{ 'left'|explore }})
+
+orphan-section:
+  body: |
+    This section is unreachable from the entrypoint.
+
+    [somewhere]({{ 'right'|explore }})

@@ -76,6 +76,50 @@ def build_mobi(narative_path, output, book_config):
 
 
 @cli.command()
+@click.option(
+    "--narrative-path", default="narrative.yaml", help="Path to narrative yaml file"
+)
+@click.option(
+    "--dot-output",
+    default=None,
+    metavar="FILE",
+    help=(
+        "Write Graphviz DOT graph to FILE. Use '-' for stdout. "
+        "If omitted, no graph is written."
+    ),
+)
+@click.option("--quiet", is_flag=True, help="Suppress the report; only exit code")
+def check(narrative_path, dot_output, quiet):
+    """Validate narrative structure: broken links, unreachable sections, dead ends."""
+    import sys
+
+    from beware.check import check_narrative, to_dot
+
+    try:
+        text = open(narrative_path).read()
+    except OSError as exc:
+        click.echo("error: %s" % exc, err=True)
+        sys.exit(2)
+
+    result = check_narrative(text)
+
+    if not quiet:
+        click.echo(result.report())
+
+    if dot_output is not None:
+        dot = to_dot(result)
+        if dot_output == "-":
+            click.echo(dot)
+        else:
+            with open(dot_output, "w") as f:
+                f.write(dot)
+            if not quiet:
+                click.echo("\ndot graph written to %s" % dot_output)
+
+    sys.exit(1 if result.has_errors else 0)
+
+
+@cli.command()
 @click.option("--root", default=".", help="Folder containing story yaml files")
 @click.option("--port", default=8181, help="Port for the webapp to listen on")
 def serve(root, port):
