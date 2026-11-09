@@ -91,31 +91,140 @@ pip install -e git+https://github.com/glassresistor/reader-beware.git
 
 ## Running commands
 
-To see the most up to date instructions run
+The `beware` command is a click CLI with five subcommands.  Run `beware --help`
+at any time to see the full reference; everything below is copied verbatim from
+the `--help` output of each command (as of version 0.2.0).
 
-```bash
-beware --help
+### Top level (`beware --help`)
+
+```text
+Usage: beware [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  --help  Show this message and exit.
+
+Commands:
+  build-epub
+  build-html
+  build-mobi
+  check       Validate narrative structure: broken links, unreachable...
+  serve       Run a tiny flask editor for narratives under --root.
 ```
 
-To build html files designed primarily for debugging run this.
+### `beware build-html` — build html pages (for debugging)
+
+```text
+Usage: beware build-html [OPTIONS]
+
+Options:
+  --narative-path TEXT  Path to natarive yaml file
+  --output TEXT         Output folder
+  --help                Show this message and exit.
+```
+
+Defaults: `--narative-path narative.yaml`, `--output output`.
 
 ```bash
 beware build-html --narative-path narative.yaml --output output_folder
-````
+```
 
 Once it runs you can open your browser to file://path_to_folder/entrypoint-{}.html and it will be the first page.
 
+### `beware build-epub` — build an ebook
 
-To build epub files run the below command.  This will create both an epub file (`output_file.epub`) and a folder (`output_file/`) containing the unzipped pages for debugging.
+```text
+Usage: beware build-epub [OPTIONS]
+
+Options:
+  --narative-path TEXT  Path to natarive yaml file
+  --output TEXT         Output folder and file (the epub is written as
+                        <output>.epub)
+  --book-config TEXT    Path to a yaml/json file with ebook metadata (title,
+                        description, cover, ...)
+  --help                Show this message and exit.
+```
+
+Defaults: `--narative-path narative.yaml`, `--output output`.
+
+This will create both an epub file (`output_file.epub`) and a folder
+(`output_file/`) containing the unzipped pages for debugging.
 
 ```bash
 beware build-epub --narative-path narative.yaml --output output_file
-````
+```
 
 Add `--book-config book.yaml` to set the ebook title, description, publisher,
 rights notice and cover image (see Book Config below).
 
+### `beware build-mobi` — build a Kindle mobi file
+
+```text
+Usage: beware build-mobi [OPTIONS]
+
+Options:
+  --narative-path TEXT  Path to natarive yaml file
+  --output TEXT         Output base name (mobi written as <output>.mobi)
+  --book-config TEXT    Path to a yaml/json file with ebook metadata (title,
+                        description, cover, ...)
+  --help                Show this message and exit.
+```
+
+Defaults: `--narative-path narative.yaml`, `--output output`.
+
+Uses Calibre's `ebook-convert` when available; otherwise falls back to a
+Kindle-ready `.epub` with instructions (see MOBI / Kindle formats below).
+
+```bash
+beware build-mobi --narative-path narative.yaml --output book \
+    --book-config book.yaml
+```
+
 Acfter this I typically use Calibre to view the epub file and use it to create a mobi file and transfer it to my Kindle but it should work for any ebook reader that Calibre works with or accepts epub/mobi files.
+
+### `beware check` — validate narrative structure
+
+```text
+Usage: beware check [OPTIONS]
+
+  Validate narrative structure: broken links, unreachable sections, dead ends.
+
+Options:
+  --narrative-path TEXT  Path to narrative yaml file
+  --dot-output FILE      Write Graphviz DOT graph to FILE. Use '-' for stdout.
+                         If omitted, no graph is written.
+  --quiet                Suppress the report; only exit code
+  --help                 Show this message and exit.
+```
+
+Defaults: `--narrative-path narrative.yaml` (note: spelled correctly here,
+unlike the build commands).
+
+Exit code is 0 when the story has no errors, 1 when it does, 2 when the file
+cannot be read.  Useful in CI or as a pre-build sanity check:
+
+```bash
+beware check --narrative-path narative.yaml
+beware check --narrative-path narative.yaml --dot-output graph.dot
+```
+
+### `beware serve` — live web editor
+
+```text
+Usage: beware serve [OPTIONS]
+
+  Run a tiny flask editor for narratives under --root.
+
+Options:
+  --root TEXT     Folder containing story yaml files
+  --port INTEGER  Port for the webapp to listen on
+  --help          Show this message and exit.
+```
+
+Defaults: `--root .`, `--port 8181`.
+
+```bash
+beware serve --root stories_folder --port 8181
+```
 
 ## Other Examples
 
@@ -387,6 +496,13 @@ doubles as the book builder:
 python site/scripts/capture_screenshots.py --books-only   # build site/books/
 python site/scripts/capture_screenshots.py               # + render embeds, inject index
 ```
+
+## Agent skills
+
+[`SKILL.md`](./SKILL.md) is a compact reference for coding agents (and humans)
+working on stories in this repo: how to write narrative yaml, which commands to
+run and in what order, and the gotchas that waste the most time.  Point your
+agent at it before starting work on a book.
 
 ## Running tests
 
