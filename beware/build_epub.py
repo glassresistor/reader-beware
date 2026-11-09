@@ -75,6 +75,13 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         stem = os.path.splitext(os.path.basename(section_path))[0]
         return posixpath.join("xhtml", stem + ".xhtml")
 
+    def _render_dead_page(self, text):
+        """XHTML for one interstitial dead page (deterrent / wayfinding)."""
+        template = self.env.get_template("html/dead_page.html.j2")
+        return template.render(
+            message=text, language=self.meta.language or "en-US"
+        )
+
     # -- rendering -----------------------------------------------------
     def render_body(self, narative_name, world):
         """Render one section to its final html file in the output folder."""
@@ -183,8 +190,17 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         )
         book.add_item(style_item)
 
+        # interstitial dead pages (optional, from the book config): dropped
+        # between each section and the next so a reader flipping through
+        # linearly cannot get lost.  Choice links jump straight over them.
+        dead_texts = self.meta.dead_page_texts()
+        include_after_last = bool(
+            self.meta.dead_pages and self.meta.dead_pages.include_after_last
+        )
+
         spine_ids = []
-        for xmlid, section_path in self._spine_entries:
+        total = len(self._spine_entries)
+        for pos, (xmlid, section_path) in enumerate(self._spine_entries):
             full = os.path.join(self.output_path, section_path)
             with open(full, "r", encoding="utf-8") as f:
                 page_content = f.read().encode("utf-8")
@@ -203,6 +219,28 @@ class EPubWorldBuilder(NarativeWorldBuilder):
             chapter.content = page_content
             book.add_item(chapter)
             spine_ids.append(xmlid)
+
+            is_last = pos == total - 1
+            if dead_texts and (not is_last or include_after_last):
+                for i, text in enumerate(dead_texts):
+                    d_uid = _xml_id("dead-page-%d-%d" % (pos, i))
+                    d_name = posixpath.join(
+                        "xhtml", "dead-%d-%d.xhtml" % (pos, i)
+                    )
+                    d_chapter = epub.EpubHtml(
+                        uid=d_uid,
+                        file_name=d_name,
+                        media_type=XHTML_MEDIA_TYPE,
+                        lang=self.meta.language or "en-US",
+                    )
+                    d_chapter.add_link(
+                        href="../style/default.css",
+                        rel="stylesheet",
+                        type="text/css",
+                    )
+                    d_chapter.content = self._render_dead_page(text).encode("utf-8")
+                    book.add_item(d_chapter)
+                    spine_ids.append(d_uid)
 
         if self.meta.has_cover:
             cover_data, mime = self._cover_bytes_and_mime()

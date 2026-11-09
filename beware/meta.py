@@ -37,6 +37,60 @@ DEFAULT_RIGHTS = (
     "Suite 300, San Francisco, California, 94105, USA."
 )
 
+#: Deterrent copy for interstitial "dead" pages, in the idiom of the
+#: long-term nuclear waste warning messages (WIPP / the Clapp report):
+#: "not a place of honor", "nothing here is worth your desire", "go home
+#: and tell them what you have seen", "do not proceed", "do not dig".
+#: Each line also does plain wayfinding so a reader who has drifted off
+#: the linked path can orient themselves instead of getting lost.
+DEFAULT_DEAD_PAGE_MESSAGES = (
+    "You are between passages. Nothing here is worth your desire. Do not "
+    "proceed \u2014 turn back to the last page you remember, or follow the "
+    "links onward.",
+    "This is not a place of honor. The road you walked does not continue "
+    "here. Go home to where your story began and tell it what you have seen.",
+    "You are approaching a site of deep significance. Do not dig. Do not "
+    "linger. Turn the page and return to the path, or you will be lost for "
+    "good.",
+)
+
+
+@dataclass
+class DeadPageConfig:
+    """How many interstitial dead pages to drop between sections, and with
+    what copy.  ``messages`` empty means use :data:`DEFAULT_DEAD_PAGE_MESSAGES`
+    (they cycle if ``count`` exceeds the number supplied)."""
+
+    count: int = 3
+    messages: tuple = ()
+    include_after_last: bool = False
+
+
+def _parse_dead_pages(value):
+    """Normalize a raw config value into a :class:`DeadPageConfig` or None.
+
+    Accepts ``True`` (defaults), a mapping (``count`` / ``messages`` /
+    ``include_after_last``), or ``None``/``False`` (disabled).
+    """
+    if value is None or value is False:
+        return None
+    if value is True:
+        return DeadPageConfig()
+    if isinstance(value, dict):
+        msgs = value.get("messages", [])
+        if isinstance(msgs, str):
+            msgs = [msgs]
+        try:
+            count = int(value.get("count", 3))
+        except (TypeError, ValueError):
+            count = 3
+        return DeadPageConfig(
+            count=count,
+            messages=tuple(str(m) for m in msgs),
+            include_after_last=bool(value.get("include_after_last", False)),
+        )
+    return None
+
 
 @dataclass
 class BookMetadata:
@@ -53,7 +107,13 @@ class BookMetadata:
     kindle_notification_address: str = ""
     generator: str = "Reader Beware"
     css_files: tuple = ("template.css",)
+    dead_pages: Optional[DeadPageConfig] = None
     extras: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        # allow a raw dict/bool to be passed straight to the constructor
+        if isinstance(self.dead_pages, (dict, bool)):
+            self.dead_pages = _parse_dead_pages(self.dead_pages)
 
     # -- loading ---------------------------------------------------------
     @classmethod
@@ -94,6 +154,8 @@ class BookMetadata:
         if "date" in known:
             # yaml parses bare dates into datetime.date objects
             known["date"] = str(known["date"])
+        if "dead_pages" in known:
+            known["dead_pages"] = _parse_dead_pages(known["dead_pages"])
         kwargs = {}
         for name in cls.field_names():
             if name in known:
@@ -127,3 +189,18 @@ class BookMetadata:
     @property
     def has_cover(self):
         return bool(self.cover)
+
+    def dead_page_texts(self):
+        """Ordered list of dead-page body strings, or ``[]`` when disabled.
+
+        The pool (custom messages, else the nuclear-waste defaults) is cycled
+        so a ``count`` larger than the number of supplied messages still fills
+        every page.
+        """
+        if self.dead_pages is None:
+            return []
+        count = max(0, int(self.dead_pages.count))
+        if count == 0:
+            return []
+        pool = list(self.dead_pages.messages) or list(DEFAULT_DEAD_PAGE_MESSAGES)
+        return [pool[i % len(pool)] for i in range(count)]

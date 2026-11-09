@@ -89,3 +89,29 @@ body.story-page {
   border-top: 1px solid var(--line);
 }
 .bookmeta a { color: var(--lilac); }
+
+/* dead / interstitial pages: ominous guardrails dropped between sections
+   (long-term nuclear waste warning style).  Choice links jump straight over
+   them, so only a reader flipping through linearly ever lands here -- where
+   the copy tells them they have drifted off the path and how to get back. */
+body.story-page.dead-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.dead { max-width: 40ch; margin: 3rem auto; padding: 0 1.5rem; }
+.dead-marker { font-size: 2.6rem; color: var(--pink); opacity: .85; line-height: 1; }
+.dead-copy {
+  font-size: 1.25em;
+  line-height: 1.7;
+  color: var(--ink);
+  margin-top: 1.6rem;
+  font-style: italic;
+}
+.dead-hint {
+  color: var(--ink-faint);
+  font-size: .95em;
+  margin-top: 2rem;
+  letter-spacing: .02em;
+}
