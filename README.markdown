@@ -497,7 +497,7 @@ python site/scripts/capture_screenshots.py --books-only   # build site/books/
 python site/scripts/capture_screenshots.py               # + render embeds, inject index
 ```
 
-## Agent skills
+## Agent skills(i use this for fuzzing complex tasks please dont write slop)
 
 [`SKILL.md`](./SKILL.md) is a compact reference for coding agents (and humans)
 working on stories in this repo: how to write narrative yaml, which commands to
