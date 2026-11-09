@@ -78,9 +78,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
     def _render_dead_page(self, text):
         """XHTML for one interstitial dead page (deterrent / wayfinding)."""
         template = self.env.get_template("html/dead_page.html.j2")
-        return template.render(
-            message=text, language=self.meta.language or "en-US"
-        )
+        return template.render(message=text, language=self.meta.language or "en-US")
 
     # -- rendering -----------------------------------------------------
     def render_body(self, narative_name, world):
@@ -224,9 +222,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
             if dead_texts and (not is_last or include_after_last):
                 for i, text in enumerate(dead_texts):
                     d_uid = _xml_id("dead-page-%d-%d" % (pos, i))
-                    d_name = posixpath.join(
-                        "xhtml", "dead-%d-%d.xhtml" % (pos, i)
-                    )
+                    d_name = posixpath.join("xhtml", "dead-%d-%d.xhtml" % (pos, i))
                     d_chapter = epub.EpubHtml(
                         uid=d_uid,
                         file_name=d_name,

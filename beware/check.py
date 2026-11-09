@@ -28,11 +28,7 @@ class CheckResult:
 
     @property
     def has_errors(self) -> bool:
-        return bool(
-            self.entrypoint is None
-            or self.broken_links
-            or self.unreachable
-        )
+        return bool(self.entrypoint is None or self.broken_links or self.unreachable)
 
     def report(self) -> str:
         """Human-readable summary of all findings."""
@@ -122,10 +118,8 @@ def to_dot(result: CheckResult) -> str:
     """Render a Graphviz DOT digraph of the narrative structure."""
     lines = []
     lines.append("digraph narrative {")
-    lines.append('    rankdir=TB;')
-    lines.append(
-        '    node [shape=box, style="rounded,filled", fillcolor="#f8f9fa"];'
-    )
+    lines.append("    rankdir=TB;")
+    lines.append('    node [shape=box, style="rounded,filled", fillcolor="#f8f9fa"];')
     lines.append('    edge [color="#6c757d"];')
     lines.append("")
 

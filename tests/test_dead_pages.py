@@ -37,7 +37,9 @@ def spine_hrefs(epub_file):
     """Ordered list of hrefs in the reading (spine) order."""
     with zipfile.ZipFile(epub_file) as z:
         opf = z.read("EPUB/content.opf").decode()
-    uid_to_href = {i: h for h, i in re.findall(r'<item href="([^"]+)" id="([^"]+)"', opf)}
+    uid_to_href = {
+        i: h for h, i in re.findall(r'<item href="([^"]+)" id="([^"]+)"', opf)
+    }
     spine_block = opf.split("<spine", 1)[1]
     idrefs = re.findall(r'idref="([^"]+)"', spine_block)
     return [uid_to_href[r] for r in idrefs]
@@ -70,24 +72,18 @@ def test_true_enables_defaults(out):
 
 def test_custom_messages_used(out):
     custom = ("STOP. Do not read further.", "This page is a trap.")
-    meta = BookMetadata(
-        dead_pages=DeadPageConfig(count=2, messages=custom)
-    )
+    meta = BookMetadata(dead_pages=DeadPageConfig(count=2, messages=custom))
     epub_file = build_epub(out, meta)
     with zipfile.ZipFile(epub_file) as z:
         bodies = [z.read(n).decode() for n in dead_files(epub_file)]
     assert any("STOP. Do not read further." in b for b in bodies)
     assert any("This page is a trap." in b for b in bodies)
     # default copy must NOT leak in when custom messages are supplied
-    assert not any(
-        m in b for b in bodies for m in DEFAULT_DEAD_PAGE_MESSAGES
-    )
+    assert not any(m in b for b in bodies for m in DEFAULT_DEAD_PAGE_MESSAGES)
 
 
 def test_count_cycles_messages(out):
-    meta = BookMetadata(
-        dead_pages=DeadPageConfig(count=5, messages=("only one line",))
-    )
+    meta = BookMetadata(dead_pages=DeadPageConfig(count=5, messages=("only one line",)))
     epub_file = build_epub(out, meta)
     # 2 gaps x 5 pages = 10 dead pages, all showing the single cycled message
     files = dead_files(epub_file)
@@ -98,9 +94,7 @@ def test_count_cycles_messages(out):
 
 
 def test_include_after_last(out):
-    meta = BookMetadata(
-        dead_pages=DeadPageConfig(count=3, include_after_last=True)
-    )
+    meta = BookMetadata(dead_pages=DeadPageConfig(count=3, include_after_last=True))
     epub_file = build_epub(out, meta)
     # now all 3 sections are followed by dead pages -> 3 gaps x 3 = 9
     assert len(dead_files(epub_file)) == 9
