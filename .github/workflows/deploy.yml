@@ -2,7 +2,7 @@ name: Deploy advertisement site
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 # allow the "Tests" workflow to run alongside; pages deployment is scoped
