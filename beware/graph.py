@@ -57,7 +57,7 @@ NODE_MISSING = "missing"
 #: edge kinds
 EDGE_NORMAL = "normal"
 EDGE_BROKEN = "broken"  # points at a section that does not exist
-EDGE_BACK = "back"      # part of a cycle (drawn dashed so loops are visible)
+EDGE_BACK = "back"  # part of a cycle (drawn dashed so loops are visible)
 
 
 @dataclass
@@ -199,6 +199,7 @@ def _node_label(name: str, body: str, mode: str, limit: int) -> str:
 # ---------------------------------------------------------------------------
 # Layout: rank -> order -> coordinates
 # ---------------------------------------------------------------------------
+
 
 class _Layout(object):
     """Holds the mutable state of a single layout pass."""
@@ -447,8 +448,14 @@ def _wrap_text(text: str, max_chars: int) -> List[str]:
     return lines or [""]
 
 
-def _compute_metrics(graph: StoryGraph, font_size: float, pad_x: float,
-                      pad_y: float, min_w: float, max_w: float) -> Dict[str, Tuple[float, float]]:
+def _compute_metrics(
+    graph: StoryGraph,
+    font_size: float,
+    pad_x: float,
+    pad_y: float,
+    min_w: float,
+    max_w: float,
+) -> Dict[str, Tuple[float, float]]:
     """Compute (width, height) for every node from its wrapped label.
 
     For name/off labels all boxes share one uniform width (the widest label)
@@ -475,15 +482,19 @@ def _compute_metrics(graph: StoryGraph, font_size: float, pad_x: float,
     uniform = all(len(raw[n.name]) <= 1 for n in graph.nodes)
     metrics: Dict[str, Tuple[float, float]] = {}
     if uniform:
-        common = max(width_for(raw[n.name]) for n in graph.nodes) if graph.nodes else min_w
+        common = (
+            max(width_for(raw[n.name]) for n in graph.nodes) if graph.nodes else min_w
+        )
         for node in graph.nodes:
             w = common
             h = 2 * pad_y + len(raw[node.name]) * line_h
             metrics[node.name] = (w, h)
     else:
         for node in graph.nodes:
-            metrics[node.name] = (width_for(raw[node.name]),
-                                  2 * pad_y + len(raw[node.name]) * line_h)
+            metrics[node.name] = (
+                width_for(raw[node.name]),
+                2 * pad_y + len(raw[node.name]) * line_h,
+            )
     # stash the wrapped lines on each node for rendering
     for node in graph.nodes:
         node.lines = raw[node.name]
@@ -539,12 +550,14 @@ def _edge_path(graph: StoryGraph, e: GEdge) -> Tuple[str, str]:
             # route the loop around below both boxes
             bend = max(s.y, t.y) + 40
             return (
-                "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f" % (sx, sy, sx + 30, bend, tx - 30, bend, tx, ty),
+                "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f"
+                % (sx, sy, sx + 30, bend, tx - 30, bend, tx, ty),
                 marker,
             )
         dx = max(20.0, abs(tx - sx) * 0.5)
         return (
-            "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f" % (sx, sy, sx + dx, sy, tx - dx, ty, tx, ty),
+            "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f"
+            % (sx, sy, sx + dx, sy, tx - dx, ty, tx, ty),
             marker,
         )
 
@@ -553,7 +566,17 @@ def _edge_path(graph: StoryGraph, e: GEdge) -> Tuple[str, str]:
         # loop around the right side of both boxes
         bend = max(s.x, t.x) + 40
         return (
-            "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f" % (s.x, s.y + s.h / 2.0, bend, s.y + 30, bend, t.y - 30, t.x, t.y - t.h / 2.0),
+            "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f"
+            % (
+                s.x,
+                s.y + s.h / 2.0,
+                bend,
+                s.y + 30,
+                bend,
+                t.y - 30,
+                t.x,
+                t.y - t.h / 2.0,
+            ),
             marker,
         )
     sx = s.x
@@ -562,7 +585,8 @@ def _edge_path(graph: StoryGraph, e: GEdge) -> Tuple[str, str]:
     ty = t.y - t.h / 2.0
     dy = max(20.0, abs(ty - sy) * 0.5)
     return (
-        "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f" % (sx, sy, sx, sy + dy, tx, ty - dy, tx, ty),
+        "M %.1f %.1f C %.1f %.1f, %.1f %.1f, %.1f %.1f"
+        % (sx, sy, sx, sy + dy, tx, ty - dy, tx, ty),
         marker,
     )
 
@@ -574,11 +598,16 @@ def _edge_path(graph: StoryGraph, e: GEdge) -> Tuple[str, str]:
 
 def _fmt(value: float) -> str:
     """Format a coordinate for the SVG (drop a trailing .0)."""
-    return ("%.1f" % value).rstrip("0").rstrip(".") if "." in ("%.1f" % value) else "%d" % int(value)
+    return (
+        ("%.1f" % value).rstrip("0").rstrip(".")
+        if "." in ("%.1f" % value)
+        else "%d" % int(value)
+    )
 
 
-def _render_svg(graph: StoryGraph, font_size: float, margin: float,
-                title: Optional[str]) -> str:
+def _render_svg(
+    graph: StoryGraph, font_size: float, margin: float, title: Optional[str]
+) -> str:
     """Render a laid-out :class:`StoryGraph` to an SVG string."""
     nodes = graph.nodes
     if not nodes:
@@ -647,7 +676,7 @@ def _render_svg(graph: StoryGraph, font_size: float, margin: float,
         fill, stroke = PALETTES.get(node.category, PALETTES[NODE_NORMAL])
         x = node.x - node.w / 2.0 + ox
         y = node.y - node.h / 2.0 + oy
-        dash = "" 
+        dash = ""
         if node.category == NODE_MISSING:
             dash = ' stroke-dasharray="5 3"'
         penw = "2" if node.category == NODE_ENTRYPOINT else "1.5"
@@ -677,7 +706,14 @@ def _render_svg(graph: StoryGraph, font_size: float, margin: float,
             parts.append(
                 '<text x="%s" y="%s" font-size="%s" font-weight="%s" '
                 'fill="%s" text-anchor="middle">%s</text>'
-                % (_fmt(cx), _fmt(ty + size * 0.35), _fmt(size), weight, color, _xml.escape(line))
+                % (
+                    _fmt(cx),
+                    _fmt(ty + size * 0.35),
+                    _fmt(size),
+                    weight,
+                    color,
+                    _xml.escape(line),
+                )
             )
     parts.append("</g>")
 
@@ -709,8 +745,9 @@ def to_svg(
     :param result: an already-computed :class:`~beware.check.CheckResult` to
         avoid re-running the structural check.
     """
-    graph = build_story_graph(text, labels=labels, preview_chars=preview_chars,
-                              result=result)
+    graph = build_story_graph(
+        text, labels=labels, preview_chars=preview_chars, result=result
+    )
     graph.orientation = orientation
     graph.title = title
 

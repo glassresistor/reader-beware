@@ -169,8 +169,16 @@ def check(narrative_path, dot_output, quiet):
     show_default=True,
     help="Base font size for the SVG (user units).",
 )
-def graph(narrative_path, output_base, dot_output, svg_output, orientation,
-          labels, title, font_size):
+def graph(
+    narrative_path,
+    output_base,
+    dot_output,
+    svg_output,
+    orientation,
+    labels,
+    title,
+    font_size,
+):
     """Render the story tree as a Graphviz DOT file and/or a scalable SVG."""
     import sys
 
