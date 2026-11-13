@@ -2,7 +2,7 @@ import os
 
 import click
 
-from beware.build_html import NarativeWorldBuilder
+from beware.build_html import NarrativeWorldBuilder
 from beware.build_epub import EPubWorldBuilder
 from beware.mobi import MobiWorldBuilder
 from beware.meta import BookMetadata
@@ -15,16 +15,16 @@ def cli():
 
 @cli.command()
 @click.option(
-    "--narative-path", default="narative.yaml", help="Path to natarive yaml file"
+    "--narrative-path", default="narrative.yaml", help="Path to narrative yaml file"
 )
 @click.option("--output", default="output", help="Output folder")
-def build_html(narative_path, output):
-    NarativeWorldBuilder(narative_path, output).build()
+def build_html(narrative_path, output):
+    NarrativeWorldBuilder(narrative_path, output).build()
 
 
 @cli.command()
 @click.option(
-    "--narative-path", default="narative.yaml", help="Path to natarive yaml file"
+    "--narrative-path", default="narrative.yaml", help="Path to narrative yaml file"
 )
 @click.option(
     "--output",
@@ -37,9 +37,9 @@ def build_html(narative_path, output):
     help="Path to a yaml/json file with ebook metadata "
     "(title, description, cover, ...)",
 )
-def build_epub(narative_path, output, book_config):
+def build_epub(narrative_path, output, book_config):
     meta = BookMetadata.from_config(book_config)
-    builder = EPubWorldBuilder(narative_path, output, meta=meta)
+    builder = EPubWorldBuilder(narrative_path, output, meta=meta)
     builder.build()
     epub_file = builder.build_epub(meta)
     print("epub written to %s" % epub_file)
@@ -47,7 +47,7 @@ def build_epub(narative_path, output, book_config):
 
 @cli.command()
 @click.option(
-    "--narative-path", default="narative.yaml", help="Path to natarive yaml file"
+    "--narrative-path", default="narrative.yaml", help="Path to narrative yaml file"
 )
 @click.option(
     "--output",
@@ -60,13 +60,13 @@ def build_epub(narative_path, output, book_config):
     help="Path to a yaml/json file with ebook metadata "
     "(title, description, cover, ...)",
 )
-def build_mobi(narative_path, output, book_config):
+def build_mobi(narrative_path, output, book_config):
     meta = BookMetadata.from_config(book_config)
-    epub_builder = EPubWorldBuilder(narative_path, "%s_epub" % output, meta=meta)
+    epub_builder = EPubWorldBuilder(narrative_path, "%s_epub" % output, meta=meta)
     epub_builder.build()
     epub_builder.build_epub(meta)
     mobi_builder = MobiWorldBuilder(
-        narative_path, output, meta=meta, epub_builder=epub_builder
+        narrative_path, output, meta=meta, epub_builder=epub_builder
     )
     artifact, note = mobi_builder.build()
     if artifact:

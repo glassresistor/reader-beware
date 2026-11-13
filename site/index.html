@@ -238,7 +238,7 @@ your green shirt very much.&quot;&lt;/p&gt;
   <code class="inline">explore</code> (plain jump) and <code class="inline">choice</code>
   (jump, and update the world state on the way).</p>
 
-<pre class="code"><span class="cm"># narative.yaml &mdash; a whole book</span>
+<pre class="code"><span class="cm"># narrative.yaml &mdash; a whole book</span>
 ---
 entrypoint:
   body: |
@@ -268,8 +268,8 @@ go-outside:
   <div class="steps">
     <ol>
       <li><b>Write the story.</b> A folder of yaml files, or one file. The section named <code class="inline">entrypoint</code> opens the book.</li>
-      <li><b>Build html pages</b> for fast preview: <code class="inline">beware build-html --narative-path narative.yaml --output output_folder</code></li>
-      <li><b>Build the ebook:</b> <code class="inline">beware build-epub --narative-path narative.yaml --output book --book-config book.yaml</code> writes a real <code class="inline">book.epub</code> (plus an unzipped debug folder).</li>
+      <li><b>Build html pages</b> for fast preview: <code class="inline">beware build-html --narrative-path narrative.yaml --output output_folder</code></li>
+      <li><b>Build the ebook:</b> <code class="inline">beware build-epub --narrative-path narrative.yaml --output book --book-config book.yaml</code> writes a real <code class="inline">book.epub</code> (plus an unzipped debug folder).</li>
       <li><b>Kindle-ready:</b> <code class="inline">beware build-mobi &hellip;</code> converts through Calibre's ebook-convert, or falls back to a Kindle-ready epub.</li>
       <li><b>Read anywhere.</b> Transfer the file to any reader app &mdash; no player, no runtime.</li>
     </ol>

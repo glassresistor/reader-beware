@@ -10,7 +10,7 @@ import shutil
 
 from lxml import etree
 
-from beware.build_html import NarativeWorldBuilder
+from beware.build_html import NarrativeWorldBuilder
 from beware.meta import BookMetadata
 
 
@@ -43,7 +43,7 @@ REMOTE_CSS_RE = re.compile(
 )
 
 
-class EPubWorldBuilder(NarativeWorldBuilder):
+class EPubWorldBuilder(NarrativeWorldBuilder):
 
     #: section filenames must be url-safe so they work as xhtml href targets
     encode_filenames = True
@@ -81,21 +81,21 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         return template.render(message=text, language=self.meta.language or "en-US")
 
     # -- rendering -----------------------------------------------------
-    def render_body(self, narative_name, world):
+    def render_body(self, narrative_name, world):
         """Render one section to its final html file in the output folder."""
-        path = self.narative_path(narative_name, world)
+        path = self.narrative_path(narrative_name, world)
         if path in self.section_names:
             return
         self.section_names.append(path)
-        body = self.body(narative_name)
+        body = self.body(narrative_name)
         type(self).push_current_world(world)
         markdown = self.env.from_string(body, globals=dict(world)).render()
         html_body = self.markdown_to_html(markdown)
-        xmlid = _xml_id(self.section_id(narative_name, world))
+        xmlid = _xml_id(self.section_id(narrative_name, world))
         self._spine_entries.append((xmlid, path))
-        template = self.env.get_template("html/narative.html.j2")
+        template = self.env.get_template("html/narrative.html.j2")
         page = template.render(
-            narative_name=narative_name, section_id=xmlid, path=xmlid, body=html_body
+            narrative_name=narrative_name, section_id=xmlid, path=xmlid, body=html_body
         )
         page = self.rewrite_links(page)
         output_file = os.path.join(self.output_path, path)
@@ -128,13 +128,13 @@ class EPubWorldBuilder(NarativeWorldBuilder):
         except FileNotFoundError:
             pass
         os.makedirs(self.output_path, exist_ok=True)
-        if "entrypoint" not in self.naratives:
+        if "entrypoint" not in self.narratives:
             raise ValueError(
                 "narrative %r is missing an entrypoint section" % self.yaml_path
             )
         self.render_body("entrypoint", {})
         while self.render_next:
-            narative = self.render_next.pop()
+            narrative = self.render_next.pop()
             if (
                 self.max_sections is not None
                 and len(self.section_names) >= self.max_sections
@@ -143,7 +143,7 @@ class EPubWorldBuilder(NarativeWorldBuilder):
                     "narrative generated more than %s sections; it may be "
                     "unbounded" % self.max_sections
                 )
-            self.render_body(*narative)
+            self.render_body(*narrative)
         print("%s sections written" % len(self.section_names))
         shutil.copyfile(
             os.path.join(self.base_dir, "files", "template.css"),

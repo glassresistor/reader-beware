@@ -15,7 +15,7 @@ from jinja2 import Environment, FileSystemLoader
 DEFAULT_LANGUAGE = "en-US"
 
 
-class NarativeWorldBuilder(object):
+class NarrativeWorldBuilder(object):
 
     #: When True section filenames are percent-encoded so they are always
     #: valid urls/uris (needed for epub/xhtml; html builds keep them raw).
@@ -28,8 +28,8 @@ class NarativeWorldBuilder(object):
     def __init__(self, yaml_path, output_path):
         self.yaml_path = os.path.realpath(yaml_path)
         with open(self.yaml_path, "r") as f:
-            self.naratives = yaml.safe_load(f)
-        if not isinstance(self.naratives, dict):
+            self.narratives = yaml.safe_load(f)
+        if not isinstance(self.narratives, dict):
             raise ValueError("%s does not contain a narrative mapping" % yaml_path)
         self.base_dir = os.path.dirname(os.path.realpath(__file__))
         template_dir = os.path.join(self.base_dir, "templates")
@@ -91,13 +91,13 @@ class NarativeWorldBuilder(object):
         except FileNotFoundError:
             pass
         os.makedirs(self.output_path, exist_ok=True)
-        if "entrypoint" not in self.naratives:
+        if "entrypoint" not in self.narratives:
             raise ValueError(
                 "narrative %r is missing an entrypoint section" % self.yaml_path
             )
         self.render_body("entrypoint", {})
         while self.render_next:
-            narative = self.render_next.pop()
+            narrative = self.render_next.pop()
             if (
                 self.max_sections is not None
                 and len(self.section_names) >= self.max_sections
@@ -106,26 +106,26 @@ class NarativeWorldBuilder(object):
                     "narrative generated more than %s sections; it may be "
                     "unbounded" % self.max_sections
                 )
-            self.render_body(*narative)
+            self.render_body(*narrative)
         print("%s sections written" % len(self.section_names))
 
-    def body(self, narative_name):
+    def body(self, narrative_name):
         try:
-            return self.naratives[narative_name]["body"]
+            return self.narratives[narrative_name]["body"]
         except KeyError:
             raise KeyError(
                 "section %r is linked to but not defined in the narrative "
-                "file" % narative_name
+                "file" % narrative_name
             )
 
     # -- paths ---------------------------------------------------------
-    def section_id(self, narative, world):
+    def section_id(self, narrative, world):
         """Unique id for a section+world combination."""
-        return narative + "-" + json.dumps(world, sort_keys=True)
+        return narrative + "-" + json.dumps(world, sort_keys=True)
 
-    def narative_path(self, narative, world):
+    def narrative_path(self, narrative, world):
         """Filename (html by default) for a section+world combination."""
-        return self.section_file(self.section_id(narative, world))
+        return self.section_file(self.section_id(narrative, world))
 
     def section_file(self, base_name):
         """Encode a raw stem into a filename according to `encode_filenames`."""
@@ -138,31 +138,31 @@ class NarativeWorldBuilder(object):
     def explore(self, value):
         return self.choice(value)
 
-    def choice(self, next_narative, **update_vars):
+    def choice(self, next_narrative, **update_vars):
         world = self._world_snapshot()
         world.update(update_vars)
-        self.render_next.append([next_narative, world])
-        return self.narative_path(next_narative, world)
+        self.render_next.append([next_narrative, world])
+        return self.narrative_path(next_narrative, world)
 
     # -- rendering -----------------------------------------------------
-    def render_body(self, narative_name, world):
+    def render_body(self, narrative_name, world):
         """Render one section to its final html file in the output folder."""
-        path = self.narative_path(narative_name, world)
+        path = self.narrative_path(narrative_name, world)
         if path in self.section_names:
             return
         self.section_names.append(path)
-        body = self.body(narative_name)
+        body = self.body(narrative_name)
         type(self).push_current_world(world)
         markdown = self.env.from_string(body, globals=dict(world)).render()
         html_body = self.markdown_to_html(markdown)
-        template = self.env.get_template("html/narative.html.j2")
-        raw_id = self.section_id(narative_name, world)
+        template = self.env.get_template("html/narrative.html.j2")
+        raw_id = self.section_id(narrative_name, world)
         html = template.render(
-            narative_name=narative_name,
+            narrative_name=narrative_name,
             section_id=self.anchor_id(raw_id),
             path=self.anchor_id(raw_id),
             body=html_body,
-            breadcrumb=self.breadcrumb(narative_name, world),
+            breadcrumb=self.breadcrumb(narrative_name, world),
             language=getattr(self, "language", DEFAULT_LANGUAGE),
         )
         output_file = os.path.join(self.output_path, path)
@@ -186,11 +186,11 @@ class NarativeWorldBuilder(object):
         """
         return self.anchor_id(raw)
 
-    def breadcrumb(self, narative_name, world):
+    def breadcrumb(self, narrative_name, world):
         """Human-readable page label: section name plus current world state."""
         if not world:
-            return narative_name
+            return narrative_name
         parts = ", ".join(
             "%s=%s" % (key, value) for key, value in sorted(world.items())
         )
-        return "%s (%s)" % (narative_name, parts)
+        return "%s (%s)" % (narrative_name, parts)

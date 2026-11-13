@@ -5,7 +5,7 @@ import re
 
 import pytest
 
-from beware.build_html import NarativeWorldBuilder
+from beware.build_html import NarrativeWorldBuilder
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 NARRATIVES = os.path.join(HERE, "narratives")
@@ -16,7 +16,7 @@ def narrative(name):
 
 
 def test_builds_simple_story(out):
-    builder = NarativeWorldBuilder(narrative("simple.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("simple.yaml"), out)
     builder.build()
     files = sorted(os.listdir(out))
     assert len(files) == 3
@@ -27,41 +27,41 @@ def test_builds_simple_story(out):
 
 
 def test_no_entrypoint_raises(out):
-    builder = NarativeWorldBuilder(narrative("no_entrypoint.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("no_entrypoint.yaml"), out)
     with pytest.raises(ValueError):
         builder.build()
 
 
 def test_missing_section_raises(out):
-    builder = NarativeWorldBuilder(narrative("missing.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("missing.yaml"), out)
     with pytest.raises(KeyError):
         builder.build()
 
 
 def test_loop_terminates(out):
     """Sections linking back to each other must not hang the build."""
-    builder = NarativeWorldBuilder(narrative("loop.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("loop.yaml"), out)
     builder.max_sections = 100
     builder.build()
     assert len(os.listdir(out)) == 2
 
 
 def test_incrementing_loop_with_break(out):
-    builder = NarativeWorldBuilder(narrative("counting.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("counting.yaml"), out)
     builder.build()
     # entrypoint + value=0..10 (the last prints Done counting!)
     assert len(os.listdir(out)) == 12
 
 
 def test_infinite_loop_stops_at_max(out):
-    builder = NarativeWorldBuilder(narrative("infinite.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("infinite.yaml"), out)
     builder.max_sections = 50
     with pytest.raises(RuntimeError):
         builder.build()
 
 
 def test_world_state_flows_forward(out):
-    builder = NarativeWorldBuilder(narrative("shirts.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("shirts.yaml"), out)
     builder.build()
     files = os.listdir(out)
     # put-on-shirt and go-outside each exist once per shirt color
@@ -79,7 +79,7 @@ def test_world_state_flows_forward(out):
 
 
 def test_link_urls_resolve_to_files(out):
-    builder = NarativeWorldBuilder(narrative("simple.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("simple.yaml"), out)
     builder.build()
     entrypoint_file = [f for f in os.listdir(out) if f.startswith("entrypoint")][0]
     html = open(os.path.join(out, entrypoint_file)).read()
@@ -92,7 +92,7 @@ def test_link_urls_resolve_to_files(out):
 
 def test_the_square_bounded(out):
     """A bounded run of the Square maze: generation and page contents."""
-    builder = NarativeWorldBuilder(narrative("square.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("square.yaml"), out)
     builder.max_sections = 200
     with pytest.raises(RuntimeError):
         builder.build()
@@ -112,7 +112,7 @@ def test_the_square_maze_slow(tmp_path):
     if not os.environ.get("BEWARE_RUN_SLOW"):
         pytest.skip("slow test; set BEWARE_RUN_SLOW=1 to run it")
     out_dir = str(tmp_path / "square")
-    builder = NarativeWorldBuilder(narrative("square.yaml"), out_dir)
+    builder = NarrativeWorldBuilder(narrative("square.yaml"), out_dir)
     # The full maze is ~40k pages (minutes of compute); stop at 6000
     # which still exercises thousands of rooms and many exit pages.
     builder.max_sections = 6000
@@ -128,7 +128,7 @@ def test_the_square_maze_slow(tmp_path):
 
 
 def test_markdown_rendered(out):
-    builder = NarativeWorldBuilder(narrative("markdown_features.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("markdown_features.yaml"), out)
     builder.build()
     html_files = [f for f in os.listdir(out) if f.endswith(".html")]
     assert len(html_files) == 1
@@ -139,9 +139,9 @@ def test_markdown_rendered(out):
 
 
 def test_rebuild_into_existing_folder(out):
-    builder = NarativeWorldBuilder(narrative("simple.yaml"), out)
+    builder = NarrativeWorldBuilder(narrative("simple.yaml"), out)
     builder.build()
-    builder2 = NarativeWorldBuilder(narrative("simple.yaml"), out)
+    builder2 = NarrativeWorldBuilder(narrative("simple.yaml"), out)
     builder2.build()
     assert len(os.listdir(out)) == 3
 
@@ -153,7 +153,7 @@ def test_filters_are_pluggable(tmp_path):
     with open(path, "w") as f:
         f.write(body)
     out_dir = str(tmp_path / "out")
-    builder = NarativeWorldBuilder(path, out_dir)
+    builder = NarrativeWorldBuilder(path, out_dir)
 
     def shout(value):
         return value.upper() + "!!!"
@@ -173,7 +173,7 @@ def test_markdown_extras_are_pluggable(tmp_path):
     with open(path, "w") as f:
         f.write(body)
     out_dir = str(tmp_path / "out")
-    builder = NarativeWorldBuilder(path, out_dir)
+    builder = NarrativeWorldBuilder(path, out_dir)
     builder.markdown_extras = ("fenced-code-blocks",)
     builder.build()
     html_files = [f for f in os.listdir(out_dir) if f.endswith(".html")]
@@ -187,7 +187,7 @@ def test_default_markdown_has_no_fenced_blocks(tmp_path):
     with open(path, "w") as f:
         f.write(body)
     out_dir = str(tmp_path / "out")
-    builder = NarativeWorldBuilder(path, out_dir)
+    builder = NarrativeWorldBuilder(path, out_dir)
     builder.build()
     html_files = [f for f in os.listdir(out_dir) if f.endswith(".html")]
     html = open(os.path.join(out_dir, html_files[0])).read()

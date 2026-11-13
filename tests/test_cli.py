@@ -22,7 +22,7 @@ def test_build_html_cli(tmp_path):
         cli_group,
         [
             "build-html",
-            "--narative-path",
+            "--narrative-path",
             narrative("simple.yaml"),
             "--output",
             out_dir,
@@ -42,7 +42,7 @@ def test_build_epub_cli(tmp_path):
         cli_group,
         [
             "build-epub",
-            "--narative-path",
+            "--narrative-path",
             narrative("simple.yaml"),
             "--output",
             out_base,
@@ -64,7 +64,7 @@ def test_build_epub_cli_with_book_config(tmp_path):
         cli_group,
         [
             "build-epub",
-            "--narative-path",
+            "--narrative-path",
             narrative("simple.yaml"),
             "--output",
             out_base,

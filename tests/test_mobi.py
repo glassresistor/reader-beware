@@ -88,7 +88,7 @@ def test_mobi_cli(tmp_path):
         cli_group,
         [
             "build-mobi",
-            "--narative-path",
+            "--narrative-path",
             narrative("simple.yaml"),
             "--output",
             out_base,
