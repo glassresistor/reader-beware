@@ -25,12 +25,13 @@ class NarrativeWorldBuilder(object):
     #: against accidentally generating a book that never terminates.
     max_sections = None
 
-    def __init__(self, yaml_path, output_path):
-        self.yaml_path = os.path.realpath(yaml_path)
-        with open(self.yaml_path, "r") as f:
-            self.narratives = yaml.safe_load(f)
-        if not isinstance(self.narratives, dict):
-            raise ValueError("%s does not contain a narrative mapping" % yaml_path)
+    #: If True, filenames in a folder are used as section names. 
+    #: If False, section names are extracted from filename__section_name.
+    folder_mode_filename_as_section = True
+
+    def __init__(self, narrative_path, output_path):
+        self.narrative_path = os.path.realpath(narrative_path)
+        self.output_path = output_path
         self.base_dir = os.path.dirname(os.path.realpath(__file__))
         template_dir = os.path.join(self.base_dir, "templates")
         self.env = Environment(loader=FileSystemLoader(template_dir))
@@ -38,13 +39,79 @@ class NarrativeWorldBuilder(object):
         # `markdown_extras` to enable markdown2 extensions (pluggable).
         self.markdown_extras = ()
         self._markdowner = None
-        self.output_path = output_path
         self.section_names = []
         self.render_next = []
         # Register the default jinja2 filters.  These are pluggable: any
         # code (including user extensions) can call `register_filter` to
         # add or replace a filter before building.
         self.register_default_filters()
+
+        if os.path.isfile(self.narrative_path):
+            self._load_single_file()
+        elif os.path.isdir(self.narrative_path):
+            self._load_folder()
+        else:
+            raise FileNotFoundError("Narrative path %r is not a file or directory" % self.narrative_path)
+
+    def _load_single_file(self):
+        with open(self.narrative_path, "r") as f:
+            self.narratives = yaml.safe_load(f)
+        if not isinstance(self.narratives, dict):
+            raise ValueError("%s does not contain a narrative mapping" % self.narrative_path)
+
+    def _load_folder(self):
+        """Loads narratives from a folder of either bare markdown/jinja or YAML sections."""
+        self.narratives = {}
+        files = sorted([f for f in os.listdir(self.narrative_path) if os.path.isfile(os.path.join(self.narrative_path, f))])
+        
+        if not files:
+            raise ValueError("Narrative folder %r is empty" % self.narrative_path)
+
+        # Detect mode based on first file
+        first_file = os.path.join(self.narrative_path, files[0])
+        is_yaml_mode = False
+        try:
+            with open(first_file, "r") as f:
+                # Try to see if it starts with something that looks like YAML
+                content = f.read(512)
+                if content.strip().startswith(("---", "{", "[")):
+                    is_yaml_mode = True
+        except Exception:
+            is_yaml_mode = False
+
+        for filename in files:
+            file_path = os.path.join(self.narrative_path, filename)
+            stem = os.path.splitext(filename)[0]
+            
+            if is_yaml_mode:
+                # YAML mode: files contain sections (or are themselves sections if parsed as dict)
+                with open(file_path, "r") as f:
+                    import yaml
+                    data = yaml.safe_load(f)
+                if isinstance(data, dict):
+                    # If the file itself is a mapping of sections
+                    self.narratives.update(data)
+                elif data is not None:
+                    # A single scalar value in a YAML file might be intended as a section body?
+                    # But user said "files with yaml sections", implying dicts.
+                    raise ValueError("YAML mode requires files to contain section mappings")
+            else:
+                # Bare Markdown/Jinja mode
+                section_name = stem
+                if self.folder_mode_filename_as_section and "__" in stem:
+                    # filename__section_name -> extract section_name
+                    parts = stem.split("__", 1)
+                    if len(parts) == 2:
+                        section_name = parts[1]
+                
+                with open(file_path, "r") as f:
+                    body = f.read()
+                
+                # In bare mode, we need to wrap it in the expected structure
+                self.narratives[section_name] = {"body": body}
+
+        if "entrypoint" not in self.narratives:
+            raise ValueError("Narrative is missing an entrypoint section")
 
     def register_default_filters(self):
         """Register the built-in jinja2 filters used by narrative bodies."""
@@ -93,7 +160,7 @@ class NarrativeWorldBuilder(object):
         os.makedirs(self.output_path, exist_ok=True)
         if "entrypoint" not in self.narratives:
             raise ValueError(
-                "narrative %r is missing an entrypoint section" % self.yaml_path
+                "narrative %r is missing an entrypoint section" % self.narrative_path
             )
         self.render_body("entrypoint", {})
         while self.render_next:
@@ -128,7 +195,7 @@ class NarrativeWorldBuilder(object):
         return self.section_file(self.section_id(narrative, world))
 
     def section_file(self, base_name):
-        """Encode a raw stem into a filename according to `encode_filenames`."""
+        """Encode a raw stem into a filename according to encode_filenames."""
         if not self.encode_filenames:
             return base_name + ".html"
         encoded = urllib.parse.quote(base_name, safe="")
@@ -179,8 +246,8 @@ class NarrativeWorldBuilder(object):
     def hash_filename(self, raw):
         """Filesystem stem for a section whose raw name needs hashing.
 
-        The same ``sid-<md5>`` digest the anchor id uses, without the
-        ``.html`` suffix; the epub builder writes these as its section
+        The same sid-<md5> digest the anchor id uses, without the
+        .html suffix; the epub builder writes these as its section
         filenames (see EPubWorldBuilder.hash_filename), and site scripts
         need to find those pages again from a raw name.
         """

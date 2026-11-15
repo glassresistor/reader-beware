@@ -1,0 +1,9 @@
+---
+entrypoint:
+  body: |
+    This is the entrypoint from YAML.
+
+    [go right]({{ 'right'|explore }})
+right:
+  body: |
+    You went right!
