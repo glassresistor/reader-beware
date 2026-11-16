@@ -3,6 +3,7 @@ import os
 import click
 
 from beware.build_html import NarrativeWorldBuilder
+from beware.meta import BookMetadata
 from beware.build_epub import EPubWorldBuilder
 from beware.mobi import MobiWorldBuilder
 from beware.meta import BookMetadata
@@ -18,8 +19,14 @@ def cli():
     "--narrative-path", default="narrative.yaml", help="Path to narrative yaml file"
 )
 @click.option("--output", default="output", help="Output folder")
-def build_html(narrative_path, output):
-    NarrativeWorldBuilder(narrative_path, output).build()
+@click.option(
+    "--book-config",
+    default=None,
+    help="Path to a yaml/json file with ebook metadata",
+)
+def build_html(narrative_path, output, book_config):
+    meta = BookMetadata.from_config(book_config) if book_config else None
+    NarrativeWorldBuilder(narrative_path, output, meta=meta).build()
 
 
 @cli.command()

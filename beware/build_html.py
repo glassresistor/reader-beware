@@ -8,6 +8,7 @@ import yaml
 
 from markdown2 import Markdown
 from jinja2 import Environment, FileSystemLoader
+from beware.meta import BookMetadata
 
 #: language stamped onto every rendered page, so assistive tech voices the
 #: prose correctly instead of falling back to whatever the reader's system
@@ -29,9 +30,10 @@ class NarrativeWorldBuilder(object):
     #: If False, section names are extracted from filename__section_name.
     folder_mode_filename_as_section = True
 
-    def __init__(self, narrative_path, output_path):
+    def __init__(self, narrative_path, output_path, meta=None):
         self.narrative_path = os.path.realpath(narrative_path)
         self.output_path = output_path
+        self.meta = meta
         self.base_dir = os.path.dirname(os.path.realpath(__file__))
         template_dir = os.path.join(self.base_dir, "templates")
         self.env = Environment(loader=FileSystemLoader(template_dir))
@@ -163,6 +165,17 @@ class NarrativeWorldBuilder(object):
                 "narrative %r is missing an entrypoint section" % self.narrative_path
             )
         self.render_body("entrypoint", {})
+        
+        # Interstitial dead pages for HTML build
+        if self.meta and self.meta.dead_pages:
+            for idx, text in enumerate(self.meta.dead_page_texts()):
+                path = "dead-page-%d-%d.html" % (0, idx)
+                output_file = os.path.join(self.output_path, path)
+                template = self.env.get_template("html/dead_page.html.j2")
+                html = template.render(message=text, language=getattr(self.meta, 'language', 'en-US'))
+                with open(output_file, "w", encoding="utf-8") as f:
+                    f.write(html)
+
         while self.render_next:
             narrative = self.render_next.pop()
             if (
