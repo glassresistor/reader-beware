@@ -46,14 +46,18 @@ body.story-page {
 .story h2 { font-size: 1.35em; color: var(--pink-soft); }
 
 .story a {
-  color: var(--pink-soft);
+  color: var(--ink-dim);
+  font-size: 1.05em;
   text-decoration: none;
   border-bottom: 1px dotted rgba(255, 110, 199, .45);
 }
 .story a:hover { color: var(--pink); background: rgba(255, 110, 199, .08); }
 
 /* choice links read like buttons */
-.story p a:not([href^="#"]) { }
+.story p a:not([href^="#"]) {
+  display: block;
+  margin-top: 1rem;
+}
 
 .story code, .story pre {
   font-family: "IBM Plex Mono", Menlo, monospace;
